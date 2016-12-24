@@ -1,0 +1,64 @@
+﻿<Page
+    x:Class="_9Contatos.Interface.Sobre"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos.Interface"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <SlideNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton Label="Voltar" Icon="Back" Click="voltar_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="SOBRE" VerticalAlignment="Top" FontSize="28"/>
+        <StackPanel Height="457" Margin="15,100,10,0" VerticalAlignment="Top">
+            <TextBlock Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="0" Canvas.ZIndex="1">
+                <Run Text="Arruma Contatos - v1.0 "/>
+                <LineBreak/>
+                <Run/>
+                <LineBreak/>
+                <Run Text="Criado por LZFStudio."/>
+                <LineBreak/>
+                <Run Text=""/>
+                <LineBreak/>
+                <Run Text="Agradeço a ajuda do Jaedson por achar um meio"/>
+                <Run Text=" "/>
+                <Run Text="de conseguir atualizar os contatos"/>
+                <Run Text=" no app pessoas"/>
+                <Run Text="."/>
+            </TextBlock>
+            <Rectangle Fill="#FFF4F4F5" Margin="0" Stroke="Black" VerticalAlignment="Top" Height="7" Canvas.ZIndex="2" StrokeThickness="2"/>
+            <TextBlock Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.887,-4.3">
+                <Run Text="O aplicativo ainda não obteve autorização de editar os contatos sem criar novos contatos"/>
+                <Run Text=", por isso quando você for salvar os seus contatos você verá na agenda que seu contato está "/>
+                <Run Text="vinculado "/>
+                <Run Text="com o nosso app."/>
+                <LineBreak/>
+                <Run/>
+                <LineBreak/>
+                <Run Text="Caso não seja isso que estava procurando"/>
+                <Run Text=","/>
+                <Run Text=" por favor"/>
+                <Run Text=","/>
+                <Run Text=" "/>
+                <Run Text="comente sobre o que você queria no review do app na loja."/>
+            </TextBlock>
+        </StackPanel>
+
+    </Grid>
+</Page>
