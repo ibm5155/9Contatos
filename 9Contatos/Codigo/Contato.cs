@@ -1,21 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using _9Contatos.Classe;
+using System.Linq;
 
 namespace _9Contatos.Codigo
 {
-    enum TipoEmail{
-        Outlook,Gmail
-    };
+    enum TipoEmail
+    {
+        Outlook,
+        Gmail
+    }
 
     enum ContatoSalvo
     {
-        UnauthorizedAccessException = -1,NaoSalvo,Salvo 
-    };
+        UnauthorizedAccessException = -1,
+        NaoSalvo,
+        Salvo 
+    }
 
     class Contato
     {
@@ -39,15 +41,12 @@ namespace _9Contatos.Codigo
         {
             PeopleAPI Link = new PeopleAPI();
             ContatoSalvo Status = ContatoSalvo.NaoSalvo;
-            List<string> tel_formatado = new List<string>();
-            foreach (Telefone tel in Telefones_Formatados)
-            {
-                tel_formatado.Add(tel.Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais));
-            }
+            IEnumerable<string> tel_formatado = from tel in Telefones_Formatados
+                                                select tel.Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais);
             try
             {
                 int saida = 0;
-                saida = await Link.AlterarContato(ID, NomeCompleto, tel_formatado, Telefones_Antigos);
+                saida = await Link.AlterarContato(ID, NomeCompleto, tel_formatado.ToList(), Telefones_Antigos);
                 if (saida == 0)
                 {
                     Status = ContatoSalvo.Salvo;

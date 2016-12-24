@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace _9Contatos.JSON
 {
@@ -47,11 +44,10 @@ namespace _9Contatos.JSON
         public string yomiGivenName { get; set; }
         public string yomiSurname { get; set; }
 
-
         void Carrega(string Json)
         {
             string []remove_value = new string[] { "value" };
             string[] Contato_Filtrado = Json.Split(remove_value, StringSplitOptions.RemoveEmptyEntries);
-        } 
+        }
     }
 }

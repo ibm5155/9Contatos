@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using _9Contatos.Classe;
 using _9Contatos.Codigo;
 using Windows.UI.Popups;
 using _9Contatos.Interface;

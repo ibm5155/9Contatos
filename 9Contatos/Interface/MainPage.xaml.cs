@@ -1,23 +1,12 @@
-﻿using _9Contatos.Codigo;
-using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 using _9Contatos.Classe;
 using Windows.UI.Popups;
 using _9Contatos.Interface;
-using System.Threading.Tasks;
-using Windows.UI.Core;
 
 #warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
 
@@ -30,17 +19,17 @@ namespace _9Contatos
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private OpcoesAvancadas xx;
+
         public MainPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Globais.contatos.Clear();
         }
 
-        private _9Contatos.Interface.OpcoesAvancadas xx;
-
         private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
+            Frame.Navigate(typeof(OpcoesAvancadas),xx);
         }
 
         private async void image1_Tapped(object sender, TappedRoutedEventArgs e)
@@ -56,28 +45,28 @@ namespace _9Contatos
                     var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
                     pergunta.Title = "Nenhum contato encontrado";
                     pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                    pergunta.ShowAsync();
+                    await pergunta.ShowAsync();
                 }
                 else
                 {
-                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                    Frame.Navigate(typeof(TelaContatos));
                 }
             }
         }
 
         private void bt_Sobre_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
+            Frame.Navigate(typeof(Sobre));
         }
 
         private void image1_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Gray);
+            Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Gray);
         }
 
         private void image1_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+            Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Black);
         }
     }
 }

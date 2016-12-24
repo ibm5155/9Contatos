@@ -3,11 +3,7 @@
 // Parser NÚMERO DE TELEFONE, POR: Lucas Zimerman Fraulob
 //
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using _9Contatos.Classe;
 
 namespace _9Contatos.Codigo

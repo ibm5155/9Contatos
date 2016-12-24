@@ -1,21 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using _9Contatos.Codigo;
 using Windows.UI.Core;
 
 namespace _9Contatos
@@ -25,10 +13,7 @@ namespace _9Contatos
     /// </summary>
     sealed partial class App : Application
     {
-
-
-        private void App_BackRequested(object sender,
-            Windows.UI.Core.BackRequestedEventArgs e)
+        private void App_BackRequested(object sender, BackRequestedEventArgs e)
         {
             Frame rootFrame = Window.Current.Content as Frame;
             if (rootFrame == null)
@@ -50,10 +35,8 @@ namespace _9Contatos
         /// </summary>
         public App()
         {
-
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
-            
+            InitializeComponent();
+            Suspending += OnSuspending;
         }
 
         /// <summary>
@@ -67,7 +50,7 @@ namespace _9Contatos
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
-                this.DebugSettings.EnableFrameRateCounter = true;
+                DebugSettings.EnableFrameRateCounter = true;
             }
 #endif
             Frame rootFrame = Window.Current.Content as Frame;
