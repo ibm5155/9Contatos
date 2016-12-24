@@ -1,0 +1,18 @@
+﻿<ContentDialog
+    x:Class="_9Contatos.Interface.PegaRegiao"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos.Interface"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Digite o código de sua região"
+    PrimaryButtonText="Ok"
+    SecondaryButtonText=""
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick_1"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" MinWidth="339" VerticalAlignment="Top" HorizontalAlignment="Left">
+
+    <Grid>
+        <TextBox x:Name="Entrada" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" InputScope="Number"/>
+    </Grid>
+</ContentDialog>

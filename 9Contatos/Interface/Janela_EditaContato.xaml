@@ -1,0 +1,27 @@
+﻿<ContentDialog
+    x:Class="_9Contatos.Interface.Janela_EditaContato"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos.Interface"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="Editar Contato"
+    PrimaryButtonText="Editar"
+    SecondaryButtonText="Cancelar"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded" VerticalAlignment="Center" HorizontalAlignment="Center">
+
+    <Grid Margin="0,0,0,-15.667">
+        <StackPanel Height="103" Width="270" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel Height="32" Orientation="Horizontal" Margin="0" HorizontalAlignment="Right" Width="270" >
+                <TextBlock x:Name="textBlock1" TextWrapping="Wrap" Text="Nome:" Width="46" HorizontalAlignment="Left" Margin="0,0,0,10"/>
+                <TextBlock x:Name="NomeEditado" TextWrapping="Wrap" Text="$Nome" Width="211" Margin="0,0,0,10" Padding="0,0,3,0"/>
+            </StackPanel>
+            <StackPanel Height="44" Orientation="Horizontal">
+                <TextBlock x:Name="textBlock1_Copy1" TextWrapping="Wrap" Text="Celular:" Width="52" HorizontalAlignment="Left" Margin="0,0,0,22"/>
+                <TextBox x:Name="NumeroEditado" TextWrapping="Wrap" Text="$NumeroAntigo" Width="209" Margin="0,0,0,10"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</ContentDialog>

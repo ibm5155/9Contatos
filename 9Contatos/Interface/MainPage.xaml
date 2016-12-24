@@ -1,0 +1,45 @@
+﻿<Page NavigationCacheMode="Disabled"
+    x:Class="_9Contatos.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+    <Page.BottomAppBar>
+        <CommandBar>
+            <CommandBar.Content>
+                <Grid/>
+            </CommandBar.Content>
+            <AppBarButton x:Name="bt_Sobre" Icon="Help" Label="Sobre o App" Click="bt_Sobre_Click"/>
+            <AppBarButton x:Name="bt_Mais_Opcoes" Icon="Add" Label="Mais Opções" Click="bt_Mais_Opcoes_Click"/>
+        </CommandBar>
+    </Page.BottomAppBar>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
+        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
+        </ProgressBar>
+        <Grid Height="125" Margin="0,10,0,0" VerticalAlignment="Top" Width="Auto">
+            <Image x:Name="image" Height="109" Width="90" Source="ms-appx:///Assets/Icone.png" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="5,6,0,10"/>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Arruma Contatos"  FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="100,0,0,0"/>
+
+            <Border BorderThickness="1" Margin="5,0" Padding="1,0">
+                <Border.BorderBrush>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="Black" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+            </Border>
+        </Grid>
+        <Border x:Name="Image1_border" Background="Black" Height="154" Margin="0,0,0,100" Width="153" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+        <Image x:Name="image1" Height="154" Margin="0,0,0,100" Width="153" Source="ms-appx:///Assets/arrumar.png" Tapped="image1_Tapped" HorizontalAlignment="Center" VerticalAlignment="Bottom" PointerEntered="image1_PointerEntered" PointerExited="image1_PointerExited"/>
+        <TextBlock x:Name="textBlock1" Margin="0,0,0,52" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center">
+            <Run Text="Aperte na figura "/>
+            <Run Text="acima "/>
+            <Run Text="para editar os"/>
+            <Run Text=" "/>
+            <Run Text="seus contatos."/>
+        </TextBlock>
+    </Grid>
+</Page>
