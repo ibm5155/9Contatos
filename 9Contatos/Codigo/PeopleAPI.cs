@@ -12,7 +12,7 @@ namespace _9Contatos.Codigo
     /// </summary>
     class PeopleAPI
     {
-        private List<Windows.ApplicationModel.Contacts.Contact> Contatos = new List<Windows.ApplicationModel.Contacts.Contact>();
+        private List<Contact> Contatos = new List<Contact>();
 
         /// <summary>
         ///  Função que altera um contato.
@@ -27,10 +27,10 @@ namespace _9Contatos.Codigo
         ///         -2 o contagem de telefones novos difere do número no contato_a_mudar
         ///         -3 = Nome do contato se difere ao nomecompleto a ser validado
         /// </returns>
-        public async Task<int> AlterarContato(Windows.ApplicationModel.Contacts.Contact Contato_a_Mudar, string NomeCompleto, List<string> TelefonesNovos, List<string> TelefonesAntigos)
+        public async Task<int> AlterarContato(Contact Contato_a_Mudar, string NomeCompleto, List<string> TelefonesNovos, List<string> TelefonesAntigos)
         {
             int Valido = 0;
-            var contactStore = await Windows.ApplicationModel.Contacts.ContactManager.RequestStoreAsync(Windows.ApplicationModel.Contacts.ContactStoreAccessType.AllContactsReadWrite);
+            var contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
 
             var contactList = await contactStore.GetContactListAsync(Contato_a_Mudar.ContactListId);
 
@@ -234,10 +234,7 @@ namespace _9Contatos.Codigo
             return cont;
         }
 
-        public int TotalContatos()
-        {
-            return this.Contatos.Count();
-        }
+        public int TotalContatos() => Contatos.Count();
 
         public async void Limpa_Contatos_Temporarios()
         {

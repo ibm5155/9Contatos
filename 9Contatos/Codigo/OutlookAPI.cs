@@ -1,24 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using _9Contatos.Codigo;
 using Windows.Storage;
 using Microsoft.Identity.Client;
 using System.Net.Http;
 //using Windows.Data.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 
 namespace _9Contatos.Codigo
 {
-
     internal class ODataResponse<T>
     {
         public List<T> Value { get; set; }
     }
-
 
     class OutlookAPI
     {
@@ -29,7 +22,6 @@ namespace _9Contatos.Codigo
         public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
         static string clientId = App.Current.Resources["ida:ClientID"].ToString();
         public static PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId);
-
 
         /// <summary>
         /// Get Token for User.
@@ -43,9 +35,9 @@ namespace _9Contatos.Codigo
                 authResult = await IdentityClientApp.AcquireTokenSilentAsync(Scopes);
                 TokenForUser = authResult.Token;
                 // save user ID in local storage
-//                _settings.Values["userID"] = authResult.User.UniqueId;
-//                _settings.Values["userEmail"] = authResult.User.DisplayableId;
-//                _settings.Values["userName"] = authResult.User;
+                //_settings.Values["userID"] = authResult.User.UniqueId;
+                //_settings.Values["userEmail"] = authResult.User.DisplayableId;
+                //_settings.Values["userName"] = authResult.User;
             }
 
             catch (Exception)
@@ -58,7 +50,6 @@ namespace _9Contatos.Codigo
                     Expiration = authResult.ExpiresOn;
                 }
             }
-
             return TokenForUser;
         }
 
@@ -71,7 +62,7 @@ namespace _9Contatos.Codigo
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage Requisicao;
-                var token = await OutlookAPI.GetTokenForUserAsync();
+                var token = await GetTokenForUserAsync();
                 int TotalContatos = 0;
                 int proximo_grupo = 0;
 
