@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using _9Contatos.Codigo;
+using _9Contatos.Contatos.Contato;
 using Windows.Storage;
 using Microsoft.Identity.Client;
 using System.Net.Http;
@@ -11,7 +11,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
-namespace _9Contatos.Codigo
+namespace _9Contatos.API.Outlook
 {
     /*
      * Bem, é só um caso de testes, por enquanto ele consegue contactar o outlook, conectar a ele e também carregar todos os contatos (em formato json.

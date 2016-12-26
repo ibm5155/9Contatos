@@ -1,21 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using _9Contatos.Codigo;
-using _9Contatos.Classe;
 using System.Threading.Tasks;
 using Windows.UI.Popups;
+using _9Contatos.API.PeopleAPP;
+using _9Contatos.API.Outlook;
+using _9Contatos.Contatos.Carrega;
+using _9Contatos.globais;
+
+
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
 namespace _9Contatos.Interface

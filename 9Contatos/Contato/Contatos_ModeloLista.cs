@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace _9Contatos.Codigo
+﻿namespace _9Contatos.Contatos.ModeloLista
 {
     /**
      *  Estrutura de dados que será utilizada pela listview dos contatos

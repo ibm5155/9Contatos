@@ -3,9 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
-using _9Contatos.Classe;
+using _9Contatos.Contatos.Carrega;
+using _9Contatos.Contatos.Contato;
 
-namespace _9Contatos.Codigo
+namespace _9Contatos.API.PeopleAPP
 {
     /// <summary>
     /// Objeto utilizado para interagir com o App Pessoas diretamente

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Windows.UI.Popups;
-using _9Contatos.Classe;
+﻿using System.Linq;
+using _9Contatos.Telefones.regiao;
+using _9Contatos.Telefones.telefone;
 
-namespace _9Contatos.Codigo
+namespace _9Contatos.Telefones.ParserNonoDigito
 {
     class ParserNonoDigito
     {

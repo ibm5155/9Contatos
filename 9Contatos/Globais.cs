@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using _9Contatos.Codigo;
+﻿using System.Collections.Generic;
+using _9Contatos.Contatos.Contato;
+using _9Contatos.Contatos.Carrega;
 
-
-
-namespace _9Contatos.Classe
+namespace _9Contatos.globais
 {
     class Globais
     {
-
         public static List<Contato> contatos = new List<Contato>();
         public static string MinhaRegiao = "";
         public static int OffsetCelular = -2;

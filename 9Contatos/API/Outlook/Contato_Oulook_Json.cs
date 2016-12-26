@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _9Contatos.JSON
+namespace _9Contatos.API.Outlook
 {
     /**
      * Estrutura de dados em Json, só que tem dados não reconhecidos, creio que sejam dinamicos...

@@ -3,14 +3,10 @@
 // Parser NÚMERO DE TELEFONE, POR: Lucas Zimerman Fraulob
 //
 
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using _9Contatos.Classe;
+using _9Contatos.Telefones.operadora;
 
-namespace _9Contatos.Codigo
+namespace _9Contatos.Telefones.telefone
 {
     enum ChamadaACobrar
     {

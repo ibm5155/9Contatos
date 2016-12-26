@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
-using _9Contatos.Classe;
-namespace _9Contatos.Codigo
+using _9Contatos.API.PeopleAPP;
+using _9Contatos.Telefones.telefone;
+using _9Contatos.globais;
+
+namespace _9Contatos.Contatos.Contato
 {
     enum TipoEmail{
         Outlook,Gmail

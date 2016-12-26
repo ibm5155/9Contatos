@@ -108,9 +108,9 @@
     <Compile Include="Contato\SalvaContatos.cs" />
     <Compile Include="Contato\Contato.cs" />
     <Compile Include="Contato\Contatos_ModeloLista.cs" />
-    <Compile Include="APIs\Outlook\OutlookAPI.cs" />
+    <Compile Include="API\Outlook\OutlookAPI.cs" />
     <Compile Include="Telefone\ParserNonoDigito.cs" />
-    <Compile Include="APIs\PeopleAPP\PeopleAPI.cs" />
+    <Compile Include="API\PeopleAPP\PeopleAPI.cs" />
     <Compile Include="Telefone\Telefone.cs" />
     <Compile Include="Interface\OptionBox_FormatacaoContato.xaml.cs">
       <DependentUpon>OptionBox_FormatacaoContato.xaml</DependentUpon>
@@ -145,7 +145,7 @@
     <Compile Include="Interface\Tela_Contatos.xaml.cs">
       <DependentUpon>Tela_Contatos.xaml</DependentUpon>
     </Compile>
-    <Compile Include="APIs\Outlook\Contato_Oulook_Json.cs" />
+    <Compile Include="API\Outlook\Contato_Oulook_Json.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

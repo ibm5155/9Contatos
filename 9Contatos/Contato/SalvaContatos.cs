@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using _9Contatos.Classe;
-using _9Contatos.Codigo;
+using _9Contatos.Contatos.Carrega;
+using _9Contatos.API.PeopleAPP;
+using _9Contatos.globais;
 using Windows.UI.Popups;
 using _9Contatos.Interface;
 
-namespace _9Contatos.Classe
+namespace _9Contatos.Contatos.Salvar
 {
     class SalvaContatos
     {

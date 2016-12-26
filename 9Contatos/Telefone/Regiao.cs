@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 
-namespace _9Contatos.Classe
+namespace _9Contatos.Telefones.regiao
 {
     class Regiao
     {

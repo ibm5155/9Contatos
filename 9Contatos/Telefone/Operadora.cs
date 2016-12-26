@@ -34,7 +34,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace _9Contatos.Telefone
+namespace _9Contatos.Telefones.operadora
 {
     class Operadora
     {
