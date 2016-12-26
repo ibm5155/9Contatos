@@ -1,0 +1,62 @@
+﻿<Page NavigationCacheMode="Disabled"
+    x:Class="_9Contatos.Interface.OpcoesAvancadas"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos.Interface"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" CacheMode="BitmapCache">
+    <Page.Transitions>
+        <TransitionCollection>
+            <NavigationThemeTransition>
+                <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    <ContinuumNavigationTransitionInfo/>
+                </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+            </NavigationThemeTransition>
+        </TransitionCollection>
+    </Page.Transitions>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="68*"/>
+            <RowDefinition Height="3*"/>
+            <RowDefinition Height="57*"/>
+        </Grid.RowDefinitions>
+        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" IsIndeterminate="True" Margin="20,10,0,0" VerticalAlignment="Top"/>
+        <TextBlock x:Name="Titulo" TextWrapping="Wrap" Text="Arruma Contatos"  FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+        <Button x:Name="Voltar" Content="Voltar" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,30,30" Click="Voltar_Click" Width="83" Grid.Row="2"/>
+        <ListView x:Name="listView" Margin="0,163,0,0" VerticalAlignment="Top" Tapped="listView_Tapped" Grid.RowSpan="3" BorderThickness="0" >
+            <ListViewItem x:Name="Arrumar_Com_Modificacao"  Background="#FF802424" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="Arrumar_Com_Modificacao_icone" Symbol="Permissions" Margin="0" />
+                    <TextBlock x:Name="Arrumar_Com_Modificacao_texto" TextWrapping="Wrap" Text="Arrumar Contatos sem criar novos contatos"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem Background="#FF383838" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="Arrumar_Sem_Nono_icone" Symbol="Phone" />
+                    <TextBlock x:Name="Arrumar_Sem_Nono_texto" TextWrapping="Wrap" Text="Arrumar Contatos sem adicionar o nono Digito."  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="Arrumar_Email" Background="#FF802424" Visibility="Collapsed">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="Arrumar_Email_icone" Symbol="Mail" />
+                    <TextBlock x:Name="Arrumar_Email_texto" TextWrapping="Wrap" Text="Arrumar os contatos do e-mail da Microsoft"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                </StackPanel>
+
+            </ListViewItem>
+            <ListViewItem x:Name="Limpar_Contatos" Background="#FF3C3C3C">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="Limpar_Contatos_icone" Symbol="Delete" />
+                    <TextBlock x:Name="Limpar_Contatos_texto" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0">
+                        <Run Text="Deletar Contatos "/>
+                        <Run Text="Criados pelo App"/>
+                        <Run Text="."/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+
+
+
+        </ListView>
+    </Grid>
+</Page>
