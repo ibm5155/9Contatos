@@ -39,5 +39,7 @@ namespace _9Contatos.globais
         public static bool Filtrar_Desconhecido = true;
         public static bool Filtrar_Internacional = true;
 
+        public static bool Contatos_Carregados = false;
+
     }
 }

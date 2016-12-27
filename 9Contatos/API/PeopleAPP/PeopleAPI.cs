@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using _9Contatos.Contatos.Carrega;
 using _9Contatos.Contatos.Contato;
+using _9Contatos.globais;
 
 namespace _9Contatos.API.PeopleAPP
 {
@@ -19,7 +20,7 @@ namespace _9Contatos.API.PeopleAPP
         ///  Função que altera um contato.
         /// </summary>
         /// <param name="Contato_a_Mudar"> O objeto contato que será alterado</param>
-        /// <param name="NomeCompletos">O nome completo do contato a ser alterado (validação)</param>
+        /// <param name="NomeCompleto">O nome completo do contato a ser alterado (validação)</param>
         /// <param name="TelefonesNovos">Os números de telefone novos a serem alterados</param>
         /// <param name="TelefonesAntigos">Os números antigos de telefones (validação)</param>
         /// <returns>
@@ -160,6 +161,7 @@ namespace _9Contatos.API.PeopleAPP
                     //                    Debug.WriteLine($"not aggregated, name: {contact.DisplayName }, ContactListId: {contact.ContactListId}");
                 }
             }
+            Globais.Contatos_Carregados = true;
             return true;
         }
 
