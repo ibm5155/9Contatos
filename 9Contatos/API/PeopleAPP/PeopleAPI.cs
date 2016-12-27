@@ -166,7 +166,7 @@ namespace _9Contatos.API.PeopleAPP
         public Contato CarregaContato(int Indice)
         {
             Contato NovoContato = new Contato();
-            if (Indice < this.Contatos.Count())
+            if (Indice < Contatos.Count())
             {
                 NovoContato.NomeCompleto = Contatos[Indice].FullName;
                 for (int i = 0, fim = Contatos[Indice].Phones.Count(); i < fim; i++)
@@ -237,7 +237,7 @@ namespace _9Contatos.API.PeopleAPP
 
         public int TotalContatos()
         {
-            return this.Contatos.Count();
+            return Contatos.Count();
         }
 
         public async void Limpa_Contatos_Temporarios()
@@ -247,8 +247,15 @@ namespace _9Contatos.API.PeopleAPP
             {
                 //Limpa contatos antigos
                 var listaListasApp = await allAccessStore.FindContactListsAsync();
-                var lista = listaListasApp.First();
-                await lista.DeleteAsync();
+                if (listaListasApp.Count() == 0)
+                {
+                    //não tem nada a ser deletado (parece bobera, mas o nosso amigo first ali em baixo tem tendencias de bugismo quando isso ocorre, então não vamos incomoda-lo
+                }
+                else
+                {
+                    var lista = listaListasApp.First();
+                    await lista.DeleteAsync();
+                }
                 //recria o link limpo
             }
         }

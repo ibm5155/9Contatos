@@ -22,12 +22,12 @@ namespace _9Contatos.Interface
     {
         public OpcoesAvancadas()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Voltar_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.GoBack();
+            Frame.GoBack();
         }
 
         /// <summary>
@@ -63,21 +63,21 @@ namespace _9Contatos.Interface
                         Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
                         if (Carregar == true)
                         {
-                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                            Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                         }
                         break;
                     case 1:
-                        Globais.api_usada = QualAPI.PeopleAPI_COM_Alteracao;
+/*                        Globais.api_usada = QualAPI.PeopleAPI_COM_Alteracao;
                         Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_SemNono);
                         if (Carregar == true)
                         {
-                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                            Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                         }
                         break;
-                    case 2:
+                        */
+                        case 2:
 #if MODO_TESTES || DEBUG
                         Globais.api_usada = QualAPI.OutlookAPI;
-                        ProgressBar.Visibility = Visibility.Visible;
                         try
                         {
                             if (await SignInCurrentUserAsync())
@@ -85,7 +85,7 @@ namespace _9Contatos.Interface
                                 Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
                                 if (Carregar == true)
                                 {
-                                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                    Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                                 }
                             }
                             else
@@ -96,9 +96,6 @@ namespace _9Contatos.Interface
                         {
                             //faz nada já que não fez login....
                         }
-
-                        ProgressBar.Visibility = Visibility.Collapsed;
-
 #else
                         var pergunta = new MessageDialog("Esta funcionalidade ainda está em desenvolvimento.");
                         pergunta.Title = "Funcionalidade em construção.";
@@ -121,41 +118,41 @@ namespace _9Contatos.Interface
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             /*
-                        this.ProgressBar.Name = "";
-                        this.ProgressBar = null;
-                        this.Titulo.Name = "";
-                        this.Titulo = null;
-                        this.Descricao.Name = "";
-                        this.Descricao = null;
-                        this.Voltar.Name = "";
-                        this.Voltar = null;
-                        this.Arrumar_Com_Modificacao.Name = "";
-                        this.Arrumar_Com_Modificacao = null;
-                        this.Arrumar_Com_Modificacao_icone.Name = "";
-                        this.Arrumar_Com_Modificacao_icone = null;
-                        this.Arrumar_Com_Modificacao_texto.Name = "";
-                        this.Arrumar_Com_Modificacao_texto = null;
-                        this.Arrumar_Sem_Nono.Name = "";
-                        this.Arrumar_Sem_Nono = null;
-                        this.Arrumar_Sem_Nono_icone.Name = "";
-                        this.Arrumar_Sem_Nono_icone = null;
-                        this.Arrumar_Sem_Nono_texto.Name = "";
-                        this.Arrumar_Sem_Nono_texto = null;
-                        this.Arrumar_Email.Name = "";
-                        this.Arrumar_Email = null;
-                        this.Arrumar_Email_icone.Name = "";
-                        this.Arrumar_Email_icone = null;
-                        this.Arrumar_Email_texto.Name = "";
-                        this.Arrumar_Email_texto = null;
-                        this.Limpar_Contatos.Name = "";
-                        this.Limpar_Contatos = null;
-                        this.Limpar_Contatos_icone.Name = "";
-                        this.Limpar_Contatos_icone = null;
-                        this.Limpar_Contatos_texto.Name = "";
-                        this.Limpar_Contatos_texto = null;
-                        this.listView.Name = "";
-                        this.listView.ItemsSource = null;
-                        this.listView = null;
+                        ProgressBar.Name = "";
+                        ProgressBar = null;
+                        Titulo.Name = "";
+                        Titulo = null;
+                        Descricao.Name = "";
+                        Descricao = null;
+                        Voltar.Name = "";
+                        Voltar = null;
+                        Arrumar_Com_Modificacao.Name = "";
+                        Arrumar_Com_Modificacao = null;
+                        Arrumar_Com_Modificacao_icone.Name = "";
+                        Arrumar_Com_Modificacao_icone = null;
+                        Arrumar_Com_Modificacao_texto.Name = "";
+                        Arrumar_Com_Modificacao_texto = null;
+                        Arrumar_Sem_Nono.Name = "";
+                        Arrumar_Sem_Nono = null;
+                        Arrumar_Sem_Nono_icone.Name = "";
+                        Arrumar_Sem_Nono_icone = null;
+                        Arrumar_Sem_Nono_texto.Name = "";
+                        Arrumar_Sem_Nono_texto = null;
+                        Arrumar_Email.Name = "";
+                        Arrumar_Email = null;
+                        Arrumar_Email_icone.Name = "";
+                        Arrumar_Email_icone = null;
+                        Arrumar_Email_texto.Name = "";
+                        Arrumar_Email_texto = null;
+                        Limpar_Contatos.Name = "";
+                        Limpar_Contatos = null;
+                        Limpar_Contatos_icone.Name = "";
+                        Limpar_Contatos_icone = null;
+                        Limpar_Contatos_texto.Name = "";
+                        Limpar_Contatos_texto = null;
+                        listView.Name = "";
+                        listView.ItemsSource = null;
+                        listView = null;
              */
             GC.Collect();
             GC.WaitForPendingFinalizers();

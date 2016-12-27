@@ -16,7 +16,7 @@
         </TransitionCollection>
     </Page.Transitions>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Background="#FF136993">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
@@ -31,21 +31,17 @@
     </Page.BottomAppBar>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="43*"/>
-            <ColumnDefinition Width="47*"/>
-        </Grid.ColumnDefinitions>
+        <Border BorderThickness="1" Margin="5,0" Padding="1,0" VerticalAlignment="Top" Height="47">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+        </Border>
 
         <TextBlock x:Name="Titulo" TextWrapping="Wrap" FontSize="22" Height="34" Margin="5,1,0,0" VerticalAlignment="Top" MinWidth="34" Grid.ColumnSpan="2" Canvas.ZIndex="2">
-            <Run Text="Arruma"/>
-            <Run Text=" "/>
-            <Run Text="Contatos"/>
-            <LineBreak/>
-            <Span>
-                <Run/>
-            </Span>
-            <LineBreak/>
-            <Run/>
+            <Run Text="Arruma Contatos"/>
         </TextBlock>
 
         <ListView x:Name="ListaContatosView" HorizontalContentAlignment="Stretch" ItemClick="ListaContatosView_ItemClick" Tapped="ListaContatosView_Tapped" Margin="15,46,15,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Background="#FF292727"  BorderThickness="0,2" >

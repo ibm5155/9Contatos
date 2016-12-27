@@ -16,7 +16,7 @@
         </TransitionCollection>
     </Page.Transitions>
     <Page.BottomAppBar>
-        <CommandBar>
+        <CommandBar Background="#FF136993">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
@@ -26,24 +26,36 @@
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <TextBlock HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="SOBRE" VerticalAlignment="Top" FontSize="28"/>
-        <StackPanel Height="457" Margin="15,100,10,0" VerticalAlignment="Top">
-            <TextBlock Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="0" Canvas.ZIndex="1">
-                <Run Text="Arruma Contatos - v1.0 "/>
-                <LineBreak/>
-                <Run/>
-                <LineBreak/>
-                <Run Text="Criado por LZFStudio."/>
-                <LineBreak/>
-                <Run Text=""/>
-                <LineBreak/>
-                <Run Text="Agradeço a ajuda do Jaedson por achar um meio"/>
-                <Run Text=" "/>
-                <Run Text="de conseguir atualizar os contatos"/>
-                <Run Text=" no app pessoas"/>
-                <Run Text="."/>
-            </TextBlock>
-            <Rectangle Fill="#FFF4F4F5" Margin="0" Stroke="Black" VerticalAlignment="Top" Height="7" Canvas.ZIndex="2" StrokeThickness="2"/>
-            <TextBlock Margin="0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.887,-4.3">
+        <Border BorderThickness="1" Margin="5,0" Padding="1,0" VerticalAlignment="Top" Height="47">
+            <Border.BorderBrush>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="Black" Offset="0"/>
+                    <GradientStop Color="White" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+        </Border>
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Height="457" Margin="15,100,10,0" Grid.Row="1">
+
+            <StackPanel>
+                <TextBlock Margin="0,0,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="0" Canvas.ZIndex="1">
+                    <Run Text="Arruma Contatos - v1."/>
+                    <Run Text="1.7"/>
+                    <Run Text=" "/>
+                    <LineBreak/>
+                    <Run/>
+                    <LineBreak/>
+                    <Run Text="Criado por LZFStudio."/>
+                    <LineBreak/>
+                    <Run Text=""/>
+                    <LineBreak/>
+                    <Run Text="Agradeço a ajuda do Jaedson por achar um meio"/>
+                    <Run Text=" "/>
+                    <Run Text="de conseguir atualizar os contatos"/>
+                    <Run Text=" no app pessoas"/>
+                    <Run Text="."/>
+                </TextBlock>
+                <Rectangle Fill="#FFF4F4F5" Margin="0,10,0,0" Stroke="Black" VerticalAlignment="Top" Height="7" Canvas.ZIndex="2" StrokeThickness="2"/>
+                <TextBlock Margin="0,10,20,0" TextWrapping="Wrap" VerticalAlignment="Top" RenderTransformOrigin="-0.887,-4.3">
                 <Run Text="O aplicativo ainda não obteve autorização de editar os contatos sem criar novos contatos"/>
                 <Run Text=", por isso quando você for salvar os seus contatos você verá na agenda que seu contato está "/>
                 <Run Text="vinculado "/>
@@ -57,8 +69,14 @@
                 <Run Text=","/>
                 <Run Text=" "/>
                 <Run Text="comente sobre o que você queria no review do app na loja."/>
-            </TextBlock>
-        </StackPanel>
+                </TextBlock>
+                <Rectangle Fill="#FFF4F4F5" Margin="0,10,0,0" Stroke="Black" VerticalAlignment="Top" Height="7" Canvas.ZIndex="2" StrokeThickness="2"/>
+                <TextBlock TextWrapping="Wrap" Text="Como Ajudar" FontSize="25" Margin="0,0,20,0"/>
+                <TextBlock TextWrapping="Wrap" Text="Você pode ajudar Avaliando o aplicativo na loja ou votando a favor no hud do feedback para liberarem o nosso aplicativo a realmente editar os seus números e não somente poder criar novos contatos e vincular eles aos contatos existentes." Margin="0,4,20,0"/>
+                <Button  x:Name="Votar_Loja" Content="Fazer uma avaliação na loja" Margin="0,20,0,0" Tapped="Votar_Loja_Tapped"/>
+                <Button  x:Name="Votar_Feedback" Content="Votar a favor no Hud de Feedback"  Margin="0,20" Tapped="Votar_Feedback_Tapped"/>
 
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

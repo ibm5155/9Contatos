@@ -10,7 +10,9 @@ namespace _9Contatos.Telefones.telefone
 {
     enum ChamadaACobrar
     {
-        CobrarLocal,CobrarInterurbano,NaoCobrar
+        CobrarLocal,
+        CobrarInterurbano,
+        NaoCobrar
     }
     public class Telefone
     {
@@ -34,8 +36,8 @@ namespace _9Contatos.Telefones.telefone
         {
             string Numero_Formatado = "";
             string Espaco = "";
-            string TRegiao = this.Regiao;
-            if(EspacoEntreDados == true || (ManterFormatacao == true && this.Formatacao_EspacoEntreNumero == true))
+            string TRegiao = Regiao;
+            if(EspacoEntreDados == true || (ManterFormatacao == true && Formatacao_EspacoEntreNumero == true))
             {
                 Espaco = " ";
             }            
@@ -49,12 +51,12 @@ namespace _9Contatos.Telefones.telefone
             }
             else if(Numero_Nao_Geografico != "") // 0800
             {
-                Numero_Formatado = this.Numero_Nao_Geografico + Espaco + this.Numero;
-                if(TracoNumero == true || (ManterFormatacao == true && this.Formatacao_TracoNumero == true))
+                Numero_Formatado = Numero_Nao_Geografico + Espaco + Numero;
+                if(TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
                 {
                     Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 3, "-");
                 }
-                if((AspasEntreRegiao == true || (ManterFormatacao == true && this.Formatacao_AspasEntreRegiao == true)) && TRegiao.Count() > 0)
+                if((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true)) && TRegiao.Count() > 0)
                 {
                     Numero_Formatado = Numero_Formatado.Insert(4, ")");
                     Numero_Formatado = "(" + Numero_Formatado;
@@ -78,18 +80,18 @@ namespace _9Contatos.Telefones.telefone
                     }
                 }
 
-                if (this.Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarLocal)
+                if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarLocal)
                 {
                     Numero_Formatado += "9090" + Espaco;
                 }
-                else if (this.Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarInterurbano)
+                else if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarInterurbano)
                 {
                     Numero_Formatado += "90" + Espaco;
                 }
 
-                if(this.CSP != "") //se tem o CSP ele quem terá o digito de longa distancia e não no DDD
+                if(CSP != "") //se tem o CSP ele quem terá o digito de longa distancia e não no DDD
                 {
-                    if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && this.Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
+                    if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
                     {
                         Numero_Formatado +=  CSP + Espaco;
                     }
@@ -98,17 +100,16 @@ namespace _9Contatos.Telefones.telefone
                         Numero_Formatado += CSP + Espaco;
                     }
                 }
-                else if((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && this.Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
+                else if((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
                 {
                     TRegiao =Regiao;
                 }
-                if (OcultaDDD_Nacional == false || (this.Regiao != DDD_Nacional))
+                if (OcultaDDD_Nacional == false || (Regiao != DDD_Nacional))
                 {
                     // só adiciona o ddd se for permitido adicionar o DDD nacional e caso contário, se o DDD for diferente do DDD nacional
-                    if ((AspasEntreRegiao == true || (ManterFormatacao == true && this.Formatacao_AspasEntreRegiao == true /* &&  TRegiao.Count() > 0*/)))
+                    if ((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true /* &&  TRegiao.Count() > 0*/)))
                     {
-#warning Testar se a remoção do TRegião.Count > 0 pode afetar outros locais
-                        if(ManterFormatacao == true && TRegiao.Count() == 0);
+                        if(ManterFormatacao == true && TRegiao.Count() == 0) { }
                         else if ((OcultaDDD_Nacional == false && TRegiao.Count() == 0))
                         {
                             //Caso o usuário deseje manter a formatação original e o prefixo de longa distancia que estava no número existir
@@ -136,7 +137,7 @@ namespace _9Contatos.Telefones.telefone
                 }
 
                 Numero_Formatado += Numero;
-                if (TracoNumero == true || (ManterFormatacao == true && this.Formatacao_TracoNumero == true))
+                if (TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
                 {
                     Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 4, "-");
                 }
@@ -219,18 +220,18 @@ namespace _9Contatos.Telefones.telefone
 
                 if (Cnt_Traco > 1 || Cnt_Aspas > 2)
                 {
-                    this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                    Numero_Nao_Reconhecido = numero_original_nao_formatado;
                 }
                 else if(EhInternacional(ref numero) == true)
                 {
-                    this.Numero_Internacional = numero_original_nao_formatado;
+                    Numero_Internacional = numero_original_nao_formatado;
                 }
                 else
                 {
                     //primerio caso 12341234 -> 1234-1234
                     if (SizeofCelular == 8)
                     {
-                        this.Numero = numero;
+                        Numero = numero;
                     }
                     //segundo caso 912341234 -> 91234-1234
                     else if (SizeofCelular == 9)
@@ -239,24 +240,24 @@ namespace _9Contatos.Telefones.telefone
                         {
                             if (numero[1] >= '6' && numero[1] <= '9')
                             { //é um celular
-                                this.Numero = numero;
+                                Numero = numero;
                             }
                             else
                             { //ai temos um numero alienigena
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
                             }
                         }
                         else
                         {
-                            this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                            Numero_Nao_Reconhecido = numero_original_nao_formatado;
                         }
                     }
                     //terceiro caso 4112341234 -> 41 1234-1234
                     else if (SizeofCelular == 10)
                     {
                         {
-                            this.Regiao = numero.Remove(2);
-                            this.Numero = numero.Remove(0, 2);
+                            Regiao = numero.Remove(2);
+                            Numero = numero.Remove(0, 2);
                         }
                     }
                     //quarto caso 04112341234 -> +55 41 12341234
@@ -274,40 +275,40 @@ namespace _9Contatos.Telefones.telefone
                                  * A discagem de um código não geográfico deve ser precedida do prefixo nacional como apresentado a seguir
                                  *  0 + 3 digitos para o código + 7 digitos para o telefone
                                  */
-                                this.Numero_Nao_Geografico = numero.Remove(4);
-                                this.Numero = numero.Remove(0, 4);
+                                Numero_Nao_Geografico = numero.Remove(4);
+                                Numero = numero.Remove(0, 4);
                             }
                             else
                             {
                                 //04112341234 -> +55 41 12341234
-                                this.Pais = "+55";
-                                this.Regiao = numero.Remove(3);
-                                this.Regiao = this.Regiao.Remove(0, 1);
-                                this.Numero = numero.Remove(0, 3);
-                                this.Formatacao_PrefixoLongaDistanciaNacional = true;
+                                Pais = "+55";
+                                Regiao = numero.Remove(3);
+                                Regiao = Regiao.Remove(0, 1);
+                                Numero = numero.Remove(0, 3);
+                                Formatacao_PrefixoLongaDistanciaNacional = true;
                             }
                         }
                         else if(numero[0] == '+')
                         {
                             //+5512341234
-                            this.Pais = numero.Remove(3);
-                            this.Numero = numero.Remove(0, 3);
+                            Pais = numero.Remove(3);
+                            Numero = numero.Remove(0, 3);
                         }
                         else
                         {
                             if (numero[3] >= '6' && numero[3] <= '9' && numero[2] == '9') // 41912341234
                             {
-                                this.Regiao = numero.Remove(2);
-                                this.Numero = numero.Remove(0, 2);
+                                Regiao = numero.Remove(2);
+                                Numero = numero.Remove(0, 2);
                             }
-                            else if (this.Formatacao_TracoNumero == true) // 117777-7777
+                            else if (Formatacao_TracoNumero == true) // 117777-7777
                             {
-                                this.Regiao = numero.Remove(2);
-                                this.Numero = numero.Remove(0, 2);
+                                Regiao = numero.Remove(2);
+                                Numero = numero.Remove(0, 2);
                             }
                             else
                             {
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
 
                             }
                         }
@@ -323,34 +324,34 @@ namespace _9Contatos.Telefones.telefone
                         {
                             if (numero[4] >= '6' && numero[4] <= '9' && numero[3] == '9')
                             {
-                                this.Pais = "+55";
-                                this.Regiao = numero.Remove(3);
-                                this.Regiao = this.Regiao.Remove(0, 1);
-                                this.Numero = numero.Remove(0, 3);
-                                this.Formatacao_PrefixoLongaDistanciaNacional = true;
+                                Pais = "+55";
+                                Regiao = numero.Remove(3);
+                                Regiao = Regiao.Remove(0, 1);
+                                Numero = numero.Remove(0, 3);
+                                Formatacao_PrefixoLongaDistanciaNacional = true;
                             }
                             else
                             {
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
                             }
                         }
                         else
                         {
-                            this.CSP = numero.Remove(2);
-                            if (Operadora.ValidaPrestadora(this.CSP) != 0)
+                            CSP = numero.Remove(2);
+                            if (Operadora.ValidaPrestadora(CSP) != 0)
                             {
                                 // 144122221111 -> 14 41 2222-1111
-                                this.Regiao = numero.Remove(4);
-                                this.Regiao = this.Regiao.Remove(0,2);
-                                this.Numero = numero.Remove(0, 4);
+                                Regiao = numero.Remove(4);
+                                Regiao = Regiao.Remove(0,2);
+                                Numero = numero.Remove(0, 4);
                             }
                             else if (ENoventaNoventa(ref numero) == ChamadaACobrar.CobrarLocal)
                             {
                                 // 909012341234
-                                this.CSP = "";
-                                this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
-                                this.Numero = numero.Remove(0, 4); //  tira o 9090
-                                this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
+                                CSP = "";
+                                Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
+                                Numero = numero.Remove(0, 4); //  tira o 9090
+                                Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
                             }
                             else if(ENoventaNoventa(ref numero) == ChamadaACobrar.CobrarInterurbano)
                             {
@@ -361,16 +362,16 @@ namespace _9Contatos.Telefones.telefone
                                 //90 41 12341234
                                 //caso contrario
 #warning falta tratar os casos comentados acima
-                                this.CSP = "";
-                                this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
-                                this.Regiao = numero.Remove(0, 2);
-                                this.Regiao = this.Regiao.Remove(2);
-                                this.Numero = numero.Remove(0, 4); //  tira o 90 e a região
+                                CSP = "";
+                                Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
+                                Regiao = numero.Remove(0, 2);
+                                Regiao = Regiao.Remove(2);
+                                Numero = numero.Remove(0, 4); //  tira o 90 e a região
                             }                            
                             else
                             {
-                                this.CSP = "";
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                CSP = "";
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
                             }
                         }
                     }
@@ -383,10 +384,10 @@ namespace _9Contatos.Telefones.telefone
                     {
                         if (numero[0] == '+')
                         {
-                            this.Pais = numero.Remove(3);
-                            this.Regiao = numero.Remove(0, 3);
-                            this.Regiao = this.Regiao.Remove(2);
-                            this.Numero = numero.Remove(0, 5);
+                            Pais = numero.Remove(3);
+                            Regiao = numero.Remove(0, 3);
+                            Regiao = Regiao.Remove(2);
+                            Numero = numero.Remove(0, 5);
                         }
                         else
                         {
@@ -395,38 +396,38 @@ namespace _9Contatos.Telefones.telefone
                                 if(numero[5] >= '6' && numero[5] <= '9' && numero[4] == '9')
                                 {
                                     //9090 912341234
-                                    this.Numero = numero.Remove(0, 4);
-                                    this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
+                                    Numero = numero.Remove(0, 4);
+                                    Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
 
                                 }
                                 else // tem o 9090 mas o proximo digito não é o nono digito, então não sabemos o que é, ou tem o nono digito entretanto é um numero fixo.
                                 {
-                                    this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                    Numero_Nao_Reconhecido = numero_original_nao_formatado;
                                 }
                             }
                             else if(numero[0] == '0')
                             {// achamos um zero, então pode conter um CSP nos próximos dois digitos.
-                                this.CSP = numero.Remove(3);
-                                this.CSP = this.CSP.Remove(0, 1);
-                                if(Operadora.ValidaPrestadora(this.CSP) != 0)
+                                CSP = numero.Remove(3);
+                                CSP = CSP.Remove(0, 1);
+                                if(Operadora.ValidaPrestadora(CSP) != 0)
                                 {
                                     // 0144112341234 -> +55 14 41 1234-1234
-                                    this.Pais = "+55";
-                                    this.Regiao = numero.Remove(0, 3);
-                                    this.Regiao = this.Regiao.Remove(2);
-                                    this.Numero = numero.Remove(0, 5);
-                                    this.Formatacao_PrefixoLongaDistanciaNacional = true;
+                                    Pais = "+55";
+                                    Regiao = numero.Remove(0, 3);
+                                    Regiao = Regiao.Remove(2);
+                                    Numero = numero.Remove(0, 5);
+                                    Formatacao_PrefixoLongaDistanciaNacional = true;
                                 }
                                 else
                                 {
-                                    this.CSP = "";
-                                    this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                    CSP = "";
+                                    Numero_Nao_Reconhecido = numero_original_nao_formatado;
 
                                 }
                             }
                             else
                             {
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
                             }
                         }
                     }
@@ -441,92 +442,92 @@ namespace _9Contatos.Telefones.telefone
                         {
                             if (numero[3] == '0') //+5504112341234
                             {
-                                this.Pais = numero.Remove(3);
-                                this.Regiao = numero.Remove(0, 4);
-                                this.Regiao = this.Regiao.Remove(2);
-                                this.Numero = numero.Remove(0, 6);
-                                this.Formatacao_PrefixoLongaDistanciaNacional = true;
+                                Pais = numero.Remove(3);
+                                Regiao = numero.Remove(0, 4);
+                                Regiao = Regiao.Remove(2);
+                                Numero = numero.Remove(0, 6);
+                                Formatacao_PrefixoLongaDistanciaNacional = true;
                             }
                             else //+5541912341234
                             {
                                 if (numero[6] >= '6' && numero[6] <= '9' && numero[5] == '9')
                                 {
-                                    this.Pais = numero.Remove(3);
-                                    this.Regiao = numero.Remove(0, 3);
-                                    this.Regiao = this.Regiao.Remove(2);
-                                    this.Numero = numero.Remove(0, 5);
+                                    Pais = numero.Remove(3);
+                                    Regiao = numero.Remove(0, 3);
+                                    Regiao = Regiao.Remove(2);
+                                    Numero = numero.Remove(0, 5);
                                 }
                                 else
                                 {
-                                    this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                    Numero_Nao_Reconhecido = numero_original_nao_formatado;
                                 }
                             }
                         }
                         else if(ENoventaNoventa(ref numero) == ChamadaACobrar.CobrarInterurbano)
                         {
                             //nesse caso precisamos checar o csp
-                            this.CSP = numero.Remove(0, 2);
-                            this.CSP = this.CSP.Remove(2);
+                            CSP = numero.Remove(0, 2);
+                            CSP = CSP.Remove(2);
                             if(Operadora.ValidaPrestadora(CSP) !=0) 
                             {
                                 // 90144112341234
-                                this.Regiao = numero.Remove(0, 4);
-                                this.Regiao = this.Regiao.Remove(2);
-                                this.Numero = numero.Remove(0, 6);
-                                this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
+                                Regiao = numero.Remove(0, 4);
+                                Regiao = Regiao.Remove(2);
+                                Numero = numero.Remove(0, 6);
+                                Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
 
                             }
                             else
                             {
                                 //não é uma csp
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
-                                this.CSP = "";
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                CSP = "";
                             }
 
                         }
                         else if (ENoventaNoventa(ref numero) == ChamadaACobrar.CobrarLocal)
                         {
                                 // 90904112341234 -> +51 9090 41 12341234
-                                this.Pais = "+55";
-                                this.Regiao = numero.Remove(0, 4);
-                                this.Regiao = this.Regiao.Remove(2);
-                                this.Numero = numero.Remove(0, 6);
-                                this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
+                                Pais = "+55";
+                                Regiao = numero.Remove(0, 4);
+                                Regiao = Regiao.Remove(2);
+                                Numero = numero.Remove(0, 6);
+                                Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarLocal;
                         }
                         else if(numero[0] == '0') //01441912341234
                         {
                             // achamos um zero, então pode conter um CSP nos próximos dois digitos.
-                            this.CSP = numero.Remove(3);
-                            this.CSP = this.CSP.Remove(0, 1);
-                            if (Operadora.ValidaPrestadora(this.CSP) != 0)
+                            CSP = numero.Remove(3);
+                            CSP = CSP.Remove(0, 1);
+                            if (Operadora.ValidaPrestadora(CSP) != 0)
                             {
                                 if (numero[6] >= '6' && numero[6] <= '9' && numero[5] == '9')
                                 {
                                     //confirmando que tem o nono digito e é um celular
                                     // 01441912341234 -> +55 14 41 91234-1234
-                                    this.Pais = "+55";
-                                    this.Regiao = numero.Remove(0, 3);
-                                    this.Regiao = this.Regiao.Remove(2);
-                                    this.Numero = numero.Remove(0, 5);
-                                    this.Formatacao_PrefixoLongaDistanciaNacional = true;
+                                    Pais = "+55";
+                                    Regiao = numero.Remove(0, 3);
+                                    Regiao = Regiao.Remove(2);
+                                    Numero = numero.Remove(0, 5);
+                                    Formatacao_PrefixoLongaDistanciaNacional = true;
                                 }
                                 else
                                 {
-                                    this.CSP = "";
-                                    this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                    CSP = "";
+                                    Numero_Nao_Reconhecido = numero_original_nao_formatado;
 
                                 }
                             }
                             else
                             {
-                                this.CSP = "";
-                                this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                CSP = "";
+                                Numero_Nao_Reconhecido = numero_original_nao_formatado;
 
                             }
                         }
                         else 
                         {
-                            this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                            Numero_Nao_Reconhecido = numero_original_nao_formatado;
                         }
                     }
                     // oitavo caso: 900144112341234 -> 90 014 41 12341234 (014 = csp)
@@ -538,24 +539,24 @@ namespace _9Contatos.Telefones.telefone
                                             {
                                                 if(numero[2] == '0')
                                                 {
-                                                    this.CSP = numero.Remove(0, 2);
-                                                    this.CSP = this.CSP.Remove(2);
-                                                    if(Operadora.ValidaPrestadora(this.CSP) != 0)
+                                                    CSP = numero.Remove(0, 2);
+                                                    CSP = CSP.Remove(2);
+                                                    if(Operadora.ValidaPrestadora(CSP) != 0)
                                                     {
-                                                        this.Regiao = numero.Remove(0, 5);
-                                                        this.Regiao = this.Regiao.Remove(2);
-                                                        this.Numero = numero.Remove(0, 7);
-                                                        this.Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
+                                                        Regiao = numero.Remove(0, 5);
+                                                        Regiao = Regiao.Remove(2);
+                                                        Numero = numero.Remove(0, 7);
+                                                        Contem_Numero_A_Cobrar = ChamadaACobrar.CobrarInterurbano;
                                                     }
                                                     else
                                                     {
-                                                        this.CSP = "";
-                                                        this.Numero_Nao_Reconhecido = numero;
+                                                        CSP = "";
+                                                        Numero_Nao_Reconhecido = numero;
                                                     }
                                                 }
                                                 else
                                                 {
-                                                    this.Numero_Nao_Reconhecido = numero;
+                                                    Numero_Nao_Reconhecido = numero;
                                                 }
 
                                             }
@@ -563,7 +564,7 @@ namespace _9Contatos.Telefones.telefone
                      */
                     else
                     {
-                        this.Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                        Numero_Nao_Reconhecido = numero_original_nao_formatado;
                     }
 
                 }
@@ -580,7 +581,7 @@ namespace _9Contatos.Telefones.telefone
         {
             if (Numero.Count() == 8 || Numero.Count() == 9)
             {
-                this.Numero = Numero;
+                Numero = Numero;
             }
         }
         */
@@ -588,11 +589,11 @@ namespace _9Contatos.Telefones.telefone
         public bool SetCSP(string CSP)
         {
             bool Saida = false;
-            if (this.Numero_Nao_Reconhecido.Count() != 0)
+            if (Numero_Nao_Reconhecido.Count() != 0)
             {
                 if(Operadora.ValidaPrestadora(CSP) != 0)
                 {
-                    this.CSP = CSP;
+                    CSP = CSP;
                     Saida = true;
                 }
             }

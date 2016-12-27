@@ -33,7 +33,7 @@ namespace _9Contatos.Interface
 
         public TelaContatos()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Indice_Filtro = new int[Globais.contatos.Count];
             AtualizaLista();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -82,7 +82,7 @@ namespace _9Contatos.Interface
                 if (Globais.contatos[indice].Telefones_Antigos.Count > 1)
                 {
                     Globais.Indice_Contato_Completo = indice;
-                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos_Completo));
+                    Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos_Completo));
                 }
                 else
                 {
@@ -298,8 +298,7 @@ namespace _9Contatos.Interface
         private async void Bt_Salvar_Click(object sender, RoutedEventArgs e)
         {
             if (await SalvaContatos.Salvar() == true)
-                this.Frame.GoBack();
-            e = null;
+                Frame.GoBack();
         }
 
         private void Bt_Cancelar_Click(object sender, RoutedEventArgs e)
@@ -310,7 +309,7 @@ namespace _9Contatos.Interface
             ListaContatosView = null;
 
             Globais.contatos.Clear();
-            this.Frame.GoBack();
+            Frame.GoBack();
             e = null;
         }
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.System;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -25,7 +26,7 @@ namespace _9Contatos.Interface
     {
         public Sobre()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
             SystemNavigationManager.GetForCurrentView().BackRequested += (s, e) =>
             {
@@ -35,7 +36,17 @@ namespace _9Contatos.Interface
 
         private void voltar_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.GoBack();
+            Frame.GoBack();
+        }
+
+        private async void Votar_Loja_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:REVIEW?PFN={0}", Windows.ApplicationModel.Package.Current.Id.FamilyName)));
+        }
+
+        private async void Votar_Feedback_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("feedback-hub:?contextid=30&feedbackid=97d42871-98cb-42cb-9c0e-a0e6b5fe1b48&form=2&src=1"));
         }
     }
 }

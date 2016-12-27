@@ -23,8 +23,8 @@ namespace _9Contatos.Interface
 
         public TelaContatos_Completo()
         {
-            this.QualContato = Globais.Indice_Contato_Completo;
-            this.InitializeComponent();
+            QualContato = Globais.Indice_Contato_Completo;
+            InitializeComponent();
             AtualizaLista();
             Nome.Text = Globais.contatos[QualContato].NomeCompleto;
 
@@ -129,8 +129,8 @@ namespace _9Contatos.Interface
         private void bt_Voltar_Click(object sender, RoutedEventArgs e)
         {
             ListaContatosView.ItemsSource = null;
-            this.Frame.GoBack();
-//            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+            Frame.GoBack();
+//            Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
         }
 
         private async void Bt_Ajuda_Click(object sender, RoutedEventArgs e)

@@ -23,14 +23,14 @@ namespace _9Contatos.Interface
         public string Result = "X";
         public Janela_EditaContato()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         public Janela_EditaContato(string Nome, string Celular)
         {
-            this.Nome = Nome;
-            this.Celular = Celular;
-            this.InitializeComponent();
+            Nome = Nome;
+            Celular = Celular;
+            InitializeComponent();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -38,7 +38,7 @@ namespace _9Contatos.Interface
             // Cancelar
             Result = NumeroEditado.Text;
             NumeroEditado.Text = "X";
-            this.Hide();
+            Hide();
 
 
         }
@@ -46,13 +46,13 @@ namespace _9Contatos.Interface
         private void ContentDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
             // Editar
-            this.Hide();
+            Hide();
         }
 
         private void ContentDialog_Loaded(object sender, RoutedEventArgs e)
         {
-            NomeEditado.Text = this.Nome;
-            NumeroEditado.Text = this.Celular;
+            NomeEditado.Text = Nome;
+            NumeroEditado.Text = Celular;
         }
     }
 }

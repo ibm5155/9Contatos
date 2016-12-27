@@ -12,7 +12,7 @@ namespace _9Contatos.Interface
     {
         public PegaRegiao()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
@@ -30,7 +30,7 @@ namespace _9Contatos.Interface
             {
                 int MeuDDD_Inteiro = Int32.Parse(Entrada.Text);
                 Globais.MinhaRegiao = MeuDDD_Inteiro.ToString(); //assim garantimos que não tem um 0XX onde o XX é o DDD do usuário (só server por enquanto para mostrar como vai ficar a formatação de um DDD local)
-                this.Hide();
+                Hide();
             }
 
             else

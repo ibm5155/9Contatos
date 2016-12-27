@@ -21,7 +21,7 @@ namespace _9Contatos.Interface
     {
         public Janela_Carregando()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

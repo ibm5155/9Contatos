@@ -21,7 +21,7 @@ namespace _9Contatos.Interface
     {
         public Popup_Explicacao_Contatos()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

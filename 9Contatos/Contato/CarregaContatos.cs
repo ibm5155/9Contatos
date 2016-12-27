@@ -13,7 +13,10 @@ namespace _9Contatos.Contatos.Carrega
 {
     enum QualAPI
     {
-        PeopleAPI,PeopleAPI_COM_Alteracao,PeopleAPI_SemNono, OutlookAPI, GmailAPI
+        PeopleAPI,
+        PeopleAPI_COM_Alteracao,
+        OutlookAPI,
+        GmailAPI
     }
 
     class CarregaContatos
@@ -74,21 +77,7 @@ namespace _9Contatos.Contatos.Carrega
                         {
                             TelefoneBuffer = new Telefone();
                             TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
-                            if (api != QualAPI.PeopleAPI_SemNono)
-                            {
-                                Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
-                            }
-                            else
-                            {
-                                if (TelefoneBuffer.Numero_Nao_Reconhecido != "")
-                                {
-                                    Saida = -1;
-                                }
-                                else
-                                {
-                                    Saida = 0;
-                                }
-                            }
+                            Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
                             Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
                             if (Saida == -2)
                             {
@@ -139,7 +128,6 @@ namespace _9Contatos.Contatos.Carrega
             {
                 case QualAPI.PeopleAPI:
                 case QualAPI.PeopleAPI_COM_Alteracao:
-                case QualAPI.PeopleAPI_SemNono:
                     PodeCarregarOutraPagina = await Carrega_PeopleAPI(api);
                     break;
                 case QualAPI.OutlookAPI:

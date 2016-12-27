@@ -9,7 +9,7 @@ namespace _9Contatos.Interface
     {
         public Popup_Filtra_Contato()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             checkBox_Nono.IsChecked = Globais.Filtrar_Nono_Digito;
             checkBox_Internacional.IsChecked = Globais.Filtrar_Internacional;
             checkBox_Desconhecido.IsChecked = Globais.Filtrar_Desconhecido;

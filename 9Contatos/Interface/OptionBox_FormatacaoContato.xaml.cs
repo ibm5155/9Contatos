@@ -22,7 +22,7 @@ namespace _9Contatos.Interface
 
         public FormatacaoContato()
         {
-            this.InitializeComponent();
+            InitializeComponent();
             Gera_Exemplos();
             Atualiza_Exemplo();
             checkBox_Parentes.IsChecked = Globais.Formatacao_Aspas; // oops é aspas.

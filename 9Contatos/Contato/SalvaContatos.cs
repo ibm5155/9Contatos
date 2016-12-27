@@ -77,12 +77,11 @@ namespace _9Contatos.Contatos.Salvar
             bool Saida = false;
 
             Carregando = new Janela_Carregando();
-            Carregando.ShowAsync(); // é pra rodar em paralelo com a opção salvar abaixo
+            Carregando.ShowAsync(); //Roda em paralelo ao código
 
             switch (Globais.api_usada)
             {
                 case QualAPI.PeopleAPI:
-                case QualAPI.PeopleAPI_SemNono:
                     Saida = await Salvar_PeopleAPI_Com_LINK();
                     break;
                 case QualAPI.PeopleAPI_COM_Alteracao:
