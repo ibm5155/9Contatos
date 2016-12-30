@@ -45,7 +45,7 @@ namespace _9Contatos.Contatos.Carrega
                 }
                 else
                 {
-                    PeopleData.Limpa_Contatos_Temporarios();
+//                    PeopleData.Limpa_Contatos_Temporarios();
                     PeopleData.LoadBuffer(api);
                 }
             }

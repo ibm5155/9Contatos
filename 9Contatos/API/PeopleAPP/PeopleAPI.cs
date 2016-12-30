@@ -15,6 +15,7 @@ namespace _9Contatos.API.PeopleAPP
     class PeopleAPI
     {
         private List<Windows.ApplicationModel.Contacts.Contact> Contatos = new List<Windows.ApplicationModel.Contacts.Contact>();
+        private ContactStore contactStore;
 
         /// <summary>
         ///  Função que altera um contato.
@@ -32,7 +33,7 @@ namespace _9Contatos.API.PeopleAPP
         public async Task<int> AlterarContato(Windows.ApplicationModel.Contacts.Contact Contato_a_Mudar, string NomeCompleto, List<string> TelefonesNovos, List<string> TelefonesAntigos)
         {
             int Valido = 0;
-            var contactStore = await Windows.ApplicationModel.Contacts.ContactManager.RequestStoreAsync(Windows.ApplicationModel.Contacts.ContactStoreAccessType.AllContactsReadWrite);
+            contactStore = await Windows.ApplicationModel.Contacts.ContactManager.RequestStoreAsync(Windows.ApplicationModel.Contacts.ContactStoreAccessType.AllContactsReadWrite);
 
             var contactList = await contactStore.GetContactListAsync(Contato_a_Mudar.ContactListId);
 
@@ -83,7 +84,7 @@ namespace _9Contatos.API.PeopleAPP
         {
             Contact contato_temp;
             int Valido = 0;
-            var contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
+            contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
             var listaListasApp = await contactStore.FindContactListsAsync();
             ContactList contactList;
             contactList = listaListasApp.First();
@@ -104,12 +105,12 @@ namespace _9Contatos.API.PeopleAPP
         /// <returns></returns>
         public async Task<bool> LoadBuffer(QualAPI api)
         {
-            ContactStore allAccessStore;
+            //ContactStore allAccessStore;
             if (api == QualAPI.PeopleAPI_COM_Alteracao)
             {
                 try
                 {
-                    allAccessStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
+                    contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AllContactsReadWrite);
                 }
                 catch(System.UnauthorizedAccessException)
                 {
@@ -118,23 +119,19 @@ namespace _9Contatos.API.PeopleAPP
             }
             else
             {
-                allAccessStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
-                if ((await allAccessStore.FindContactListsAsync()).Count == 0)
+                contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
+                if ((await contactStore.FindContactListsAsync()).Count == 0)
                 {
-                    await allAccessStore.CreateContactListAsync("Arruma Contatos");
+                    await contactStore.CreateContactListAsync("Arruma Contatos");
                 }
                 else
                 {
-                    Limpa_Contatos_Temporarios();
-                    ContactStore allAccessStore2;
-                    //recria o link limpo
-                    allAccessStore2 = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
-                    await allAccessStore2.CreateContactListAsync("Arruma Contatos");
-                    allAccessStore = allAccessStore2;
+                    await Limpa_Contatos_Temporarios();
+                    await contactStore.CreateContactListAsync("Arruma Contatos");
                 }
             }
             Contatos.Clear();
-            var contacts = await allAccessStore.FindContactsAsync();
+            var contacts = await contactStore.FindContactsAsync();
             foreach (var contact in contacts)
             {
                 //process aggregated contacts
@@ -144,7 +141,7 @@ namespace _9Contatos.API.PeopleAPP
                     //in this case if you need the the ContactListId then you need to iterate through the raw contacts
                     if (api == QualAPI.PeopleAPI_COM_Alteracao)
                     {
-                        var rawContacts = await allAccessStore.AggregateContactManager.FindRawContactsAsync(contact);
+                        var rawContacts = await contactStore.AggregateContactManager.FindRawContactsAsync(contact);
                         foreach (var rawContact in rawContacts)
                         {
                             Contatos.Add(rawContact);
@@ -242,23 +239,28 @@ namespace _9Contatos.API.PeopleAPP
             return Contatos.Count();
         }
 
-        public async void Limpa_Contatos_Temporarios()
+        public async 
+        Task
+Limpa_Contatos_Temporarios()
         {
-            var allAccessStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
-            if ((await allAccessStore.FindContactListsAsync()).Count != 0)
+            //   var allAccessStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
+            if (contactStore != null)
             {
-                //Limpa contatos antigos
-                var listaListasApp = await allAccessStore.FindContactListsAsync();
-                if (listaListasApp.Count() == 0)
+                if ((await contactStore.FindContactListsAsync()).Count != 0)
                 {
-                    //não tem nada a ser deletado (parece bobera, mas o nosso amigo first ali em baixo tem tendencias de bugismo quando isso ocorre, então não vamos incomoda-lo
+                    //Limpa contatos antigos
+                    var listaListasApp = await contactStore.FindContactListsAsync();
+                    if (listaListasApp.Count() == 0)
+                    {
+                        //não tem nada a ser deletado (parece bobera, mas o nosso amigo first ali em baixo tem tendencias de bugismo quando isso ocorre, então não vamos incomoda-lo
+                    }
+                    else
+                    {
+                        var lista = listaListasApp.First();
+                        await lista.DeleteAsync();
+                    }
+                    //recria o link limpo
                 }
-                else
-                {
-                    var lista = listaListasApp.First();
-                    await lista.DeleteAsync();
-                }
-                //recria o link limpo
             }
         }
     }
