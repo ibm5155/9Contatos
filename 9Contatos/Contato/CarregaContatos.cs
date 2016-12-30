@@ -45,8 +45,8 @@ namespace _9Contatos.Contatos.Carrega
                 }
                 else
                 {
-//                    PeopleData.Limpa_Contatos_Temporarios();
-                    PeopleData.LoadBuffer(api);
+                    PeopleData.LoadBuffer(api); // Carregamos os dados enquanto o usuário digita a região.
+//                                                 Com isso,tempos de 3 -  6 segundos de sobra pra fazer o serviço sem que o usuário perceba.
                 }
             }
             catch (System.UnauthorizedAccessException)
@@ -63,6 +63,8 @@ namespace _9Contatos.Contatos.Carrega
             {
                 PegaRegiao dialog = new PegaRegiao();
                 await dialog.ShowAsync();
+//              quando sair daqui, talvez os contatos a Função "LoadBuffer" pode não ter terminado de carregar os contatos
+//              então vamos checar se ele terminou, caso contrario, espere ele carregar.
                 while (Globais.Contatos_Carregados == false)
                 {
                     //só sai do loop quando o app ter finalizado de carregar todos os seus contatos.
