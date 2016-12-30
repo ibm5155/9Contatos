@@ -93,7 +93,7 @@ namespace _9Contatos.API.PeopleAPP
                 Contato_a_Mudar.Phones[i].Number = TelefonesNovos[i];
             }
             contato_temp = ClonaContato(ref Contato_a_Mudar);
-            await contactList.SaveContactAsync(contato_temp);
+            /*await*/ contactList.SaveContactAsync(contato_temp);
 
             return Valido;
         }

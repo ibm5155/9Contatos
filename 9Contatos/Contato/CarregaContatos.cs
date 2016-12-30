@@ -58,17 +58,17 @@ namespace _9Contatos.Contatos.Carrega
                 pergunta.Title = "Algo deu errado";
                 pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                 await pergunta.ShowAsync();
-                while(Globais.Contatos_Carregados == false)
-                {
-                    //só sai do loop quando o app ter finalizado de carregar todos os seus contatos.
-                    await System.Threading.Tasks.Task.Delay(200); //dorme por 200ms (0,2 segundos) 
-                    //se não botarmos um Delay, o programa vai usar 100% de um core do dispositivo, com um delay de somente 1ms isso cai pra quase 0%
-                }
             }
             if (PodeCarregarOutraPagina == true)
             {
                 PegaRegiao dialog = new PegaRegiao();
                 await dialog.ShowAsync();
+                while (Globais.Contatos_Carregados == false)
+                {
+                    //só sai do loop quando o app ter finalizado de carregar todos os seus contatos.
+                    await System.Threading.Tasks.Task.Delay(200); //dorme por 200ms (0,2 segundos) 
+                    //se não botarmos um Delay, o programa vai usar 100% de um core do dispositivo, com um delay de somente 1ms isso cai pra quase 0%
+                }
                 if (Globais.MinhaRegiao != "")
                 {
                     for (int i = 0, fim = PeopleData.TotalContatos(); i < fim; i++)
