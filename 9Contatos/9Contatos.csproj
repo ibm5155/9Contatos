@@ -102,6 +102,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Contato\CarregaContatos.cs" />
+    <Compile Include="FileHandler\FileHandler.cs" />
     <Compile Include="Globais.cs" />
     <Compile Include="Telefone\Operadora.cs" />
     <Compile Include="Telefone\Regiao.cs" />
@@ -204,6 +205,13 @@
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
     <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="LogErros\v1.1.4\Log1.txt" />
+    <Content Include="LogErros\v1.1.4\Log2.txt" />
+    <Content Include="LogErros\v1.1.7\Log1.txt" />
+    <Content Include="LogErros\v1.1.8\Log1.txt" />
+    <Content Include="LogErros\v1.1.8\Log2.txt" />
+    <Content Include="LogErros\v1.1.8\Log3.txt" />
+    <Content Include="LogErros\v1.1.8\Log4.txt" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -258,6 +266,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Themes\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

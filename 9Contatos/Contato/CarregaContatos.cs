@@ -8,6 +8,7 @@ using _9Contatos.Telefones.ParserNonoDigito;
 using _9Contatos.Telefones.telefone;
 using _9Contatos.globais;
 using Windows.UI.Popups;
+using System.Diagnostics;
 //test
 namespace _9Contatos.Contatos.Carrega
 {
@@ -26,6 +27,7 @@ namespace _9Contatos.Contatos.Carrega
         {
             int Saida = 0;
             bool PodeCarregarOutraPagina = true;
+            Debug.WriteLine("Usando PeopleAPI " + api);
             PeopleAPI PeopleData = new PeopleAPI(); // onde está toda a lógica de get/set com o app Pessoas/People
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();
@@ -75,7 +77,9 @@ namespace _9Contatos.Contatos.Carrega
                 {
                     for (int i = 0, fim = PeopleData.TotalContatos(); i < fim; i++)
                     {
+                        Debug.Write("Adicionando contato N" + i + " - ");
                         Globais.contatos.Add(PeopleData.CarregaContato(i));
+                        Debug.WriteLine(Globais.contatos[i].NomeCompleto + " - ADICIONADO");
                     }
                     //Etapa 2: adicionar o nono digito
                     for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
@@ -83,6 +87,7 @@ namespace _9Contatos.Contatos.Carrega
 
                         for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
                         {
+                            Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
                             TelefoneBuffer = new Telefone();
                             TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
                             Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
@@ -97,6 +102,7 @@ namespace _9Contatos.Contatos.Carrega
                             Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
                             Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
                             Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
+                            Debug.WriteLine(" - ADICIONADO");
                         }
                     }
                 }
@@ -131,6 +137,7 @@ namespace _9Contatos.Contatos.Carrega
 
         public static async Task<bool> Carrega(QualAPI api)
         {
+            Debug.WriteLine("Carregando contatos");
             Globais.Contatos_Carregados = false;
             bool PodeCarregarOutraPagina = true;
             switch(api)
@@ -152,6 +159,8 @@ namespace _9Contatos.Contatos.Carrega
             Globais.Filtrar_Servico = true;
             Globais.Filtrar_Desconhecido= true;
             Globais.Filtrar_Internacional = true;
+            Debug.WriteLine("contatos carregados - status " + PodeCarregarOutraPagina);
+
 
             return PodeCarregarOutraPagina;
         }

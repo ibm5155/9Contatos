@@ -7,6 +7,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Popups;
 using _9Contatos.globais;
 using _9Contatos.Contatos.Carrega;
+using _9Contatos.filehandler;
 
 #warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
 
@@ -21,8 +22,16 @@ namespace _9Contatos
     {
         public MainPage()
         {
-            this.InitializeComponent();
-            Globais.contatos.Clear();
+            try
+            {
+                this.InitializeComponent();
+                Globais.contatos.Clear();
+                FileHandler.Carrega_Dados_9Contatos();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao inicializar o aplicativo", ex);
+            }
         }
 
         private _9Contatos.Interface.OpcoesAvancadas xx;
@@ -30,13 +39,32 @@ namespace _9Contatos
         private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
+
         }
 
         private async void image1_Tapped(object sender, TappedRoutedEventArgs e)
         {
             ProgressBar.Visibility = Visibility.Visible;
             Globais.api_usada = QualAPI.PeopleAPI;
-            bool Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
+            bool Carregar = false;
+            //teste de crash
+#if !DEBUG
+            /*
+                COMO NO RELEASE VOCê NÃO ESTARÁ RODANDO O APLICATIVO, ENTÃO PRECISAMOS INCREMENTAR AS MENSAGENS DE ERROS
+            */
+            try
+            {
+
+            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao Carregar os Contatos.", ex);
+            }
+#else
+            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
+#endif
+
             ProgressBar.Visibility = Visibility.Collapsed;
             if (Carregar == true)
             {

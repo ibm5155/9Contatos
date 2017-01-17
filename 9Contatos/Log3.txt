@@ -1,0 +1,6 @@
+﻿ERRO : STOWED_EXCEPTION_System.ArgumentOutOfRangeException_80131502_9Contatos.dll!$0__9Contatos::Telefones::telefone::Telefone.SetTelefone 
+STATUS: DESCONHECIDO
+OCORRENCIAS: 1
+ARQUIVOS AFETADOS: PeopleAPI.cs, MainPage.cs
+NOTAS: Erro durante o carregamento dos contatos.
+PILHA:

@@ -1,0 +1,13 @@
+﻿ERRO : STOWED_EXCEPTION_System.Exception_80004005_9Contatos.dll!$0__9Contatos::Interface::TelaContatos::_Bt_Salvar_Click_d__9.MoveNext
+STATUS: CORRIGIDO NA VERSÃO ?
+OCORRENCIAS: 2
+ARQUIVOS AFETADOS:
+PROBLEMA:
+PILHA:
+0	9Contatos	$1_McgInterop::McgHelpers.ThrowFailed	0x33
+1	9Contatos	$1_McgInterop::ComCallHelpers.ComCall__HRESULT	0xA5
+2	9Contatos	$1_McgInterop::ForwardComSharedStubs.Proc__System.__Canon_	0x1B
+3	9Contatos	$0__9Contatos::Interface::TelaContatos::_Bt_Salvar_Click_d__9.MoveNext	0x85
+4	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw	0x19
+5	SharedLibrary	$13_System::Runtime::CompilerServices::AsyncMethodBuilderCore::__c._ThrowAsync_b__9_0	0x13
+6	SharedLibrary	$13_System::Threading::WinRTSynchronizationContext::Invoker.InvokeCore	0x33

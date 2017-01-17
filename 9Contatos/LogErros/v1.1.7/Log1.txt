@@ -1,0 +1,14 @@
+﻿ERRO : STOWED_EXCEPTION_System.Exception_80070490_9Contatos.dll!$0__9Contatos::API::PeopleAPP::PeopleAPI::_Limpa_Contatos_Temporarios_d__7.MoveNext
+STATUS: CORRIGIDO NA 1.1.8
+OCORRENCIAS: 10
+ARQUIVOS AFETADOS: PeopleAPI.cs
+PROBLEMA: PARALELISMO AO CARREGAR OS CONTATOS E LIMPAR OS CONTATOS TEMPORÁRIOS
+PILHA:
+0	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw									0x21
+1	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ThrowForNonSuccess							0x7E
+2	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.HandleNonSuccessAndDebuggerNotification		0x58
+3	SharedLibrary	$13_System::Runtime::CompilerServices::ConfiguredTaskAwaitable::ConfiguredTaskAwaiter.GetResult	0x1A
+4	9Contatos	$0__9Contatos::API::PeopleAPP::PeopleAPI::_Limpa_Contatos_Temporarios_d__7.MoveNext					0x312
+5	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw									0x21
+6	SharedLibrary	$13_System::Runtime::CompilerServices::AsyncMethodBuilderCore::__c._ThrowAsync_b__9_0			0x1E
+7	SharedLibrary	$13_System::Threading::WinRTSynchronizationContext::Invoker.InvokeCore							0x4C

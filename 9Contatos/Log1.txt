@@ -1,0 +1,13 @@
+﻿ERRO : STOWED_EXCEPTION_System.UnauthorizedAccessException_80070005_9Contatos.dll!$0__9Contatos::MainPage::_image1_Tapped_d__3.MoveNext 
+STATUS: DESCONHECIDO
+OCORRENCIAS: 1
+ARQUIVOS AFETADOS: PeopleAPI.cs, MainPage.cs
+NOTAS: Erro durante o carregamento dos contatos.
+PILHA:
+$1_McgInterop::McgHelpers.ThrowFailed
+$1_McgInterop::ComCallHelpers.ComCall__HRESULT
+$1_McgInterop::ForwardComSharedStubs.Func_TResult___System.__Canon,_System.__Canon_
+$0__9Contatos::MainPage::_image1_Tapped_d__3.MoveNext
+System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw
+$13_System::Runtime::CompilerServices::AsyncMethodBuilderCore::__c._ThrowAsync_b__9_0
+$13_System::Threading::WinRTSynchronizationContext::Invoker.InvokeCore

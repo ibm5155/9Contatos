@@ -39,6 +39,9 @@ namespace _9Contatos.globais
         public static bool Filtrar_Desconhecido = true;
         public static bool Filtrar_Internacional = true;
 
+        public const string ARQUIVO_TEMPORARIO = "Data.txt";
+        public static bool  ARQUIVO_PRIMEIRA_ABERTURA = true;
+
         public static bool Contatos_Carregados = false;
 
     }

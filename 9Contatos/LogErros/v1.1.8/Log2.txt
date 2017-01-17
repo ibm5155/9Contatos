@@ -1,0 +1,58 @@
+﻿ERRO : STOWED_EXCEPTION_802a0004_39155LZFStudio.ArrumaContatos!unknown_function  
+STATUS: DESCONHECIDO
+OCORRENCIAS: 3
+ARQUIVOS AFETADOS:
+PILHA:
+
+Estrutura	Imagem							Função				Deslocamento
+0			39155LZFStudio.ArrumaContatos	unknown_function	0x0
+1			unknown							[StowedException]	0x0
+2			Windows_UI_Xaml					CDirectManipulationService::ActivateViewportConfiguration	0x1D92CF
+3			Windows_UI_Xaml					CInputManager::UpdateManipulationTouchConfiguration			0x35
+4			Windows_UI_Xaml					CInputManager::UpdateManipulationViewport					0x299
+5			Windows_UI_Xaml					CInputManager::NotifyViewportChanged						0x69
+6			Windows_UI_Xaml					CUIDMContainerHandler::NotifyViewportChanged				0x53
+7			Windows_UI_Xaml					DirectUI::ScrollViewer::OnViewportAffectingPropertyChanged	0xF5
+8			Windows_UI_Xaml					DirectUI::ScrollViewer::OnManipulatabilityAffectingPropertyChanged	0x1E5337
+9			Windows_UI_Xaml					DirectUI::ScrollViewer::InvalidateScrollInfoImpl			0x8FF
+10			Windows_UI_Xaml					DirectUI::ScrollContentPresenter::VerifyScrollData			0x10B
+11			Windows_UI_Xaml					DirectUI::ScrollContentPresenter::MeasureOverride			0x525
+12			Windows_UI_Xaml					DirectUI::FrameworkElementGenerated::MeasureOverrideProtected	0x55
+13			Windows_UI_Xaml					DirectUI::FrameworkElement::MeasureOverrideFromCore			0xB7
+14			Windows_UI_Xaml					CFrameworkElement::MeasureCore								0x773
+15			Windows_UI_Xaml					CUIElement::MeasureInternal									0x4B5
+16			Windows_UI_Xaml					CUIElement::Measure											0x52B
+17			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+18			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+19			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+20			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+21			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+22			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+23			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+24			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+25			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+26			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+27			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+28			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+29			Windows_UI_Xaml					CUIElement::Measure											0x4C9
+30			Windows_UI_Xaml					CLayoutManager::UpdateLayout								0x131
+31			Windows_UI_Xaml					CCoreServices::NWDrawTree									0x493
+32			Windows_UI_Xaml					CCoreServices::NWDrawMainTree								0xA7
+33			Windows_UI_Xaml					CWindowRenderTarget::Draw									0x6D
+34			Windows_UI_Xaml					CXcpBrowserHost::OnTick										0x18B
+35			Windows_UI_Xaml					CXcpDispatcher::Tick										0x7B
+36			Windows_UI_Xaml					CXcpDispatcher::OnReentrancyProtectedWindowMessage			0x101
+37			Windows_UI_Xaml					CDeferredInvoke::WindowProc									0x14B
+38			minuser							Core::Yield::WndProc										0x17D
+39			minuser							Core::Window::DeliverMessage								0xB3
+40			minuser							minDispatchMessageW											0x17F
+41			Windows_UI						Windows::UI::Core::CDispatcher::ProcessMessage				0xB9
+42			Windows_UI						Windows::UI::Core::CDispatcher::WaitAndProcessMessagesInternal	0x75
+43			Windows_UI						Windows::UI::Core::CDispatcher::ProcessEvents				0x61
+44			Windows_UI_Xaml					CJupiterWindow::RunCoreWindowMessageLoop					0x41
+45			Windows_UI_Xaml					CJupiterControl::RunMessageLoop								0x21
+46			Windows_UI_Xaml					DirectUI::DXamlCore::RunMessageLoop							0x23
+47			twinapi_appcore					Windows::ApplicationModel::Core::CoreApplicationView::Run	0x2F
+48			twinapi_appcore					_lambda_7eb5db05cd8d519167ba6dd56d3d7b10_::operator			0xB7
+49			shcore							_WrapperThreadProc											0xB7
+50			ntdll							RtlUserThreadStart											0x23

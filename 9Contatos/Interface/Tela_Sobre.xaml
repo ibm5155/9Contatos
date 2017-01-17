@@ -39,7 +39,8 @@
             <StackPanel>
                 <TextBlock Margin="0,0,20,0" TextWrapping="Wrap" VerticalAlignment="Top" Padding="0" Canvas.ZIndex="1">
                     <Run Text="Arruma Contatos - v1."/>
-                    <Run Text="1.7"/>
+                    <Run Text="1."/>
+                    <Run Text="8"/>
                     <Run Text=" "/>
                     <LineBreak/>
                     <Run/>
