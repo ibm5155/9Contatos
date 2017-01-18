@@ -212,6 +212,8 @@
     <Content Include="LogErros\v1.1.8\Log2.txt" />
     <Content Include="LogErros\v1.1.8\Log3.txt" />
     <Content Include="LogErros\v1.1.8\Log4.txt" />
+    <Content Include="LogErros\v1.1.8\Log5.txt" />
+    <Content Include="LogErros\v1.1.8\Log6.txt" />
     <Content Include="Properties\Default.rd.xml" />
   </ItemGroup>
   <ItemGroup>

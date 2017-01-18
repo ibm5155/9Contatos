@@ -1,0 +1,5 @@
+﻿ERRO : STOWED_EXCEPTION_NOSOS_80020012_39155LZFStudio.ArrumaContatos!unknown_function 
+STATUS: DESCONHECIDO
+OCORRENCIAS: 3 (o mesmo computador - e o mesmo cara do log5.txt)
+ARQUIVOS AFETADOS:
+PILHA:

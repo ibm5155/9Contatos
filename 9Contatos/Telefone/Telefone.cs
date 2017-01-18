@@ -157,7 +157,7 @@ namespace _9Contatos.Telefones.telefone
         {
             try
             {
-                CSP = "";
+            CSP = "";
                 Pais = "";
                 Regiao = "";
                 Numero = "";
@@ -165,10 +165,14 @@ namespace _9Contatos.Telefones.telefone
                 Numero_Nao_Reconhecido = "";
                 Numero_Internacional = "";
                 Servico = "";
-                int SizeofCelular = numero.Count();
+                int SizeofCelular = 0;
                 int Cnt_Aspas = 0;
                 int Cnt_Traco = 0;
                 string numero_original_nao_formatado = numero;
+                if (numero != null) //evita ter um número de telefone nulo e transforma ele me vazio
+                {
+                    SizeofCelular = numero.Count();
+                }
                 if (SizeofCelular >= 8)
                 {
                     #region Filtros (removemos simbolos idevidos e também checamos a presença de outros
@@ -576,20 +580,22 @@ namespace _9Contatos.Telefones.telefone
                         {
                             Numero_Nao_Reconhecido = numero_original_nao_formatado;
                         }
-
                     }
+                }
+                else if(numero == null)
+                {
+                    // não carrega o serviço como um valor nulo
                 }
                 else
                 {
                     Servico = numero;
                 }
-                #endregion
+            #endregion
             }
             catch (Exception ex)
             {
                 throw new Exception(("Erro ao processar o numero:" + numero), ex);
             }
-
         }
 
 /*        public void AlteraNumero(string Numero)

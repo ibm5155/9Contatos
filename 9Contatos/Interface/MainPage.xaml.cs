@@ -6,6 +6,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Popups;
 using _9Contatos.globais;
+using _9Contatos.Telefones.telefone;
 using _9Contatos.Contatos.Carrega;
 using _9Contatos.filehandler;
 
@@ -22,9 +23,11 @@ namespace _9Contatos
     {
         public MainPage()
         {
+            Telefone X = new Telefone();
+
             try
             {
-                this.InitializeComponent();
+            this.InitializeComponent();
                 Globais.contatos.Clear();
                 FileHandler.Carrega_Dados_9Contatos();
             }

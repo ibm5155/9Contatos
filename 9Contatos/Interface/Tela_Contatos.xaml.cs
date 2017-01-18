@@ -305,7 +305,7 @@ namespace _9Contatos.Interface
             }
             catch(Exception  ex)
             {
-                throw new Exception("Erro ao salvar os contatos," ex);
+                throw new Exception("Erro ao salvar os contatos", ex);
             }
 #else
             bool Output = await SalvaContatos.Salvar();

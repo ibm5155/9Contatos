@@ -1,6 +1,24 @@
 ﻿ERRO : STOWED_EXCEPTION_System.ArgumentOutOfRangeException_80131502_9Contatos.dll!$0__9Contatos::Telefones::telefone::Telefone.SetTelefone 
 STATUS: DESCONHECIDO
-OCORRENCIAS: 1
+OCORRENCIAS: 3 (talvez o mesmo aparelho)
 ARQUIVOS AFETADOS: PeopleAPI.cs, MainPage.cs
 NOTAS: Erro durante o carregamento dos contatos.
 PILHA:
+0	SharedLibrary	System::String.Remove	0x19B4BB
+1	9Contatos	$0__9Contatos::Telefones::telefone::Telefone.SetTelefone	0x1DB
+2	9Contatos	$0__9Contatos::Contatos::Carrega::CarregaContatos::_Carrega_PeopleAPI_d__0.MoveNext	0x601
+3	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw		0x19
+4	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ThrowForNonSuccess	0x53
+5	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.HandleNonSuccessAndDebuggerNotification	0x2D
+6	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ValidateEnd	0x1D
+7	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter$1_System::Byte_.GetResult	0xF
+8	9Contatos	$0__9Contatos::Contatos::Carrega::CarregaContatos::_Carrega_d__3.MoveNext	0xDF
+9	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw	0x19
+10	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ThrowForNonSuccess	0x53
+11	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.HandleNonSuccessAndDebuggerNotification	0x2D
+12	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ValidateEnd	0x1D
+13	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter$1_System::Byte_.GetResult	0xF
+14	9Contatos	$0__9Contatos::MainPage::_image1_Tapped_d__3.MoveNext	0x87
+15	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw	0x19
+16	SharedLibrary	$13_System::Runtime::CompilerServices::AsyncMethodBuilderCore::__c._ThrowAsync_b__9_0	0x13
+17	SharedLibrary	$13_System::Threading::WinRTSynchronizationContext::Invoker.InvokeCore	0x33
