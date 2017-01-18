@@ -107,7 +107,7 @@ namespace _9Contatos.Interface
                         PeopleAPI X = new PeopleAPI();
                         X.Limpa_Contatos_Temporarios();
                         var pergunta2 = new MessageDialog("");
-                        pergunta2.Content = "Todos os contatos criados pelo app Arruma Contatos foram excluidos.";
+                        pergunta2.Content = "Todos os contatos temporários criados pelo app Arruma Contatos foram excluidos.";
                         pergunta2.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                         await pergunta2.ShowAsync();
                         break;

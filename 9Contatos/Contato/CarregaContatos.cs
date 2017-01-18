@@ -39,7 +39,7 @@ namespace _9Contatos.Contatos.Carrega
                     if (await PeopleData.LoadBuffer(api) == false)
                     {
                         PodeCarregarOutraPagina = false;
-                        var pergunta = new MessageDialog("Se você ler essa mensagem, quer dizer que o aplicativo ainda não foi autorizado pela microsoft para alterar diretamente os seus contatos do app pessoas :(");
+                        var pergunta = new MessageDialog("O sistema negou o acesso ao seus contatos.\nEsse app não foi autorizado pela microsoft para editar os seus contatos, somente com a autorização da mesma ou com uma versão de desenvolvedor do app permitem o funcionamento desta função.");
                         pergunta.Title = "Algo deu errado";
                         pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                         await pergunta.ShowAsync();
