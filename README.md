@@ -1,6 +1,9 @@
 # Arruma Contatos, criado por: Lucas Zimerman Fraulob
 
 ------------------------------------------------------
+Você precisa do visual studio community para compilar este projeto
+
+------------------------------------------------------
 
 Adicionar o suporte de alterar os contatos:
 
