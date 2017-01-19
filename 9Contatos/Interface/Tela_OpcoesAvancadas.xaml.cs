@@ -23,6 +23,11 @@ namespace _9Contatos.Interface
         public OpcoesAvancadas()
         {
             InitializeComponent();
+            if(Globais.VERSAO_TESTES == false)
+            {
+                Arrumar_Com_Modificacao.Visibility = Visibility.Collapsed;
+                Arrumar_Email.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Voltar_Click(object sender, RoutedEventArgs e)

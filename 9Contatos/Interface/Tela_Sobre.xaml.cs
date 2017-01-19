@@ -48,5 +48,10 @@ namespace _9Contatos.Interface
         {
             await Launcher.LaunchUriAsync(new Uri("feedback-hub:?contextid=30&feedbackid=97d42871-98cb-42cb-9c0e-a0e6b5fe1b48&form=2&src=1"));
         }
+
+        private async void Ver_Source_Code(object sender, TappedRoutedEventArgs e)
+        {
+            await Launcher.LaunchUriAsync(new Uri("https://github.com/ibm5155/9Contatos"));
+        }
     }
 }

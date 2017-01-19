@@ -6,6 +6,9 @@ namespace _9Contatos.globais
 {
     class Globais
     {
+        public const bool VERSAO_TESTES = true;
+        public static bool POPUP_TESTES = true;
+
         public static List<Contato> contatos = new List<Contato>();
         public static string MinhaRegiao = "";
         public static int OffsetCelular = -2;

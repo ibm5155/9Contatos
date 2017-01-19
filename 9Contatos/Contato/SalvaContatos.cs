@@ -49,6 +49,7 @@ namespace _9Contatos.Contatos.Salvar
             bool Saida = true;
             List<string> Telefone_Novo = new List<string>();
             PeopleAPI Link = new PeopleAPI();
+            Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; Saida == true && i < Globais.contatos.Count; i++)
             {
                 Telefone_Novo.Clear();
@@ -68,6 +69,7 @@ namespace _9Contatos.Contatos.Salvar
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                     await pergunta.ShowAsync();
                 }
+                Carregando.Incrementa_Barra();
             }
             return Saida;
         }

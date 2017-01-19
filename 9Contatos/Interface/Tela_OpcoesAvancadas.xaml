@@ -46,12 +46,13 @@
                 </StackPanel>
             </ListViewItem>
             <ListViewItem Background="#FF383838" Visibility="Collapsed">
+                <!-- Não está funcionando então vai ficar assim mesmo -->
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon x:Name="Arrumar_Sem_Nono_icone" Symbol="Phone" />
                     <TextBlock x:Name="Arrumar_Sem_Nono_texto" TextWrapping="Wrap" Text="Arrumar Contatos sem adicionar o nono Digito."  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
                 </StackPanel>
             </ListViewItem>
-            <ListViewItem x:Name="Arrumar_Email" Background="#FF802424" Visibility="Collapsed">
+            <ListViewItem x:Name="Arrumar_Email" Background="#FF802424">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon x:Name="Arrumar_Email_icone" Symbol="Mail" />
                     <TextBlock x:Name="Arrumar_Email_texto" TextWrapping="Wrap" Text="Arrumar os contatos do e-mail da Microsoft"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>

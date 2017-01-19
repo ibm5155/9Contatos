@@ -35,6 +35,14 @@ namespace _9Contatos
             {
                 throw new Exception("Erro ao inicializar o aplicativo", ex);
             }
+            if(Globais.VERSAO_TESTES == true && Globais.POPUP_TESTES == true)
+            {
+                Globais.POPUP_TESTES = false;
+                var pergunta = new MessageDialog("Eu entendo que esta é uma versão de desenvolvimento e que problemas poderão ocorrer com o seu uso.\n Caso não queira testar esta versão use a versão que está na loja e desinstale este aplicativo.");
+                pergunta.Title = "Versão de desenvolvimento";
+                pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                pergunta.ShowAsync();
+            }
         }
 
         private _9Contatos.Interface.OpcoesAvancadas xx;
