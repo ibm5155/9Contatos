@@ -25,7 +25,7 @@ namespace _9Contatos.Interface
             InitializeComponent();
             if(Globais.VERSAO_TESTES == false)
             {
-                Arrumar_Com_Modificacao.Visibility = Visibility.Collapsed;
+//                Arrumar_Com_Modificacao.Visibility = Visibility.Collapsed;
                 Arrumar_Email.Visibility = Visibility.Collapsed;
             }
         }

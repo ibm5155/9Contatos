@@ -11,6 +11,12 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
+            <AppBarButton x:Name="bt_Donate" Label="Doação">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="$" FontFamily="Segoe UI" FontSize="20"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
             <AppBarButton x:Name="bt_Sobre" Icon="Help" Label="Sobre o App" Click="bt_Sobre_Click"/>
             <AppBarButton x:Name="bt_Mais_Opcoes" Icon="Add" Label="Mais Opções" Click="bt_Mais_Opcoes_Click"/>
         </CommandBar>
