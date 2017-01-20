@@ -79,7 +79,7 @@
                 <Rectangle Fill="#FFF4F4F5" Margin="0,10,0,0" Stroke="Black" VerticalAlignment="Top" Height="7" Canvas.ZIndex="2" StrokeThickness="2"/>
                 <TextBlock TextWrapping="Wrap" Text="Código Fonte" FontSize="25" Margin="0,0,20,0"/>
                 <TextBlock TextWrapping="Wrap" Text="Você pode visualizar o código fonte do projejto apertando o botão abaixo." Margin="0,4,20,0"/>
-                <Button  x:Name="Source_Code" Content="Visualizar o código fonte" Margin="0,20,0,0" Tapped="Ver_Source_Code"/>
+                <Button  x:Name="Source_Code" Content="Visualizar o código fonte" Margin="0,20,0,20" Tapped="Ver_Source_Code"/>
 
             </StackPanel>
         </ScrollViewer>
