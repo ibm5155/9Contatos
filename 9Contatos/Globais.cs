@@ -6,7 +6,7 @@ namespace _9Contatos.globais
 {
     class Globais
     {
-        public const bool VERSAO_TESTES = true;
+        public const bool VERSAO_TESTES = false;
         public static bool POPUP_TESTES = true;
 
         public static List<Contato> contatos = new List<Contato>();

@@ -11,7 +11,7 @@
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="bt_Donate" Label="Doação">
+            <AppBarButton x:Name="bt_Donate" Label="Doação" Visibility="Collapsed">
                 <AppBarButton.Icon>
                     <FontIcon Glyph="$" FontFamily="Segoe UI" FontSize="20"/>
                 </AppBarButton.Icon>

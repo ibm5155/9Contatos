@@ -24,13 +24,17 @@ namespace _9Contatos.Interface
         public Janela_EditaContato()
         {
             InitializeComponent();
+            NomeEditado.Text = this.Nome;
+            NumeroEditado.Text = this.Celular;
         }
 
         public Janela_EditaContato(string Nome, string Celular)
         {
-            Nome = Nome;
-            Celular = Celular;
             InitializeComponent();
+            this.Nome = Nome;
+            this.Celular = Celular;
+            NomeEditado.Text = this.Nome;
+            NumeroEditado.Text = this.Celular;
         }
 
         private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)

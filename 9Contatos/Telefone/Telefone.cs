@@ -39,7 +39,10 @@ namespace _9Contatos.Telefones.telefone
             {
                 string Numero_Formatado = "";
                 string Espaco = "";
-                string TRegiao = Regiao;
+                string TRegiao = (Pais.Count() + CSP.Count() == 0 ? "0" : "") + Regiao;
+                //41 xxxxxxxx é invalido, precisa ser 041 xxxxxxxx
+                //mas +55041xxxxxxx também é invalido, então precisaria ser +5541xxxxxxxx
+
                 if (EspacoEntreDados == true || (ManterFormatacao == true && Formatacao_EspacoEntreNumero == true))
                 {
                     Espaco = " ";
@@ -94,6 +97,10 @@ namespace _9Contatos.Telefones.telefone
 
                     if (CSP != "") //se tem o CSP ele quem terá o digito de longa distancia e não no DDD
                     {
+                        if(Pais.Count() == 0)
+                        {
+                            Numero_Formatado += "0";
+                        }
                         if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
                         {
                             Numero_Formatado += CSP + Espaco;
@@ -105,7 +112,7 @@ namespace _9Contatos.Telefones.telefone
                     }
                     else if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
                     {
-                        TRegiao = Regiao;
+                        TRegiao = (Pais.Count() + CSP.Count() == 0 && Oculta_Pais == true ? "0" : "") + Regiao;
                     }
                     if (OcultaDDD_Nacional == false || (Regiao != DDD_Nacional))
                     {
