@@ -398,6 +398,7 @@ namespace _9Contatos.Telefones.telefone
                         }
                         // sexto caso +554112341234 -> +55 41 1234-1234
                         //            0144112341234 -> +55 14 41 12341234 (onde 14 é o CSP)
+                        //            1441982341234 -> +55 14 41 982341234
                         //            9090912341234 -> 9090 912341234       
                         //            !!! 9004112341234 -> 90 041 12341234  (não é válido pois precisa do CSP para fazer chamadas a cobrar a distancia
 #warning reavaliar ultimo caso invalido do comentario
@@ -445,6 +446,31 @@ namespace _9Contatos.Telefones.telefone
                                         Numero_Nao_Reconhecido = numero_original_nao_formatado;
 
                                     }
+                                }
+                                else if(Operadora.ValidaPrestadora(numero.Remove(2)) != 0)
+                                {
+                                    //é UM CSP
+                                    CSP = numero.Remove(2);
+                                    Regiao = numero.Remove(4);
+                                    Regiao = Regiao.Remove(0, 2);
+                                    if (regiao.Regiao.ValidaRegiao(Regiao) != 0)
+                                    {
+                                        if (numero[5] >= '6' && numero[5] <= '9' && numero[4] == '9')
+                                        {
+                                            //14 41 98234-1234
+                                            this.Numero = numero.Remove(0, 4);
+
+                                        }
+                                        else
+                                        {
+                                            Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Numero_Nao_Reconhecido = numero_original_nao_formatado;
+                                    }
+
                                 }
                                 else
                                 {
