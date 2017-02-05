@@ -131,33 +131,44 @@ namespace _9Contatos.API.PeopleAPP
                 }
             }
             Contatos.Clear();
-            var contacts = await contactStore.FindContactsAsync();
-            foreach (var contact in contacts)
+            try
             {
-                //process aggregated contacts
-                if (contact.IsAggregate)
+                var contacts = await contactStore.FindContactsAsync(); // o try só serve para testar essa única linha
+                // mas como o resto abaixo depende dele, vai ficar assim...
+                foreach (var contact in contacts)
                 {
-                    //here contact.ContactListId is "" (null....)                  
-                    //in this case if you need the the ContactListId then you need to iterate through the raw contacts
-                    if (api == QualAPI.PeopleAPI_COM_Alteracao)
+                    //process aggregated contacts
+                    if (contact.IsAggregate)
                     {
-                        var rawContacts = await contactStore.AggregateContactManager.FindRawContactsAsync(contact);
-                        foreach (var rawContact in rawContacts)
+                        //here contact.ContactListId is "" (null....)                  
+                        //in this case if you need the the ContactListId then you need to iterate through the raw contacts
+                        if (api == QualAPI.PeopleAPI_COM_Alteracao)
                         {
-                            Contatos.Add(rawContact);
+                            var rawContacts = await contactStore.AggregateContactManager.FindRawContactsAsync(contact);
+                            foreach (var rawContact in rawContacts)
+                            {
+                                Contatos.Add(rawContact);
+                            }
+                        }
+                        else
+                        {
+                            //não precisamos do rawContacts
+                            Contatos.Add(contact);
                         }
                     }
-                    else
+                    else //not aggregated contacts should work
                     {
-                        //não precisamos do rawContacts
-                        Contatos.Add(contact);
+                        //                    Debug.WriteLine($"not aggregated, name: {contact.DisplayName }, ContactListId: {contact.ContactListId}");
                     }
                 }
-                else //not aggregated contacts should work
-                {
-                    //                    Debug.WriteLine($"not aggregated, name: {contact.DisplayName }, ContactListId: {contact.ContactListId}");
-                }
             }
+            catch (System.Exception)
+            {
+                //Po microsoft que Exception paia pra saber que o usuário marcou o aplicativo ou todos os aplicativos dele para não compartilhar os contatos...
+                Globais.Contatos_Bloqueados_Pelo_User = true;
+                //O erro vai ser tratado no CarregaContatos, depois do loop que espera essa task ser finalizada.
+            }
+
             Globais.Contatos_Carregados = true;
             return true;
         }

@@ -46,6 +46,7 @@ namespace _9Contatos.globais
         public static bool  ARQUIVO_PRIMEIRA_ABERTURA = true;
 
         public static bool Contatos_Carregados = false;
+        public static bool Contatos_Bloqueados_Pelo_User = false;
 
     }
 }

@@ -35,135 +35,126 @@ namespace _9Contatos.Telefones.telefone
 
         public string Get_Numero_Formatado(bool ManterFormatacao, bool TracoNumero /* - */, bool EspacoEntreDados, bool AspasEntreRegiao,bool PrefixoLongaDistanciaNacional, ref string DDD_Nacional, bool OcultaDDD_Nacional, bool Oculta_Pais)
         {
-            try
+            string Numero_Formatado = "";
+            string Espaco = "";
+            string TRegiao = (Pais.Count() + CSP.Count() == 0 ? "0" : "") + Regiao;
+            //41 xxxxxxxx é invalido, precisa ser 041 xxxxxxxx
+            //mas +55041xxxxxxx também é invalido, então precisaria ser +5541xxxxxxxx
+
+            if (EspacoEntreDados == true || (ManterFormatacao == true && Formatacao_EspacoEntreNumero == true))
             {
-                string Numero_Formatado = "";
-                string Espaco = "";
-                string TRegiao = (Pais.Count() + CSP.Count() == 0 ? "0" : "") + Regiao;
-                //41 xxxxxxxx é invalido, precisa ser 041 xxxxxxxx
-                //mas +55041xxxxxxx também é invalido, então precisaria ser +5541xxxxxxxx
-
-                if (EspacoEntreDados == true || (ManterFormatacao == true && Formatacao_EspacoEntreNumero == true))
-                {
-                    Espaco = " ";
-                }
-                if (Servico != "")
-                {
-                    Numero_Formatado = Servico;
-                }
-                else if (Numero_Nao_Reconhecido != "")
-                {
-                    Numero_Formatado = Numero_Nao_Reconhecido;
-                }
-                else if (Numero_Nao_Geografico != "") // 0800
-                {
-                    Numero_Formatado = Numero_Nao_Geografico + Espaco + Numero;
-                    if (TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
-                    {
-                        Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 3, "-");
-                    }
-                    if ((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true)) && TRegiao.Count() > 0)
-                    {
-                        Numero_Formatado = Numero_Formatado.Insert(4, ")");
-                        Numero_Formatado = "(" + Numero_Formatado;
-                    }
-                }
-                else if (Numero_Internacional != "")
-                {
-                    Numero_Formatado = Numero_Internacional;
-                }
-                else if (Numero != "")
-                {
-                    if (Oculta_Pais == false)
-                    {
-                        if (Pais.Count() == 0)
-                        {
-                            Numero_Formatado += "+55" + Espaco;
-                        }
-                        else
-                        {
-                            Numero_Formatado += Pais + Espaco;
-                        }
-                    }
-
-                    if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarLocal)
-                    {
-                        Numero_Formatado += "9090" + Espaco;
-                    }
-                    else if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarInterurbano)
-                    {
-                        Numero_Formatado += "90" + Espaco;
-                    }
-
-                    if (CSP != "") //se tem o CSP ele quem terá o digito de longa distancia e não no DDD
-                    {
-                        if(Pais.Count() == 0)
-                        {
-                            Numero_Formatado += "0";
-                        }
-                        if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
-                        {
-                            Numero_Formatado += CSP + Espaco;
-                        }
-                        else
-                        {
-                            Numero_Formatado += CSP + Espaco;
-                        }
-                    }
-                    else if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
-                    {
-                        TRegiao = (Pais.Count() + CSP.Count() == 0 && Oculta_Pais == true ? "0" : "") + Regiao;
-                    }
-                    if (OcultaDDD_Nacional == false || (Regiao != DDD_Nacional))
-                    {
-                        // só adiciona o ddd se for permitido adicionar o DDD nacional e caso contário, se o DDD for diferente do DDD nacional
-                        if ((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true /* &&  TRegiao.Count() > 0*/)))
-                        {
-                            if (ManterFormatacao == true && TRegiao.Count() == 0) { }
-                            else if ((OcultaDDD_Nacional == false && TRegiao.Count() == 0))
-                            {
-                                //Caso o usuário deseje manter a formatação original e o prefixo de longa distancia que estava no número existir
-                                //E
-                                //Caso o usuário deseje não ocultar o DDD nacional
-                                Numero_Formatado += "(" + DDD_Nacional + ")" + Espaco;
-                            }
-                            else if (TRegiao.Count() > 0)
-                            {
-                                Numero_Formatado += "(" + TRegiao + ")" + Espaco;
-                            }
-                        }
-
-                        else
-                        {
-                            if (OcultaDDD_Nacional == false && TRegiao.Count() == 0)
-                            {
-                                Numero_Formatado += DDD_Nacional + Espaco;
-                            }
-                            else if (TRegiao.Count() > 0 && OcultaDDD_Nacional == false)
-                            {
-                                Numero_Formatado += TRegiao + Espaco;
-                            }
-                        }
-                    }
-
-                    Numero_Formatado += Numero;
-                    if (TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
-                    {
-                        Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 4, "-");
-                    }
-                }
-                return Numero_Formatado;
+                Espaco = " ";
             }
-            catch (Exception ex)
+            if (Servico != "")
             {
-                throw new System.Exception(("Erro ao gerar um telefone formatado [Pais:"+ Pais+",Regiao:"+Regiao+",Numero:"+Numero+",NNGeo:"+Numero_Nao_Geografico+",NReconhecido:"+Numero_Nao_Reconhecido+",Serv:"+Servico+",CSP:"+CSP), ex);
+                Numero_Formatado = Servico;
             }
+            else if (Numero_Nao_Reconhecido != "")
+            {
+                Numero_Formatado = Numero_Nao_Reconhecido;
+            }
+            else if (Numero_Nao_Geografico != "") // 0800
+            {
+                Numero_Formatado = Numero_Nao_Geografico + Espaco + Numero;
+                if (TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
+                {
+                    Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 3, "-");
+                }
+                if ((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true)) && TRegiao.Count() > 0)
+                {
+                    Numero_Formatado = Numero_Formatado.Insert(4, ")");
+                    Numero_Formatado = "(" + Numero_Formatado;
+                }
+            }
+            else if (Numero_Internacional != "")
+            {
+                Numero_Formatado = Numero_Internacional;
+            }
+            else if (Numero != "")
+            {
+                if (Oculta_Pais == false)
+                {
+                    if (Pais.Count() == 0)
+                    {
+                        Numero_Formatado += "+55" + Espaco;
+                    }
+                    else
+                    {
+                        Numero_Formatado += Pais + Espaco;
+                    }
+                }
+
+                if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarLocal)
+                {
+                    Numero_Formatado += "9090" + Espaco;
+                }
+                else if (Contem_Numero_A_Cobrar == ChamadaACobrar.CobrarInterurbano)
+                {
+                    Numero_Formatado += "90" + Espaco;
+                }
+
+                if (CSP != "") //se tem o CSP ele quem terá o digito de longa distancia e não no DDD
+                {
+                    if(Pais.Count() == 0)
+                    {
+                        Numero_Formatado += "0";
+                    }
+                    if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
+                    {
+                        Numero_Formatado += CSP + Espaco;
+                    }
+                    else
+                    {
+                        Numero_Formatado += CSP + Espaco;
+                    }
+                }
+                else if ((PrefixoLongaDistanciaNacional == true || (ManterFormatacao == true && Formatacao_PrefixoLongaDistanciaNacional == true)) && TRegiao.Count() > 0)
+                {
+                    TRegiao = (Pais.Count() + CSP.Count() == 0 && Oculta_Pais == true ? "0" : "") + Regiao;
+                }
+                if (OcultaDDD_Nacional == false || (Regiao != DDD_Nacional))
+                {
+                    // só adiciona o ddd se for permitido adicionar o DDD nacional e caso contário, se o DDD for diferente do DDD nacional
+                    if ((AspasEntreRegiao == true || (ManterFormatacao == true && Formatacao_AspasEntreRegiao == true /* &&  TRegiao.Count() > 0*/)))
+                    {
+                        if (ManterFormatacao == true && TRegiao.Count() == 0) { }
+                        else if ((OcultaDDD_Nacional == false && TRegiao.Count() == 0))
+                        {
+                            //Caso o usuário deseje manter a formatação original e o prefixo de longa distancia que estava no número existir
+                            //E
+                            //Caso o usuário deseje não ocultar o DDD nacional
+                            Numero_Formatado += "(" + DDD_Nacional + ")" + Espaco;
+                        }
+                        else if (TRegiao.Count() > 0)
+                        {
+                            Numero_Formatado += "(" + TRegiao + ")" + Espaco;
+                        }
+                    }
+
+                    else
+                    {
+                        if (OcultaDDD_Nacional == false && TRegiao.Count() == 0)
+                        {
+                            Numero_Formatado += DDD_Nacional + Espaco;
+                        }
+                        else if (TRegiao.Count() > 0 && OcultaDDD_Nacional == false)
+                        {
+                            Numero_Formatado += TRegiao + Espaco;
+                        }
+                    }
+                }
+
+                Numero_Formatado += Numero;
+                if (TracoNumero == true || (ManterFormatacao == true && Formatacao_TracoNumero == true))
+                {
+                    Numero_Formatado = Numero_Formatado.Insert(Numero_Formatado.Count() - 4, "-");
+                }
+            }
+            return Numero_Formatado;
         }
 
         public void SetTelefone(string numero)
         {
-            try
-            {
             CSP = "";
                 Pais = "";
                 Regiao = "";
@@ -624,11 +615,6 @@ namespace _9Contatos.Telefones.telefone
                     Servico = numero;
                 }
             #endregion
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(("Erro ao processar o numero:" + numero), ex);
-            }
         }
 
 /*        public void AlteraNumero(string Numero)

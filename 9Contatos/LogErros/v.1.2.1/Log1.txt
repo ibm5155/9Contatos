@@ -1,5 +1,5 @@
 ﻿ERRO : STOWED_EXCEPTION_System.ArgumentOutOfRangeException_80131502_9Contatos.dll!$1_System::Runtime::InteropServices::WindowsRuntime::IVectorSharedReferenceTypesRCWAdapter.GetAt_System.__Canon_$catch$0 
-STATUS: CORRIGIDO NA VERSÃO ?
+STATUS: INVESTIGANDO
 OCORRENCIAS: 2
 ARQUIVOS AFETADOS: PeopleAPI.cs
 PROBLEMA: ao salvar os contatos, alguma coisa está ocorrendo.

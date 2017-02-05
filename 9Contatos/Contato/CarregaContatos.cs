@@ -51,71 +51,102 @@ namespace _9Contatos.Contatos.Carrega
 //                                                 Com isso,tempos de 3 -  6 segundos de sobra pra fazer o serviço sem que o usuário perceba.
                 }
             }
-            catch (System.UnauthorizedAccessException)
+            catch (System.Exception ex)
             {
-                // adicionar a seguinte linha no código do Package.appmanifest
-                //     <uap:Capability Name="contacts" />
-                PodeCarregarOutraPagina = false;
-                var pergunta = new MessageDialog("Parece que o desenvolvedor esqueceu de dizer ao sistema que este app precisa ler seus contatos, de uma cutucada nesse desenvolvedor nos comentários da loja para ele arrumar isso!");
-                pergunta.Title = "Algo deu errado";
-                pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
-                await pergunta.ShowAsync();
+                if (ex is System.UnauthorizedAccessException)
+                {
+                    // adicionar a seguinte linha no código do Package.appmanifest
+                    //     <uap:Capability Name="contacts" />
+                    PodeCarregarOutraPagina = false;
+                    var pergunta = new MessageDialog("Parece que o desenvolvedor esqueceu de dizer ao sistema que este app precisa ler seus contatos, de uma cutucada nesse desenvolvedor nos comentários da loja para ele arrumar isso!");
+                    pergunta.Title = "Algo deu errado";
+                    pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                    await pergunta.ShowAsync();
+                }
+                else
+                {
+                    PodeCarregarOutraPagina = false;
+                    var pergunta = new MessageDialog("Parece que o desenvolvedor esqueceu de dizer ao sistema que este app precisa ler seus contatos, de uma cutucada nesse desenvolvedor nos comentários da loja para ele arrumar isso!");
+                    pergunta.Title = "Algo deu errado";
+                    pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                }
             }
             if (PodeCarregarOutraPagina == true)
             {
                 PegaRegiao dialog = new PegaRegiao();
                 await dialog.ShowAsync();
-//              quando sair daqui, talvez os contatos a Função "LoadBuffer" pode não ter terminado de carregar os contatos
-//              então vamos checar se ele terminou, caso contrario, espere ele carregar.
+                //              quando sair daqui, talvez os contatos a Função "LoadBuffer" pode não ter terminado de carregar os contatos
+                //              então vamos checar se ele terminou, caso contrario, espere ele carregar.
                 while (Globais.Contatos_Carregados == false)
                 {
                     //só sai do loop quando o app ter finalizado de carregar todos os seus contatos.
                     await System.Threading.Tasks.Task.Delay(200); //dorme por 200ms (0,2 segundos) 
                     //se não botarmos um Delay, o programa vai usar 100% de um core do dispositivo, com um delay de somente 1ms isso cai pra quase 0%
                 }
-                if (Globais.MinhaRegiao != "")
+                if (Globais.Contatos_Bloqueados_Pelo_User == false)
                 {
-                    for (int i = 0, fim = PeopleData.TotalContatos(); i < fim; i++)
+                    if (Globais.MinhaRegiao != "")
                     {
-                        Debug.Write("Adicionando contato N" + i + " - ");
-                        Globais.contatos.Add(PeopleData.CarregaContato(i));
-                        Debug.WriteLine(Globais.contatos[i].NomeCompleto + " - ADICIONADO");
-                    }
-                    //Etapa 2: adicionar o nono digito
-                    for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
-                    {
-
-                        for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
+                        for (int i = 0, fim = PeopleData.TotalContatos(); i < fim; i++)
                         {
-                            Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
-                            TelefoneBuffer = new Telefone();
-                            TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
-                            Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
-                            Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
-                            if (Saida == -2)
-                            {
-                                Saida = -1;
-                            }
-                            Globais.contatos[i].NumeroAlterado.Add(Saida);
-                            Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
-                            Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
-                            Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
-                            Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
-                            Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
-                            Debug.WriteLine(" - ADICIONADO");
+                            Debug.Write("Adicionando contato N" + i + " - ");
+                            Globais.contatos.Add(PeopleData.CarregaContato(i));
+                            Debug.WriteLine(Globais.contatos[i].NomeCompleto + " - ADICIONADO");
                         }
+                        //Etapa 2: adicionar o nono digito
+                        for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
+                        {
+
+                            for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
+                            {
+                                Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
+                                TelefoneBuffer = new Telefone();
+                                TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
+                                Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
+                                Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
+                                if (Saida == -2)
+                                {
+                                    Saida = -1;
+                                }
+                                Globais.contatos[i].NumeroAlterado.Add(Saida);
+                                Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
+                                Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
+                                Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
+                                Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
+                                Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
+                                Debug.WriteLine(" - ADICIONADO");
+                            }
+                        }
+                    }
+                    else
+                    {
+                        PodeCarregarOutraPagina = false;
+                        // a mensagem já é mostrado na janela do xaml
+                        /*                    var pergunta = new MessageDialog("Não encontramos a região requisitada em nossos registros, então para evitar problemas estamos requisitando para que você repita novamente esta operação informando sua região (caso tenha digitado errado)");
+                                            pergunta.Title = "Hmm que região é essa?";
+                                            pergunta.Commands.Add(new UICommand { Label = "Entendi chefe", Id = 0 });
+                                            await pergunta.ShowAsync();
+                         */
                     }
                 }
                 else
                 {
                     PodeCarregarOutraPagina = false;
-                    // a mensagem já é mostrado na janela do xaml
-/*                    var pergunta = new MessageDialog("Não encontramos a região requisitada em nossos registros, então para evitar problemas estamos requisitando para que você repita novamente esta operação informando sua região (caso tenha digitado errado)");
-                    pergunta.Title = "Hmm que região é essa?";
-                    pergunta.Commands.Add(new UICommand { Label = "Entendi chefe", Id = 0 });
-                    await pergunta.ShowAsync();
- */
-                 }
+                    var pergunta = new MessageDialog("O sistema negou a leitura de seus contatos, talvez o app esteja desabilitado para ler seus contatos nas configurações do sistema.\nAo alterar a configuração de privacidade, o aplicativo será fechado pelo Windows.");
+                    pergunta.Title = "Algo deu errado";
+                    pergunta.Commands.Add(new UICommand { Label = "Corrigir", Id = 0 });
+                    pergunta.Commands.Add(new UICommand { Label = "Ignorar", Id = 1 });
+                    var resposta = await pergunta.ShowAsync();
+                    if ((int)resposta.Id == 0)
+                    {
+                        await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:privacy-contacts"));
+                    }
+                    else
+                    {
+
+                    }
+                }
+
             }
             return PodeCarregarOutraPagina;
         }

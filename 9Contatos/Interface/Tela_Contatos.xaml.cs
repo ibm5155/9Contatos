@@ -297,19 +297,8 @@ namespace _9Contatos.Interface
 
         private async void Bt_Salvar_Click(object sender, RoutedEventArgs e)
         {
-#if !DEBUG
-            bool Output = false;
-            try
-            {
-                Output = await SalvaContatos.Salvar();
-            }
-            catch(Exception  ex)
-            {
-                throw new Exception("Erro ao salvar os contatos", ex);
-            }
-#else
+
             bool Output = await SalvaContatos.Salvar();
-#endif
             if (Output == true)
             {
                 Frame.GoBack();
