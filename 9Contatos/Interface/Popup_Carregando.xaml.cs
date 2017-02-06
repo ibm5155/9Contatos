@@ -41,5 +41,10 @@ namespace _9Contatos.Interface
         {
             Barra_Progresso.Value = Barra_Progresso.Value + 1;
         }
+
+        public void Altera_Titulo(string NovoTitulo)
+        {
+            Title = NovoTitulo;
+        }
     }
 }

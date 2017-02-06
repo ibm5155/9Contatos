@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp">
-  <Identity Name="39155LZFStudio.ArrumaContatos" Publisher="CN=D1C98F0E-9CF5-46DB-8E21-10F88B140AC5" Version="1.2.1.0" />
+<Package xmlns:r="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities" xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" IgnorableNamespaces="uap mp r">
+  <Identity Name="39155LZFStudio.ArrumaContatos" Publisher="CN=D1C98F0E-9CF5-46DB-8E21-10F88B140AC5" Version="1.2.2.0" />
   <mp:PhoneIdentity PhoneProductId="183ca07f-8176-4724-aa35-b7e81e78ab5a" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Arruma Contatos</DisplayName>
@@ -30,6 +30,7 @@
   </Applications>
   <Capabilities>
     <Capability Name="internetClient" />
+    <r:Capability Name="contactsSystem"/>
     <uap:Capability Name="contacts" />
   </Capabilities>
 </Package>

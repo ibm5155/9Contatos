@@ -13,7 +13,11 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <ProgressRing HorizontalAlignment="Center" Margin="0" VerticalAlignment="Center" Width="100" Height="100" IsActive="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="59*"/>
+            <ColumnDefinition Width="211*"/>
+        </Grid.ColumnDefinitions>
+        <ProgressRing HorizontalAlignment="Center" Margin="25.645,0,85,0" VerticalAlignment="Center" Width="100" Height="100" IsActive="True" Grid.Column="1">
             <ProgressRing.Foreground>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="Black" Offset="0"/>
@@ -21,6 +25,6 @@
                 </LinearGradientBrush>
             </ProgressRing.Foreground>
         </ProgressRing>
-        <ProgressBar x:Name="Barra_Progresso" HorizontalAlignment="Left" Height="10" Margin="0,90,0,0" VerticalAlignment="Top" Width="270"/>
+        <ProgressBar x:Name="Barra_Progresso" HorizontalAlignment="Left" Height="10" Margin="0,90,0,0" VerticalAlignment="Top" Width="270" Grid.ColumnSpan="2"/>
     </Grid>
 </ContentDialog>

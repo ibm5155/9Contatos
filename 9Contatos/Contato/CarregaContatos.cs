@@ -22,6 +22,8 @@ namespace _9Contatos.Contatos.Carrega
 
     class CarregaContatos
     {
+        public static Janela_Carregando Carregando;
+
 
         private static async Task<bool> Carrega_PeopleAPI(QualAPI api)
         {
@@ -153,10 +155,61 @@ namespace _9Contatos.Contatos.Carrega
 
         private static async Task Carrega_OutlookAPI()
         {
+
+            int Saida;
+            Globais.contatos.Clear();
+            OutlookAPI Outlook = new OutlookAPI();
+            Carregando = new Janela_Carregando();
+
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();
 
             await OutlookAPI.Get_Contacts();
+
+            PegaRegiao dialog = new PegaRegiao();
+            Carregando.Hide();
+            await dialog.ShowAsync();
+            // a partir daqui temos todos os contatos do email carregados.
+            // agora é converter eles para o padrão usado
+
+            if (Globais.MinhaRegiao != "")
+            {
+
+                for (int i = 0; i < Globais.Outlook_contatos.Count(); i++)
+                {
+                    for (int j = 0; j < Globais.Outlook_contatos[i].Contatos.Count(); j++)
+                    {
+                        Globais.contatos.Add(Outlook.CarregaContato(i, j));
+                    }
+                }
+
+                //Etapa 2: adicionar o nono digito
+                for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
+                {
+
+                    for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
+                    {
+                        Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
+                        TelefoneBuffer = new Telefone();
+                        TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
+                        Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
+                        Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
+                        if (Saida == -2)
+                        {
+                            Saida = -1;
+                        }
+                        Globais.contatos[i].NumeroAlterado.Add(Saida);
+                        Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
+                        Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
+                        Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
+                        Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
+                        Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
+                        Debug.WriteLine(" - ADICIONADO");
+                    }
+                }
+            }
+
+            Carregando.Hide();
 
         }
 

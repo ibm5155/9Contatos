@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using _9Contatos.Contatos.Contato;
 using Windows.Storage;
 using Microsoft.Identity.Client;
+using _9Contatos.Contatos.Carrega;
 using System.Net.Http;
 //using Windows.Data.Json;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
+using _9Contatos.globais;
 
 namespace _9Contatos.API.Outlook
 {
@@ -69,9 +69,9 @@ namespace _9Contatos.API.Outlook
         }
 
 
-        public static async Task<List<Contato>> Get_Contacts()
+        public static async Task<bool> Get_Contacts()
         {
-            List<Contato> contatos = new List<Contato>();
+            Globais.Outlook_contatos = new List<Contatos_Outlook>();
             if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5)) ;
             else
             {
@@ -98,38 +98,82 @@ namespace _9Contatos.API.Outlook
                     }
                 }
                 #endregion
-#region Carrega todos os contatos...
+                #region Carrega todos os contatos...
+                CarregaContatos.Carregando.Hide(); // gambiarra
+                CarregaContatos.Carregando.ShowAsync(); //Roda em paralelo ao código
+                CarregaContatos.Carregando.Altera_Titulo("Carregando Contatos");
+                CarregaContatos.Carregando.Altera_Maximo(TotalContatos);
+                int i = 0;
+
             while (TotalContatos > proximo_grupo)
             {
-                    Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()));
+                    Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString())+ "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
 
-                if (!Requisicao.IsSuccessStatusCode)
-                {
-
-                    //                    throw new Exception("We could not send the message: " + response.StatusCode.ToString());
-                }
-                else
-                {
-                    if (Requisicao.Content != null)
+                    if (!Requisicao.IsSuccessStatusCode)
                     {
-                        var responseString = await Requisicao.Content.ReadAsStringAsync();
+
+                        //                    throw new Exception("We could not send the message: " + response.StatusCode.ToString());
+                    }
+                    else
+                    {
+                        if (Requisicao.Content != null)
+                        {
+                            var responseString = await Requisicao.Content.ReadAsStringAsync();
+                            Globais.Outlook_contatos.Add(new Contatos_Outlook());
+                            Globais.Outlook_contatos[i].Carrega(responseString);
                             proximo_grupo += 10;
-                            //var odata = JsonConvert.DeserializeObject<ODataResponse<Product>>(responseString);
-
-
-                            //                            JsonArray root = JsonValue.Parse(responseString).GetArray();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
+                            CarregaContatos.Carregando.Incrementa_Barra();
                         }
+                        i++;
                     }
             }
             #endregion
 
             }
-            return contatos;
+            Globais.Contatos_Carregados = true;
+            return true;
         }
 
         private void Set_Contact(Contato contato)
         {
 
+        }
+
+        public Contato CarregaContato(int IndiceY, int IndiceX)
+        {
+            Contato NovoContato = new Contato();
+
+            NovoContato.NomeCompleto = Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].displayName;
+
+            if(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].mobilePhone != "")
+            {
+                NovoContato.Telefones_Antigos.Add(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].mobilePhone);
+            }
+
+
+            for (int i = 0, fim = Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].homePhones.Count(); i < fim; i++)
+            {
+                NovoContato.Telefones_Antigos.Add(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].homePhones[i]);
+            }
+
+            for (int i = 0, fim = Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].businessPhones.Count(); i < fim; i++)
+            {
+                NovoContato.Telefones_Antigos.Add(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].businessPhones[i]);
+            }
+
+            NovoContato.ID_OUTLOOK = Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].Id;
+
+
+
+            return NovoContato;
         }
     }
 }

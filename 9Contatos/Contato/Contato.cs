@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Contacts;
 using _9Contatos.API.PeopleAPP;
+using _9Contatos.API.Outlook;
 using _9Contatos.Telefones.telefone;
 using _9Contatos.globais;
 
@@ -32,7 +33,8 @@ namespace _9Contatos.Contatos.Contato
         public List<bool> Flago_Numero_Eh_Internacional = new List<bool>();
 
         public string NomeCompleto = "";
-        public Contact ID { set; internal get; } // objeto contato (somente escrita)
+        public Contact ID { set; internal get; } // objeto contato (somente escrita) || PEOPLE API
+        public string ID_OUTLOOK { set; internal get; }
 
         public async Task<ContatoSalvo> SalvaContato()
         {

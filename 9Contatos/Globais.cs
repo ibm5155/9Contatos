@@ -1,15 +1,18 @@
 ﻿using System.Collections.Generic;
 using _9Contatos.Contatos.Contato;
+using _9Contatos.API.Outlook;
 using _9Contatos.Contatos.Carrega;
 
 namespace _9Contatos.globais
 {
     class Globais
     {
-        public const bool VERSAO_TESTES = false;
+        public const bool VERSAO_TESTES = true;
         public static bool POPUP_TESTES = true;
 
         public static List<Contato> contatos = new List<Contato>();
+        public static List<Contatos_Outlook> Outlook_contatos = new List<Contatos_Outlook>();
+
         public static string MinhaRegiao = "";
         public static int OffsetCelular = -2;
         public static List<int> OffsetNome = new List<int>(); // Indica os Offsets do contato
