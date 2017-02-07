@@ -35,6 +35,7 @@ namespace _9Contatos.Telefones.telefone
 
         public string Get_Numero_Formatado(bool ManterFormatacao, bool TracoNumero /* - */, bool EspacoEntreDados, bool AspasEntreRegiao,bool PrefixoLongaDistanciaNacional, ref string DDD_Nacional, bool OcultaDDD_Nacional, bool Oculta_Pais)
         {
+#warning REFAZER ESTRUTURA PARA ALGO MENOS DEPENDENTE DE ALTERAÇÕES. (criar funções que retornem algo sem depender do resultado uma das outras)
             string Numero_Formatado = "";
             string Espaco = "";
             string TRegiao = (Pais.Count() + CSP.Count() == 0 ? "0" : "") + Regiao;

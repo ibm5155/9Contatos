@@ -95,40 +95,10 @@ namespace _9Contatos.Contatos.Carrega
                             Globais.contatos.Add(PeopleData.CarregaContato(i));
                             Debug.WriteLine(Globais.contatos[i].NomeCompleto + " - ADICIONADO");
                         }
-                        //Etapa 2: adicionar o nono digito
-                        for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
-                        {
-
-                            for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
-                            {
-                                Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
-                                TelefoneBuffer = new Telefone();
-                                TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
-                                Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
-                                Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
-                                if (Saida == -2)
-                                {
-                                    Saida = -1;
-                                }
-                                Globais.contatos[i].NumeroAlterado.Add(Saida);
-                                Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
-                                Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
-                                Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
-                                Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
-                                Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
-                                Debug.WriteLine(" - ADICIONADO");
-                            }
-                        }
                     }
                     else
                     {
                         PodeCarregarOutraPagina = false;
-                        // a mensagem já é mostrado na janela do xaml
-                        /*                    var pergunta = new MessageDialog("Não encontramos a região requisitada em nossos registros, então para evitar problemas estamos requisitando para que você repita novamente esta operação informando sua região (caso tenha digitado errado)");
-                                            pergunta.Title = "Hmm que região é essa?";
-                                            pergunta.Commands.Add(new UICommand { Label = "Entendi chefe", Id = 0 });
-                                            await pergunta.ShowAsync();
-                         */
                     }
                 }
                 else
@@ -157,7 +127,6 @@ namespace _9Contatos.Contatos.Carrega
         {
 
             int Saida;
-            Globais.contatos.Clear();
             OutlookAPI Outlook = new OutlookAPI();
             Carregando = new Janela_Carregando();
 
@@ -182,32 +151,9 @@ namespace _9Contatos.Contatos.Carrega
                         Globais.contatos.Add(Outlook.CarregaContato(i, j));
                     }
                 }
-
-                //Etapa 2: adicionar o nono digito
-                for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
-                {
-
-                    for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
-                    {
-                        Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
-                        TelefoneBuffer = new Telefone();
-                        TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
-                        Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
-                        Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
-                        if (Saida == -2)
-                        {
-                            Saida = -1;
-                        }
-                        Globais.contatos[i].NumeroAlterado.Add(Saida);
-                        Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
-                        Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
-                        Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
-                        Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
-                        Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
-                        Debug.WriteLine(" - ADICIONADO");
-                    }
-                }
             }
+
+
 
             Carregando.Hide();
 
@@ -221,9 +167,19 @@ namespace _9Contatos.Contatos.Carrega
 
         public static async Task<bool> Carrega(QualAPI api)
         {
-            Debug.WriteLine("Carregando contatos");
+            ParserNonoDigito ParserNove = new ParserNonoDigito();
+            Telefone TelefoneBuffer = new Telefone();
+            int Saida = 0;
+
+            Debug.WriteLine("Limpando CACHE de contatos antigos.");
+
+            Globais.contatos.Clear();
+
+            Debug.WriteLine("INICIANDO API " + api + " E CARREGANDO CONTATOS.");
             Globais.Contatos_Carregados = false;
             bool PodeCarregarOutraPagina = true;
+            //Inicializa a api desejada, carrega seus devidos contatos e transforma os contatos da api em um contato que possa ser utilizado 
+            //pela estrutura de contatos criados no Contato.cs
             switch(api)
             {
                 case QualAPI.PeopleAPI:
@@ -236,6 +192,9 @@ namespace _9Contatos.Contatos.Carrega
                 case QualAPI.GmailAPI:
                     break;
             }
+            Debug.WriteLineIf(PodeCarregarOutraPagina == true, "CONTATOS CARREGADOS");
+            Debug.WriteLineIf(PodeCarregarOutraPagina == false, "PROBLEMAS NA API AO CARREGAR OS CONTATOS.");
+            //Zeramos os dados globais de filtro
             Globais.Filtrar_Sem_Numero = false;
             Globais.Filtrar_Ocultar_Um_Contato = false;
             Globais.Filtrar_Numero_Alterado = true;
@@ -243,7 +202,42 @@ namespace _9Contatos.Contatos.Carrega
             Globais.Filtrar_Servico = true;
             Globais.Filtrar_Desconhecido= true;
             Globais.Filtrar_Internacional = true;
-            Debug.WriteLine("contatos carregados - status " + PodeCarregarOutraPagina);
+            //Parte 2, adicionando  as strings telefones a estrutura de telefones && parser do nono digito
+            if (Globais.Contatos_Bloqueados_Pelo_User == false && PodeCarregarOutraPagina == true)
+            {
+                if (Globais.MinhaRegiao != "")
+                {
+                    //Etapa 2: adicionar o nono digito
+                    for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
+                    {
+
+                        for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
+                        {
+                            Debug.Write("Adicionando telefone filtrado de - " + Globais.contatos[i].NomeCompleto);
+                            TelefoneBuffer = new Telefone();
+                            TelefoneBuffer.SetTelefone(Globais.contatos[i].Telefones_Antigos[j]);
+                            Saida = ParserNove.ChecaNumero(ref TelefoneBuffer, Globais.MinhaRegiao);
+                            Globais.contatos[i].Telefones_Formatados.Add(TelefoneBuffer);
+                            if (Saida == -2)
+                            {
+                                Saida = -1;
+                            }
+                            //Salvamos como era  a formatação original de cada número aqui.
+                            //Pode ser utilizado para algo no futuro por exemplo caso a pessoa só queira adicionar o nono digito.
+                            Globais.contatos[i].NumeroAlterado.Add(Saida);
+                            Globais.contatos[i].Flag_Numero_Eh_Servico.Add(Globais.contatos[i].Telefones_Formatados[j].Servico.Count() > 0);
+                            Globais.contatos[i].Flag_Recebeu_Nono_Digito.Add(Saida == 1);
+                            Globais.contatos[i].Flag_Numero_Eh_Desconhecido.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Nao_Reconhecido.Count() > 0);
+                            Globais.contatos[i].Flago_Numero_Eh_Internacional.Add(Globais.contatos[i].Telefones_Formatados[j].Numero_Internacional.Count() > 0);
+                            Globais.contatos[i].Flag_Numero_Alterado.Add(Globais.contatos[i].Telefones_Formatados[j].Get_Numero_Formatado(Globais.Formatacao_Original, Globais.Formatacao_Traco, Globais.Formatacao_Espaco, Globais.Formatacao_Aspas, Globais.Formatacao_Distancia, ref Globais.MinhaRegiao, Globais.Formatacao_Ocultar_Meu_DDD, Globais.Formatacao_Ocultar_Pais) != Globais.contatos[i].Telefones_Antigos[j]);
+                            Debug.WriteLine(" - ADICIONADO");
+                        }
+                    }
+                }
+            }
+
+
+           Debug.WriteLine("contatos carregados - status " + PodeCarregarOutraPagina);
 
 
             return PodeCarregarOutraPagina;
