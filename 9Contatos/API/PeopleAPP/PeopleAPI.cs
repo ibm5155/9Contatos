@@ -80,21 +80,28 @@ namespace _9Contatos.API.PeopleAPP
         ///         -2 o contagem de telefones novos difere do número no contato_a_mudar
         ///         -3 = Nome do contato se difere ao nomecompleto a ser validado
         /// </returns>
-        public async Task<int> AlterarContato_Link(Windows.ApplicationModel.Contacts.Contact Contato_a_Mudar, string NomeCompleto, List<string> TelefonesNovos, List<string> TelefonesAntigos)
+        public async Task<int> AlterarContato_Link(Contact Contato_a_Mudar, string NomeCompleto, List<string> TelefonesNovos, List<string> TelefonesAntigos)
         {
             Contact contato_temp;
             int Valido = 0;
             contactStore = await ContactManager.RequestStoreAsync(ContactStoreAccessType.AppContactsReadWrite);
             var listaListasApp = await contactStore.FindContactListsAsync();
             ContactList contactList;
-            contactList = listaListasApp.First();
-            for (int i = 0, fim = TelefonesNovos.Count(); i < fim; i++)
+            if (listaListasApp.Count() > 0)
             {
-                Contato_a_Mudar.Phones[i].Number = TelefonesNovos[i];
+                contactList = listaListasApp.First();
+                for (int i = 0, fim = TelefonesNovos.Count(); i < fim; i++)
+                {
+                    Contato_a_Mudar.Phones[i].Number = TelefonesNovos[i];
+                }
+                contato_temp = ClonaContato(ref Contato_a_Mudar);
+                /*await*/
+                contactList.SaveContactAsync(contato_temp);
             }
-            contato_temp = ClonaContato(ref Contato_a_Mudar);
-            /*await*/ contactList.SaveContactAsync(contato_temp);
-
+            else
+            {
+                Valido = -1;
+            }
             return Valido;
         }
 
