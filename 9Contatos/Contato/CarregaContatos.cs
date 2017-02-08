@@ -123,18 +123,42 @@ namespace _9Contatos.Contatos.Carrega
             return PodeCarregarOutraPagina;
         }
 
-        private static async Task Carrega_OutlookAPI()
+        private static async Task<bool> Carrega_OutlookAPI()
         {
 
-            int Saida;
+            bool Saida =true;
             OutlookAPI Outlook = new OutlookAPI();
             Carregando = new Janela_Carregando();
 
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();
+            try
+            {
+                if( await OutlookAPI.Get_Contacts() == false)
+                {
+                    var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
+                    pergunta.Title = "Problemas em contactar o servidor da microsoft.";
+                    pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                    pergunta.ShowAsync();
+                }
 
-            await OutlookAPI.Get_Contacts();
+            }
+            catch(System.Net.Http.HttpRequestException)
+            {
+                var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
+                pergunta.Title = "Problemas em contactar o servidor da microsoft.";
+                pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                pergunta.ShowAsync();
+            }
+            /*            catch(System.Net.Http.HttpRequestException)
+                        {
 
+                        }
+                        catch(Microsoft.Identity.Client.MsalException)
+                        {
+
+                        }
+                        */
             PegaRegiao dialog = new PegaRegiao();
             Carregando.Hide();
             await dialog.ShowAsync();
@@ -156,7 +180,7 @@ namespace _9Contatos.Contatos.Carrega
 
 
             Carregando.Hide();
-
+            return Saida;
         }
 
         private static void Carrega_GmailAPI()
@@ -187,7 +211,7 @@ namespace _9Contatos.Contatos.Carrega
                     PodeCarregarOutraPagina = await Carrega_PeopleAPI(api);
                     break;
                 case QualAPI.OutlookAPI:
-                    await Carrega_OutlookAPI();
+                    PodeCarregarOutraPagina =  await Carrega_OutlookAPI();
                     break;
                 case QualAPI.GmailAPI:
                     break;

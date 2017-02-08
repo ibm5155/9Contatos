@@ -34,8 +34,8 @@ namespace _9Contatos.Contatos.Contato
 
         public string NomeCompleto = "";
         public Contact ID { set; internal get; } // objeto contato (somente escrita) || PEOPLE API
-        public string ID_OUTLOOK { set; internal get; }
-
+        public Contato_Outlook_Struct ID_OUTLOOK { set; internal get; }
+/*
         public async Task<ContatoSalvo> SalvaContato()
         {
             PeopleAPI Link = new PeopleAPI();
@@ -60,5 +60,6 @@ namespace _9Contatos.Contatos.Contato
             }
             return Status;
         }
+        */
     }
 }

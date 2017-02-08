@@ -95,6 +95,10 @@ namespace _9Contatos.Interface
                             }
                             else
                             {
+                                var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
+                                pergunta.Title = "Problemas em contactar o servidor da microsoft.";
+                                pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                                pergunta.ShowAsync();
                             }
                         }
                         catch (Microsoft.Identity.Client.MsalServiceException)
