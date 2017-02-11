@@ -85,14 +85,14 @@ namespace _9Contatos.Interface
                         Globais.api_usada = QualAPI.OutlookAPI;
                         try
                         {
-                            if (await SignInCurrentUserAsync())
-                            {
+//                            if (await SignInCurrentUserAsync())
+//                            {
                                 Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
                                 if (Carregar == true)
                                 {
                                     Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                                 }
-                            }
+ /*                           }
                             else
                             {
                                 var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
@@ -100,6 +100,7 @@ namespace _9Contatos.Interface
                                 pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                                 pergunta.ShowAsync();
                             }
+                            */
                         }
                         catch (Microsoft.Identity.Client.MsalServiceException)
                         {

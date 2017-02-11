@@ -134,34 +134,33 @@ namespace _9Contatos.Contatos.Carrega
             Telefone TelefoneBuffer = new Telefone();
             try
             {
-                if( await OutlookAPI.Get_Contacts() == false)
+                if ( await OutlookAPI.Get_Contacts() == false)
                 {
-                    var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
-                    pergunta.Title = "Problemas em contactar o servidor da microsoft.";
-                    pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
-                    pergunta.ShowAsync();
+                    // Usuário cancelou o login.
+                    //                    var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
+                    //                    pergunta.Title = "Problemas em contactar o servidor da microsoft.";
+                    //                    pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                    //                   pergunta.ShowAsync();
+                    Saida = false;
                 }
 
             }
             catch(System.Net.Http.HttpRequestException)
             {
-                var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfifique sua conexão de rede ou tente novamente mais tarde.");
+                Carregando.Hide();
+                //O usuário se conectou ao servidor da microsoft, mas por algum motivo, depois de carregar um token válido ele não conseguiu se conectar novamente a mesma
+                var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfique sua conexão de rede ou tente novamente mais tarde.");
                 pergunta.Title = "Problemas em contactar o servidor da microsoft.";
                 pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                 pergunta.ShowAsync();
+                Saida = false;
             }
-            /*            catch(System.Net.Http.HttpRequestException)
-                        {
-
-                        }
-                        catch(Microsoft.Identity.Client.MsalException)
-                        {
-
-                        }
-                        */
-            PegaRegiao dialog = new PegaRegiao();
             Carregando.Hide();
-            await dialog.ShowAsync();
+            PegaRegiao dialog = new PegaRegiao();
+            if (Saida)
+            {
+                await dialog.ShowAsync();
+            }
             // a partir daqui temos todos os contatos do email carregados.
             // agora é converter eles para o padrão usado
 
@@ -176,10 +175,12 @@ namespace _9Contatos.Contatos.Carrega
                     }
                 }
             }
+            else
+            {
+                Saida = false;
+            }
 
 
-
-            Carregando.Hide();
             return Saida;
         }
 

@@ -590,7 +590,7 @@ namespace _9Contatos.Telefones.telefone
                 //sendo o DDD vazio é dito que o R é igual ao Meu_DDD
                 R = "";
             }
-            else if(Oculta_Pais == true && Pais == "")
+            else if(Oculta_Pais == true || Pais == "")
             {
 
                 if (CSP == "")

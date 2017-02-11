@@ -10,6 +10,7 @@ using _9Contatos.Contatos.Carrega;
 using System.Net.Http;
 //using Windows.Data.Json;
 using _9Contatos.globais;
+using Microsoft.Graph;
 
 namespace _9Contatos.API.Outlook
 {
@@ -24,7 +25,6 @@ namespace _9Contatos.API.Outlook
     {
         public List<T> Value { get; set; }
     }
-
 
     class OutlookAPI
     {
@@ -75,6 +75,7 @@ namespace _9Contatos.API.Outlook
         public static async Task<bool> Get_Contacts()
         {
             Globais.Outlook_contatos = new List<Contatos_Outlook>();
+            await GetTokenForUserAsync(); //pega token
             if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
             {
                 Globais.Contatos_Carregados = false;
@@ -115,7 +116,8 @@ namespace _9Contatos.API.Outlook
             while (TotalContatos > proximo_grupo)
             {
                     Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString())+ "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
-
+                    //client.GetAsync tem um erro que se a conexão cair durante a sua execução, o programa vai ficar em loop.
+                    //se ela cair no inicio da execução ela vai dar uma Exception System.Net.Http.HttpRequestException
                     if (!Requisicao.IsSuccessStatusCode)
                     {
 
@@ -149,10 +151,6 @@ namespace _9Contatos.API.Outlook
             return true;
         }
 
-        private void Set_Contact(Contato contato)
-        {
-
-        }
 
         public Contato CarregaContato(int IndiceY, int IndiceX)
         {
@@ -193,14 +191,14 @@ namespace _9Contatos.API.Outlook
             else
             {
                 HttpClient client = new HttpClient();
-                var method = new HttpMethod("PATCH");
                 StringContent MensagemDadosAlterados;
-                string content;
+                string content = "";
                 #region MENSAGEM de atualização
                 //uma mensagem Json lindamente formatada a mão
-                content = "{ " + '"' + "MobilePhone" + '"' + ": " + '"' + NewMobilePhone + '"';
 
-                content = content + ", " + '"' + "homePhones" + '"' + ": [ " ;
+                content = "{ " + '"' + "MobilePhone" + '"' + " : " + '"' + NewMobilePhone + '"';
+
+                content = content + ", " + '"' + "homePhones" + '"' + " : [ " ;
                 for(int i = 0;i <  NewhomePhones.Count(); i++)
                 {
                     content = content + '"' + NewhomePhones[i] + '"';
@@ -219,20 +217,56 @@ namespace _9Contatos.API.Outlook
                     }
                 }
                 content = content + " ] }";
+                
                 MensagemDadosAlterados = new StringContent(content);
+                MensagemDadosAlterados.Headers.ContentType.MediaType = "application/json";
                 #endregion
+
+
+
+
                 #region Enviar MENSAGEM
-                var request = new HttpRequestMessage(method, new Uri("https://graph.microsoft.com/v1.0/me/contacts/" + contato.ID_OUTLOOK.Id)   )
+                var request = new HttpRequestMessage(new HttpMethod("PATCH"), new Uri("https://graph.microsoft.com/v1.0/me/contacts/" + contato.ID_OUTLOOK.Id + "/"))
                 {
                     Content = MensagemDadosAlterados
-                };
+                    
+
+            };
                 var token = await OutlookAPI.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token); //não sei o que é mas é requisitado...
                 var response = await client.SendAsync(request);
+                var responseString = await response.Content.ReadAsStringAsync();
+
                 #endregion
                 #region checa retorno se foi validado
 
+                if (response.StatusCode == System.Net.HttpStatusCode.UnsupportedMediaType)
+                {
+                    Status = false;
+                    // formatação errada.
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.BadGateway)
+                {
+                    Status = false;
+                    // Chamada errado
+                }
+
                 #endregion
+                /*
+                #region GRAPH CODE
+                                HttpRequestMessage authResult = new HttpRequestMessage();
+                                authResult.Headers.Add("Authorization", "Bearer " + token);
+
+                                var cliente = new GraphServiceClient(authResult);
+                                var orgRequest = cliente.Me.Contacts[contato.ID_OUTLOOK.Id].Request();
+                                var org = orgRequest.Select(contato.ID_OUTLOOK.Id).GetAsync().Result;
+                                org.BusinessPhones = NewbusinessPhones;
+                                org.HomePhones = NewhomePhones;
+                                org.MobilePhone = NewMobilePhone;
+
+                                orgRequest.UpdateAsync(org).Wait();
+                                #endregion
+                                */
             }
 
             /* REQUEST BODY:
