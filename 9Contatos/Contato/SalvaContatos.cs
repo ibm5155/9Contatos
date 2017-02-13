@@ -7,6 +7,7 @@ using _9Contatos.API.Outlook;
 using _9Contatos.globais;
 using Windows.UI.Popups;
 using _9Contatos.Interface;
+using System.Diagnostics;
 
 namespace _9Contatos.Contatos.Salvar
 {
@@ -22,6 +23,7 @@ namespace _9Contatos.Contatos.Salvar
             Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; Saida == true && i < Globais.contatos.Count; i++)
             {
+                Debug.Write("Salvando o contato " + Globais.contatos[i].NomeCompleto);
                 Telefone_Novo.Clear();
                 for (int j = 0; j < Globais.contatos[i].Telefones_Formatados.Count; j++)
                 {
@@ -35,11 +37,13 @@ namespace _9Contatos.Contatos.Salvar
                 catch (System.UnauthorizedAccessException) //não é para acontecer isso, mas vai que...
                 {
                     Saida = false;
+                    Carregando.Hide()
                     var pergunta = new MessageDialog("Parece que o sistema negou que seus contatos sejam alterados, isso se deve ao fato do programa não ter sido autorizado pela microsoft a mudar estes dados, esperamos que no futuro isso seja arrumado.");
                     pergunta.Title = "Problemas ao Contactar a api de contatos";
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                     await pergunta.ShowAsync();
                 }
+                Debug.WriteLine(" - SALVO");
                 Carregando.Incrementa_Barra();
             }
             return Saida;
@@ -89,6 +93,7 @@ namespace _9Contatos.Contatos.Salvar
             Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; TodosContatosSalvos == true && i < Globais.contatos.Count; i++)
             {
+                Debug.Write("Salvando o contato " + Globais.contatos[i].NomeCompleto);
                 New_Business_Phones.Clear();
                 New_Home_Phones.Clear();
                 if (Globais.contatos[i].Telefones_Formatados.Count > 0)
@@ -125,6 +130,7 @@ namespace _9Contatos.Contatos.Salvar
                 }
                 catch (System.Net.Http.HttpRequestException)
                 {
+                    Debug.Write(" <PROBLEMA> ");
                     Carregando.Hide();
                     TodosContatosSalvos = false;
                     var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfique sua conexão de rede ou tente novamente mais tarde.");
@@ -132,6 +138,8 @@ namespace _9Contatos.Contatos.Salvar
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                     await pergunta.ShowAsync();
                 }
+                Debug.WriteLine(" - SALVO");
+
                 Carregando.Incrementa_Barra();
             }
             #endregion
@@ -142,7 +150,7 @@ namespace _9Contatos.Contatos.Salvar
         public static async Task<bool> Salvar()
         {
             bool Saida = false;
-
+            Debug.WriteLine("Iniciando processo de salvar contatos com a API " + Globais.api_usada);
             Carregando = new Janela_Carregando();
             Carregando.ShowAsync(); //Roda em paralelo ao código
 
@@ -159,6 +167,7 @@ namespace _9Contatos.Contatos.Salvar
                     break;
             }
             Carregando.Hide();
+            Debug.WriteLine("Fim do Processo de alteracao de contatos");
             if (Saida == true)
             {
                 MessageDialog pergunta;
