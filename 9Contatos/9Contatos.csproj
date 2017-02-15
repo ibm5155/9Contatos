@@ -96,6 +96,7 @@
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
     <None Include="9Contatos_StoreKey.pfx" />
     <None Include="9Contatos_TemporaryKey.pfx" />
+    <None Include="Documentação\Diagrama_de_Estado_Telefone_SetTelefone.asta" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>

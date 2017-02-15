@@ -623,7 +623,7 @@ namespace _9Contatos.Telefones.telefone
             if(C.Count() > 0)
             {
                 //só checamos o pais se tiver o CSP
-                if(Pais.Count() == 0 && Oculta_Pais == true)
+                if(Pais.Count() == 0 || Oculta_Pais == true)
                 {
 
                     C = '0' + C;

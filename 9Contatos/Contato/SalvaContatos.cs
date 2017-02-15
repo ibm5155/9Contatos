@@ -37,7 +37,7 @@ namespace _9Contatos.Contatos.Salvar
                 catch (System.UnauthorizedAccessException) //não é para acontecer isso, mas vai que...
                 {
                     Saida = false;
-                    Carregando.Hide()
+                    Carregando.Hide();
                     var pergunta = new MessageDialog("Parece que o sistema negou que seus contatos sejam alterados, isso se deve ao fato do programa não ter sido autorizado pela microsoft a mudar estes dados, esperamos que no futuro isso seja arrumado.");
                     pergunta.Title = "Problemas ao Contactar a api de contatos";
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });

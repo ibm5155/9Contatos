@@ -40,7 +40,7 @@
             </Border.BorderBrush>
         </Border>
 
-        <TextBlock x:Name="Titulo" TextWrapping="Wrap" FontSize="22" Height="34" Margin="5,1,0,0" VerticalAlignment="Top" MinWidth="34" Grid.ColumnSpan="2" Canvas.ZIndex="2">
+        <TextBlock x:Name="Titulo" TextWrapping="Wrap" FontSize="22" Height="34" Margin="15,1,0,0" VerticalAlignment="Top" MinWidth="34" Grid.ColumnSpan="2" Canvas.ZIndex="2">
             <Run Text="Arruma Contatos"/>
         </TextBlock>
 
