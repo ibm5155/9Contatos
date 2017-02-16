@@ -7,7 +7,9 @@ using _9Contatos.API.Outlook;
 using _9Contatos.globais;
 using Windows.UI.Popups;
 using _9Contatos.Interface;
+using _9Contatos.Telefones.Censura;
 using System.Diagnostics;
+using _9Contatos.Email;
 
 namespace _9Contatos.Contatos.Salvar
 {
@@ -42,6 +44,43 @@ namespace _9Contatos.Contatos.Salvar
                     pergunta.Title = "Problemas ao Contactar a api de contatos";
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                     await pergunta.ShowAsync();
+                }
+                catch (Exception Ex)
+                {
+                    Saida = false;
+                    Carregando.Hide();
+                    var pergunta = new MessageDialog("Um erro desconhecido foi encontrado, favor entrar em contato com o desenvolvedor.");
+                    pergunta.Title = "Um problema foi detectado.";
+                    pergunta.Commands.Add(new UICommand { Label = "Reportar problema", Id = 0 });
+                    pergunta.Commands.Add(new UICommand { Label = "Cancelar", Id = 1 });
+                    await pergunta.ShowAsync();
+
+                    ReportarEmail RE = new ReportarEmail();
+                    RE.AddTitulo("Erro ao salvar um contato");
+                    string Mensagem = "=====MENSAGEM DO PROGRAMA==========" + '\n' +
+                        " Seus dados pessoais nem os dados de seus contatos serão compartilhados com o desenvolvedor, apenas alguns dados censurados do último contato que travou o processo de salvar o contato." + '\n' +
+                        "======MENSAGEM DO USUÁRIO==========(opcional)" + '\n';
+
+                    RE.AddMensagem(Mensagem);
+
+                    string LOG =
+                        DateTime.Now.ToString() + '\n' +
+                        "Total Telefones Novos:" + Telefone_Novo.Count + '\n' +
+                        "Total Contatos:" + Globais.contatos.Count + '\n' +
+                        "Iteração:" + i.ToString() + '\n' +
+                        "ID Contato:" + Globais.contatos[i].ID.Id + '\n' +
+                        "======================" + '\n';
+                    for (int j = 0; j < Telefone_Novo.Count; j++)
+                    {
+                        LOG = LOG + " Telefone Novo[" + j + "] : <" + TCensura.Censura_Telefone(Telefone_Novo[j]) + " > " + '\n';
+                    }
+                    LOG = LOG + "==============" + '\n';
+                        
+                    LOG  = LOG  + "StackTrace:" + '\n' +
+                    Ex.StackTrace.ToString();
+                    RE.AdicionaLogAnexo(LOG);
+                    RE.Enviar();
+
                 }
                 Debug.WriteLine(" - SALVO");
                 Carregando.Incrementa_Barra();

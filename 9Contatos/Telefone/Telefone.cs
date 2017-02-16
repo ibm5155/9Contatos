@@ -5,7 +5,6 @@
 
 using System.Linq;
 using _9Contatos.Telefones.operadora;
-using System;
 
 namespace _9Contatos.Telefones.telefone
 {

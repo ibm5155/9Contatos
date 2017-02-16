@@ -104,6 +104,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Contato\CarregaContatos.cs" />
+    <Compile Include="Email\ReportarEmail.cs" />
     <Compile Include="FileHandler\FileHandler.cs" />
     <Compile Include="Globais.cs" />
     <Compile Include="Telefone\Operadora.cs" />
@@ -114,6 +115,7 @@
     <Compile Include="API\Outlook\OutlookAPI.cs" />
     <Compile Include="Telefone\ParserNonoDigito.cs" />
     <Compile Include="API\PeopleAPP\PeopleAPI.cs" />
+    <Compile Include="Telefone\TCensura.cs" />
     <Compile Include="Telefone\Telefone.cs" />
     <Compile Include="Interface\OptionBox_FormatacaoContato.xaml.cs">
       <DependentUpon>OptionBox_FormatacaoContato.xaml</DependentUpon>

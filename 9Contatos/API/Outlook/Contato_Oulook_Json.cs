@@ -1,11 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using Newtonsoft;
-using System.Diagnostics;
-using Newtonsoft.Json.Linq;
 
 namespace _9Contatos.API.Outlook
 {

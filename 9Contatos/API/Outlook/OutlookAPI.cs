@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using _9Contatos.Contatos.Contato;
 using Windows.Storage;
@@ -10,7 +9,6 @@ using _9Contatos.Contatos.Carrega;
 using System.Net.Http;
 //using Windows.Data.Json;
 using _9Contatos.globais;
-using Microsoft.Graph;
 
 namespace _9Contatos.API.Outlook
 {
