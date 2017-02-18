@@ -64,19 +64,20 @@ namespace _9Contatos.Contatos.Salvar
                     RE.AddMensagem(Mensagem);
 
                     string LOG =
-                        DateTime.Now.ToString() + '\n' +
-                        "Total Telefones Novos:" + Telefone_Novo.Count + '\n' +
-                        "Total Contatos:" + Globais.contatos.Count + '\n' +
-                        "Iteração:" + i.ToString() + '\n' +
-                        "ID Contato:" + Globais.contatos[i].ID.Id + '\n' +
-                        "======================" + '\n';
+                        DateTime.Now.ToString() + System.Environment.NewLine +
+                        "API:" + Globais.api_usada + System.Environment.NewLine + 
+                        "Total Telefones Novos:" + Telefone_Novo.Count + System.Environment.NewLine +
+                        "Total Contatos:" + Globais.contatos.Count + System.Environment.NewLine +
+                        "Iteração:" + i.ToString() + System.Environment.NewLine +
+                        "ID Contato:" + Globais.contatos[i].ID.Id + System.Environment.NewLine +
+                        "======================" + System.Environment.NewLine;
                     for (int j = 0; j < Telefone_Novo.Count; j++)
                     {
-                        LOG = LOG + " Telefone Novo[" + j + "] : <" + TCensura.Censura_Telefone(Telefone_Novo[j]) + " > " + '\n';
+                        LOG = LOG + " Telefone Novo[" + j + "] : <" + TCensura.Censura_Telefone(Telefone_Novo[j]) + " > " + System.Environment.NewLine;
                     }
-                    LOG = LOG + "==============" + '\n';
+                    LOG = LOG + "==============" + System.Environment.NewLine;
                         
-                    LOG  = LOG  + "StackTrace:" + '\n' +
+                    LOG  = LOG  + "StackTrace:" + System.Environment.NewLine +
                     Ex.StackTrace.ToString();
                     RE.AdicionaLogAnexo(LOG);
                     RE.Enviar();

@@ -32,10 +32,20 @@ namespace _9Contatos.Email
             EmailMessage emailMessage = new EmailMessage();
             emailMessage.To.Add(new EmailRecipient(EmailDeveloper));
             emailMessage.Body = Mensagem;
+            emailMessage.Subject = Titulo;
             //Como o outro aplicativo não pode de nenhuma forma acessar a memória deste arquivo, temos que criar um arquivo para poder anexar um arquivo e mandar ele por email.
-            StorageFolder MyFolder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            StorageFile attachmentFile = await MyFolder.CreateFileAsync("LogErro.txt");
-
+            StorageFolder MyFolder = ApplicationData.Current.LocalFolder;
+            StorageFile attachmentFile;
+            try
+            {
+                attachmentFile = await MyFolder.GetFileAsync("LogErro.txt");
+                await attachmentFile.DeleteAsync();
+                attachmentFile = await MyFolder.CreateFileAsync("LogErro.txt");
+            }
+            catch(System.IO.FileNotFoundException)
+            {
+                attachmentFile = await MyFolder.CreateFileAsync("LogErro.txt");
+            }
             if (attachmentFile != null)
             {
                 var stream = Windows.Storage.Streams.RandomAccessStreamReference.CreateFromFile(attachmentFile);
@@ -51,7 +61,7 @@ namespace _9Contatos.Email
             
             await EmailManager.ShowComposeNewEmailAsync(emailMessage);
             //e-mail enviado ou não, segue depois abaixo...
-            await attachmentFile.DeleteAsync(); //agora vamos apagar esse email para não deixar lixo no app.
+            //await attachmentFile.DeleteAsync(); //agora vamos apagar esse email para não deixar lixo no app.
         }
 
     }
