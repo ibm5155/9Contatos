@@ -40,13 +40,13 @@ namespace _9Contatos
 
         private _9Contatos.Interface.OpcoesAvancadas xx;
 
-        private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e)
+        private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e) // apagar
         {
             this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
 
         }
 
-        private async void image1_Tapped(object sender, TappedRoutedEventArgs e)
+        private async void image1_Tapped(object sender, TappedRoutedEventArgs e)//apagar
         {
             ProgressBar.Visibility = Visibility.Visible;
             Globais.api_usada = QualAPI.PeopleAPI;
@@ -70,19 +70,65 @@ namespace _9Contatos
             }
         }
 
-        private void bt_Sobre_Click(object sender, RoutedEventArgs e)
+        private void bt_Sobre_Click(object sender, RoutedEventArgs e) //apagar
         {
             this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
         }
 
-        private void image1_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void image1_PointerEntered(object sender, PointerRoutedEventArgs e)//apagar
         {
             this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Gray);
         }
 
-        private void image1_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void image1_PointerExited(object sender, PointerRoutedEventArgs e)//apagar
         {
             this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Black);
+        }
+
+        private void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
+
+        }
+
+        private void bt_donate(object sender, TappedRoutedEventArgs e)
+        {
+
+        }
+
+        private async void bt_arrumar(object sender, TappedRoutedEventArgs e)
+        {
+            ProgressBar.Visibility = Visibility.Visible;
+            Globais.api_usada = QualAPI.PeopleAPI;
+            bool Carregar = false;
+            //teste de crash
+            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
+            ProgressBar.Visibility = Visibility.Collapsed;
+            if (Carregar == true)
+            {
+                if (Globais.contatos.Count() == 0)
+                {
+                    var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                    pergunta.Title = "Nenhum contato encontrado";
+                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                    pergunta.ShowAsync();
+                }
+                else
+                {
+                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                }
+            }
+        }
+
+        private async void bt_classificar(object sender, TappedRoutedEventArgs e)
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:REVIEW?PFN={0}", Windows.ApplicationModel.Package.Current.Id.FamilyName)));
+
+        }
+
+        private void bt_mais(object sender, TappedRoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
         }
     }
 }

@@ -6,22 +6,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    <Page.BottomAppBar>
-        <CommandBar Background="#FF136993">
-            <CommandBar.Content>
-                <Grid/>
-            </CommandBar.Content>
-            <AppBarButton x:Name="bt_Donate" Label="Doação" Visibility="Collapsed">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="$" FontFamily="Segoe UI" FontSize="20"/>
-                </AppBarButton.Icon>
-            </AppBarButton>
-
-            <AppBarButton x:Name="bt_Sobre" Icon="Help" Label="Sobre o App" Click="bt_Sobre_Click"/>
-            <AppBarButton x:Name="bt_Mais_Opcoes" Icon="Add" Label="Mais Opções" Click="bt_Mais_Opcoes_Click"/>
-        </CommandBar>
-    </Page.BottomAppBar>
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
         <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
         </ProgressBar>
@@ -39,13 +23,53 @@
             </Border>
         </Grid>
         <Border x:Name="Image1_border" Background="Black" Height="154" Margin="0,0,0,100" Width="153" HorizontalAlignment="Center" VerticalAlignment="Bottom" />
-        <Image x:Name="image1" Height="154" Margin="0,0,0,100" Width="153" Source="ms-appx:///Assets/arrumar.png" Tapped="image1_Tapped" HorizontalAlignment="Center" VerticalAlignment="Bottom" PointerEntered="image1_PointerEntered" PointerExited="image1_PointerExited"/>
-        <TextBlock x:Name="textBlock1" Margin="0,0,0,52" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Center">
-            <Run Text="Aperte na figura "/>
-            <Run Text="acima "/>
-            <Run Text="para editar os"/>
-            <Run Text=" "/>
-            <Run Text="seus contatos."/>
-        </TextBlock>
+        <ListView Height="367" Margin="0,173,0,0" VerticalAlignment="Top" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Auto" MinHeight="370">
+            <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" >
+                    </SymbolIcon>
+                    <TextBlock x:Name="List_Arrumar_Contatos" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Arrumar Contatos"/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="Sobre" Background="#FF3C3C3C" Height="70" Tapped="bt_Sobre_Click">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="List_Sobre_Icn" Symbol="Help" />
+                    <TextBlock x:Name="List_Sobre" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Sobre o Aplicativo"/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="Donate" Background="#FF3C3C3C" Height="70" Tapped="bt_donate">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="List_Donate_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Top"  Margin="2,0,0,0" >
+                        <Run Text="$"/>
+                    </TextBlock>
+
+                    <TextBlock x:Name="List_Donate" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Fazer uma Doação"/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="Classificar" Background="#FF3C3C3C" Height="70" Tapped="bt_classificar">
+                <StackPanel Orientation="Horizontal">
+                    <SymbolIcon x:Name="List_Vote_Icn" Symbol="Favorite" />
+                    <TextBlock x:Name="List_Vote" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Classificar o App na Loja"/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+            <ListViewItem x:Name="More" Background="#FF3C3C3C" Height="70" Tapped="bt_mais">
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock x:Name="List_More_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Center"  Margin="2,0,0,0" >
+                        <Run Text="+"/>
+                    </TextBlock>
+                    <TextBlock x:Name="List_More" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Mais opções"/>
+                    </TextBlock>
+                </StackPanel>
+            </ListViewItem>
+        </ListView>
     </Grid>
 </Page>
