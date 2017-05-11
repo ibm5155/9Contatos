@@ -75,15 +75,7 @@ namespace _9Contatos
             this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
         }
 
-        private void image1_PointerEntered(object sender, PointerRoutedEventArgs e)//apagar
-        {
-            this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Gray);
-        }
 
-        private void image1_PointerExited(object sender, PointerRoutedEventArgs e)//apagar
-        {
-            this.Image1_border.Background = new SolidColorBrush(Windows.UI.Colors.Black);
-        }
 
         private void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
         {
@@ -128,7 +120,7 @@ namespace _9Contatos
 
         private void bt_mais(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
+          //  this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
         }
     }
 }

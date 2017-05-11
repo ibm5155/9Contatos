@@ -18,7 +18,7 @@
         </TransitionCollection>
     </Page.Transitions>
     <Page.BottomAppBar>
-        <CommandBar Background="#FF136993">
+        <CommandBar Background="{ThemeResource SystemControlHighlightAccentBrush}">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
