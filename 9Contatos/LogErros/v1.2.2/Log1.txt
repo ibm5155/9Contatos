@@ -1,0 +1,9 @@
+﻿ERRO : EM_WATCHDOG_TIMEOUT_DEADA444_39155LZFStudio.ArrumaContatos_xxk092235avmm!9Contatos.exe_Failed_to_show_a_window_after_launch
+ERRO2: EM_WATCHDOG_TIMEOUT_DEADA444_39155LZFStudio.ArrumaContatos_xxk092235avmm!9Contatos.exe_Timeout_expired:_event_type_=_Deactivate,_timeout_modifier_type_=_None,_server_task_currentState_=_Deactivating,_targetState 
+STATUS: INVESTIGANDO
+OCORRENCIAS: 3 (v1.2.2)
+ARQUIVOS AFETADOS: 
+PROBLEMA:
+PILHA:
+DISPOSITIVOS:
+000-BR-RM-1040_1020		(730)

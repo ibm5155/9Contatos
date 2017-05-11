@@ -6,6 +6,40 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
+    <Page.Resources>
+        <Flyout x:Key="MaisOpcoes_Flyout">
+            <StackPanel >
+                <TextBlock Text="Metodo a ser utilizado para alterar os contatos" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0"/>
+                <RadioButton x:Name="Arrumar_Sem_Modificacao" ToolTipService.ToolTip="Cria um contato temporário, formata o número desse contato criado e vincula ele ao contato original." Tapped="Mark_PeopleAPI1">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="Arrumar_Sem_Modificacao_icone" Symbol="Link" Margin="0"  Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        <TextBlock x:Name="Arrumar_Sem_Modificacao_texto" TextWrapping="Wrap" Text="Arrumar os Contatos vinculando contatos temporários."  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="Arrumar_Com_Modificacao" ToolTipService.ToolTip="Arruma os contatos editando diretamente os números de telefone de cada contato sem criar contatos vinculados. (o APP da loja não é autorizado a fazer essa operação)" Tapped="Mark_PeopleAPI2">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="Arrumar_Com_Modificacao_icone" Symbol="Permissions" Margin="0"  Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        <TextBlock x:Name="Arrumar_Com_Modificacao_texto" TextWrapping="Wrap" Text="Arrumar Contatos sem criar novos contatos"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </RadioButton>
+                <RadioButton x:Name="Arrumar_Email" ToolTipService.ToolTip="Altera os números de telefone dos contatos que estão registrados na conta microsoft. Pode demorar um pouco para o app contatos sincronizar as alterações." Tapped="Mark_OutlookAPI">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="Arrumar_Email_icone" Symbol="Mail" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        <TextBlock x:Name="Arrumar_Email_texto" TextWrapping="Wrap" Text="Arrumar os contatos do e-mail da Microsoft"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                    </StackPanel>
+                </RadioButton>
+                <TextBlock Text="Outras opções" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0"/>
+                <Button  Name="btn_Fechar_Flyout" >
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="Limpar_Contatos_icone" Symbol="Delete" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        <TextBlock x:Name="Limpar_Contatos_texto" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0">
+                                <Run Text="Deletar Contatos Temporários do app."/>
+                        </TextBlock>
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Flyout>
+    </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
         <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
         </ProgressBar>
@@ -22,55 +56,56 @@
                 </Border.BorderBrush>
             </Border>
         </Grid>
-        <Grid Padding="0" Margin="0,148,0,0">
-        <ListView Height="367" Margin="0,0,0,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Visible" MinHeight="370" VerticalContentAlignment="Top" VerticalAlignment="Bottom">
-            <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
-                <StackPanel Orientation="Horizontal">
-                        <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >
-                    </SymbolIcon>
-                    <TextBlock x:Name="List_Arrumar_Contatos" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
-                        <Run Text="Arrumar Contatos"/>
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Sobre" Background="#FF3C3C3C" Height="70" Tapped="bt_Sobre_Click">
-                <StackPanel Orientation="Horizontal">
-                        <SymbolIcon x:Name="List_Sobre_Icn" Symbol="Help" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    <TextBlock x:Name="List_Sobre" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
-                        <Run Text="Sobre o Aplicativo"/>
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Donate" Background="#FF3C3C3C" Height="70" Tapped="bt_donate">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_Donate_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Top"  Margin="2,0,0,0" >
-                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
+        <Grid Padding="0" Margin="0,148,0,0" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
 
-                    <TextBlock x:Name="List_Donate" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+            <ListView Height="367" Margin="0,0,0,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Visible" MinHeight="370" VerticalContentAlignment="Top" VerticalAlignment="Bottom">
+                <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >
+                        </SymbolIcon>
+                        <TextBlock x:Name="List_Arrumar_Contatos" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Arrumar Contatos"/>
+                        </TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="Sobre" Background="#FF3C3C3C" Height="70" Tapped="bt_Sobre_Click">
+                    <StackPanel Orientation="Horizontal">
+                        <SymbolIcon x:Name="List_Sobre_Icn" Symbol="Help" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        <TextBlock x:Name="List_Sobre" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <Run Text="Sobre o Aplicativo"/>
+                        </TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="Donate" Background="#FF3C3C3C" Height="70" Tapped="bt_donate">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="List_Donate_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Top"  Margin="2,0,0,0" >
+                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
+                        </TextBlock>
+
+                        <TextBlock x:Name="List_Donate" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
                         <Run Text="Fazer uma Doação"/>
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Classificar" Background="#FF3C3C3C" Height="70" Tapped="bt_classificar">
-                <StackPanel Orientation="Horizontal">
+                        </TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="Classificar" Background="#FF3C3C3C" Height="70" Tapped="bt_classificar">
+                    <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="List_Vote_Icn" Symbol="Favorite" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    <TextBlock x:Name="List_Vote" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        <TextBlock x:Name="List_Vote" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
                         <Run Text="Classificar o App na Loja"/>
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="More" Background="#FF3C3C3C" Height="70" Tapped="bt_mais">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_More_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Center"  Margin="2,0,0,0" >
+                        </TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+                <ListViewItem x:Name="More" Background="#FF3C3C3C" Height="70" Tapped="bt_mais" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="List_More_Icn" TextWrapping="Wrap"  FontSize="22" VerticalAlignment="Center"  Margin="2,0,0,0" >
                         <Run Text="+" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
-                    <TextBlock x:Name="List_More" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
+                        </TextBlock>
+                        <TextBlock x:Name="List_More" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0">
                         <Run Text="Mais opções"/>
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-        </ListView>
+                        </TextBlock>
+                    </StackPanel>
+                </ListViewItem>
+            </ListView>
         </Grid>
     </Grid>
 </Page>

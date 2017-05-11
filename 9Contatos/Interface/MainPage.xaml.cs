@@ -9,6 +9,7 @@ using _9Contatos.globais;
 using _9Contatos.Telefones.telefone;
 using _9Contatos.Contatos.Carrega;
 using _9Contatos.filehandler;
+using Windows.UI.Xaml.Controls.Primitives;
 
 #warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
 
@@ -120,7 +121,40 @@ namespace _9Contatos
 
         private void bt_mais(object sender, TappedRoutedEventArgs e)
         {
-          //  this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
+            switch (Globais.api_usada)
+            {
+                case QualAPI.PeopleAPI:
+                    Arrumar_Sem_Modificacao.IsChecked = true;
+                    break;
+                case QualAPI.PeopleAPI_COM_Alteracao:
+                    Arrumar_Com_Modificacao.IsChecked = true;
+                    break;
+                case QualAPI.OutlookAPI:
+                    Arrumar_Email.IsChecked = true;
+                    break;
+            }
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);  
+            //MaisOpcoes_Flyout
+            //  this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
+        }
+
+        private void OpcaoAlteraContatoLista_Selecionado(object sender, TappedRoutedEventArgs e)
+        {
+        }
+
+        private void Mark_PeopleAPI1(object sender, TappedRoutedEventArgs e)
+        {
+            Globais.api_usada = QualAPI.PeopleAPI;
+        }
+
+        private void Mark_PeopleAPI2(object sender, TappedRoutedEventArgs e)
+        {
+            Globais.api_usada = QualAPI.PeopleAPI_COM_Alteracao;
+        }
+
+        private void Mark_OutlookAPI(object sender, TappedRoutedEventArgs e)
+        {
+            Globais.api_usada = QualAPI.OutlookAPI;
         }
     }
 }
