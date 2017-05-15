@@ -286,6 +286,7 @@ namespace _9Contatos.Interface
                 {
                     Indice_Filtro[k] = i;
                     k++;
+                    ListadeContatos.Add(new Contatos_ModeloLista { Nome = NomeCompleto, ImagePath = Situacao, TelefoneNovo = sTelefoneNovo, TelefoneAntigo = sTelefoneAntigo, TelefoneNotas = sTelefoneNotas });
                     ListadeContatos.Add(new Contatos_ModeloLista { Nome = NomeCompleto, ImagePath = Situacao, TelefoneNovo = sTelefoneNovo, TelefoneAntigo = sTelefoneAntigo,TelefoneNotas = sTelefoneNotas });
                 }
             }

@@ -44,48 +44,55 @@
             <Run Text="Arruma Contatos"/>
         </TextBlock>
 
-        <ListView x:Name="ListaContatosView" HorizontalContentAlignment="Stretch" ItemClick="ListaContatosView_ItemClick" Tapped="ListaContatosView_Tapped" Margin="15,46,15,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Background="#FF292727"  BorderThickness="0,2" >
-
+        <ListView x:Name="ListaContatosView" HorizontalContentAlignment="Stretch" ItemClick="ListaContatosView_ItemClick" Tapped="ListaContatosView_Tapped" Margin="2,46,2,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2" Background="#FF292727"  BorderThickness="0,2">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                </Style>
+            </ListView.ItemContainerStyle>
             <ListView.ItemTemplate>
-
                 <DataTemplate>
-                    <StackPanel Orientation="Horizontal">
-                        <Image>
-                            <Image.Source>
-                                <BitmapImage UriSource="{Binding ImagePath}"/>
-                            </Image.Source>
-                        </Image>
-                        <StackPanel>
-                            <TextBlock Text="{Binding Nome}"
-                        Margin="20,0,20,8"
-                                   FontSize="18"
-                                   FontStyle="Italic"
-                                   FontWeight="SemiBold"
-                                   Foreground="Red"/>
+                    <Border BorderBrush="{ThemeResource ApplicationPageBackgroundThemeBrush}" BorderThickness="1">
+                        <Grid HorizontalAlignment="Stretch" Margin="0">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{Binding TelefoneAntigo}"
-                                    Margin="20,0,20,8"
-                                   FontSize="14"
-                                   FontStyle="Italic"
-                                   FontWeight="SemiBold"
-                                   />
-                                <TextBlock Text="{Binding TelefoneNotas}"
-                                    Margin="0,0,20,8"
-                                   FontSize="22"
-                                   FontStyle="Italic"
-                                   FontWeight="SemiBold"
-                                   />
+                                <Image>
+                                    <Image.Source>
+                                        <BitmapImage UriSource="{Binding ImagePath}"/>
+                                    </Image.Source>
+                                </Image>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Nome}"
+                            Margin="20,0,20,8"
+                                       FontSize="18"
+                                       FontStyle="Italic"
+                                       FontWeight="SemiBold"
+                                       Foreground="Red"/>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding TelefoneAntigo}"
+                                        Margin="20,0,20,8"
+                                       FontSize="14"
+                                       FontStyle="Italic"
+                                       FontWeight="SemiBold"
+                                       />
+                                        <TextBlock Text="{Binding TelefoneNotas}"
+                                        Margin="0,0,20,8"
+                                       FontSize="22"
+                                       FontStyle="Italic"
+                                       FontWeight="SemiBold"
+                                       />
+                                    </StackPanel>
+
+                                    <TextBlock Text="{Binding TelefoneNovo}"
+                                       Margin="20,0,20,8"
+                                       FontSize="17"
+                                       FontStyle="Italic"
+                                       FontWeight="SemiBold"
+                                       />
+
+                                </StackPanel>
                             </StackPanel>
-
-                            <TextBlock Text="{Binding TelefoneNovo}"
-                                   Margin="20,0,20,8"
-                                   FontSize="17"
-                                   FontStyle="Italic"
-                                   FontWeight="SemiBold"
-                                   />
-
-                        </StackPanel>
-                    </StackPanel>
+                        </Grid>
+                    </Border>
                 </DataTemplate>
             </ListView.ItemTemplate>
 
