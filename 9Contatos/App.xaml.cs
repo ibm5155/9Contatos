@@ -5,6 +5,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
+using _9Contatos.Store;
 
 namespace _9Contatos
 {
@@ -99,6 +100,10 @@ namespace _9Contatos
                     // parameter
                     rootFrame.Navigate(typeof(MainPage), e.Arguments);
                 }
+
+                //Get License
+                License.CheckLicense();
+
                 // Ensure the current window is active
                 Window.Current.Activate();
             }

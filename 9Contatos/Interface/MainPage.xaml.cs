@@ -10,6 +10,10 @@ using _9Contatos.Telefones.telefone;
 using _9Contatos.Contatos.Carrega;
 using _9Contatos.filehandler;
 using Windows.UI.Xaml.Controls.Primitives;
+using _9Contatos.Interface;
+using _9Contatos.API.Outlook;
+using System.Threading.Tasks;
+using _9Contatos.API.PeopleAPP;
 
 #warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
 
@@ -49,26 +53,6 @@ namespace _9Contatos
 
         private async void image1_Tapped(object sender, TappedRoutedEventArgs e)//apagar
         {
-            ProgressBar.Visibility = Visibility.Visible;
-            Globais.api_usada = QualAPI.PeopleAPI;
-            bool Carregar = false;
-            //teste de crash
-            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
-            ProgressBar.Visibility = Visibility.Collapsed;
-            if (Carregar == true)
-            {
-                if (Globais.contatos.Count() == 0)
-                {
-                    var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                    pergunta.Title = "Nenhum contato encontrado";
-                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                    pergunta.ShowAsync();
-                }
-                else
-                {
-                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                }
-            }
         }
 
         private void bt_Sobre_Click(object sender, RoutedEventArgs e) //apagar
@@ -84,32 +68,74 @@ namespace _9Contatos
 
         }
 
-        private void bt_donate(object sender, TappedRoutedEventArgs e)
+        private async void bt_donate(object sender, TappedRoutedEventArgs e)
         {
-
+            OptionBox_Donate dialog = new OptionBox_Donate();
+            await dialog.ShowAsync();
         }
 
         private async void bt_arrumar(object sender, TappedRoutedEventArgs e)
         {
             ProgressBar.Visibility = Visibility.Visible;
-            Globais.api_usada = QualAPI.PeopleAPI;
             bool Carregar = false;
             //teste de crash
-            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
-            ProgressBar.Visibility = Visibility.Collapsed;
-            if (Carregar == true)
+            switch (Globais.api_usada)
             {
-                if (Globais.contatos.Count() == 0)
-                {
-                    var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                    pergunta.Title = "Nenhum contato encontrado";
-                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                    pergunta.ShowAsync();
-                }
-                else
-                {
-                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                }
+                case QualAPI.PeopleAPI_COM_Alteracao:
+                    Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
+                    ProgressBar.Visibility = Visibility.Collapsed;
+                    if (Carregar == true)
+                    {
+                        if (Globais.contatos.Count() == 0)
+                        {
+                            var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                            pergunta.Title = "Nenhum contato encontrado";
+                            pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                            pergunta.ShowAsync();
+                        }
+                        else
+                        {
+                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                        }
+                    }
+                    break;
+
+                case QualAPI.PeopleAPI:
+
+                    Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
+                    ProgressBar.Visibility = Visibility.Collapsed;
+                    if (Carregar == true)
+                    {
+                        if (Globais.contatos.Count() == 0)
+                        {
+                            var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                            pergunta.Title = "Nenhum contato encontrado";
+                            pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                            pergunta.ShowAsync();
+                        }
+                        else
+                        {
+                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                        }
+                    }
+
+                    break;
+
+                case QualAPI.OutlookAPI:
+
+                    try
+                    {
+                        Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
+                        if (Carregar == true)
+                        {
+                            Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                        }
+                    }
+                    catch (Microsoft.Identity.Client.MsalServiceException)
+                    {
+                        //faz nada já que não fez login....
+                    }
+                    break;
             }
         }
 
@@ -156,5 +182,26 @@ namespace _9Contatos
         {
             Globais.api_usada = QualAPI.OutlookAPI;
         }
+
+
+        /// <summary>
+        /// Signs in the current user.
+        /// </summary>
+        /// <returns></returns>
+        public async Task<bool> SignInCurrentUserAsync()
+        {
+            var token = await OutlookAPI.GetTokenForUserAsync();
+
+            if (token != null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
+        }
     }
 }
+

@@ -107,6 +107,11 @@
     <Compile Include="Email\ReportarEmail.cs" />
     <Compile Include="FileHandler\FileHandler.cs" />
     <Compile Include="Globais.cs" />
+    <Compile Include="Interface\OptionBox_Donate.xaml.cs">
+      <DependentUpon>OptionBox_Donate.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Store\Comprar.cs" />
+    <Compile Include="Store\License.cs" />
     <Compile Include="Telefone\Operadora.cs" />
     <Compile Include="Telefone\Regiao.cs" />
     <Compile Include="Contato\SalvaContatos.cs" />
@@ -231,6 +236,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Interface\OptionBox_Donate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interface\OptionBox_FormatacaoContato.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

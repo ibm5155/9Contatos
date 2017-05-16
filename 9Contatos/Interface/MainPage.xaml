@@ -58,7 +58,7 @@
         </Grid>
         <Grid Padding="0" Margin="0,148,0,0" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
 
-            <ListView Height="367" Margin="0,0,0,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Visible" MinHeight="370" VerticalContentAlignment="Top" VerticalAlignment="Bottom">
+            <ListView Margin="0,0,0,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Visible" MinHeight="367" VerticalContentAlignment="Stretch" VerticalAlignment="Bottom" >
                 <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >

@@ -286,7 +286,6 @@ namespace _9Contatos.Interface
                 {
                     Indice_Filtro[k] = i;
                     k++;
-                    ListadeContatos.Add(new Contatos_ModeloLista { Nome = NomeCompleto, ImagePath = Situacao, TelefoneNovo = sTelefoneNovo, TelefoneAntigo = sTelefoneAntigo, TelefoneNotas = sTelefoneNotas });
                     ListadeContatos.Add(new Contatos_ModeloLista { Nome = NomeCompleto, ImagePath = Situacao, TelefoneNovo = sTelefoneNovo, TelefoneAntigo = sTelefoneAntigo,TelefoneNotas = sTelefoneNotas });
                 }
             }
@@ -311,7 +310,10 @@ namespace _9Contatos.Interface
         {
             // Botar popup confirmando
             ListadeContatos.Clear();
-            ListaContatosView.ItemsSource = null;
+            if (ListaContatosView != null)
+            {
+                ListaContatosView.ItemsSource = null;
+            }
             ListaContatosView = null;
 
             Globais.contatos.Clear();

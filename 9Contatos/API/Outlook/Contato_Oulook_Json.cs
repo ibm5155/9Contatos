@@ -66,10 +66,15 @@ namespace _9Contatos.API.Outlook
                     //Vamos remover algum simbolo que tenha sobrado, mesmo o parser do Telefone tendo capacidade de filtrar ele...
                     for(int j=0;j<Numeros[i].Count(); j++)
                     {
-                        if(Numeros[i][j] == '\\' || Numeros[i][j] == '"')
+                        if(Numeros[i][j] == '"')
                         {
                             Numeros[i] = Numeros[i].Remove(j, 1);
                         }
+                    }
+                    if (Numeros[i] != "")
+                    {
+                        Numeros[i] = Numeros[i].Replace(@"\\", @"\");
+                        Numeros[i] = Regex.Replace(Numeros[i], @"\\u([\dA-Fa-f]{4})", v => ((char)Convert.ToInt32(v.Groups[1].Value, 16)).ToString());
                     }
                     HPs.Add(Numeros[i]);
                 }
@@ -95,10 +100,15 @@ namespace _9Contatos.API.Outlook
                     //Vamos remover algum simbolo que tenha sobrado, mesmo o parser do Telefone tendo capacidade de filtrar ele...
                     for (int j = 0; j < Numeros[i].Count(); j++)
                     {
-                        if (Numeros[i][j] == '\\' || Numeros[i][j] == '"')
+                        if (Numeros[i][j] == '"')
                         {
                             Numeros[i] = Numeros[i].Remove(j, 1);
                         }
+                    }
+                    if (Numeros[i] != "")
+                    {
+                        Numeros[i] = Numeros[i].Replace(@"\\", @"\");
+                        Numeros[i] = Regex.Replace(Numeros[i], @"\\u([\dA-Fa-f]{4})", v => ((char)Convert.ToInt32(v.Groups[1].Value, 16)).ToString());
                     }
                     BPs.Add(Numeros[i]);
                 }
