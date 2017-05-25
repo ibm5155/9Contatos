@@ -11,7 +11,6 @@
     SecondaryButtonText=""
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="59*"/>

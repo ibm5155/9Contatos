@@ -9,6 +9,8 @@ using _9Contatos.globais;
 using _9Contatos.Contatos.ModeloLista;
 using _9Contatos.Telefones.telefone;
 using _9Contatos.Contatos.Salvar;
+using Windows.UI.Xaml.Controls.Primitives;
+using _9Contatos.Contatos.Carrega;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -297,7 +299,18 @@ namespace _9Contatos.Interface
 
         private async void Bt_Salvar_Click(object sender, RoutedEventArgs e)
         {
-
+            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+            switch (Globais.api_usada)
+            {
+                case QualAPI.PeopleAPI:
+                    Salvar_TextoFlyout.Text = "Salvando contatos temporários, favor não apagar" + Environment.NewLine + "seus contatos da agenda.";
+                    break;
+                case QualAPI.PeopleAPI_COM_Alteracao:
+                    break;
+                case QualAPI.OutlookAPI:
+                    Salvar_TextoFlyout.Text = "Aguarde um momento pois esse método de " + Environment.NewLine + "atualização de contatos demora um pouco.";
+                    break;
+            }
             bool Output = await SalvaContatos.Salvar();
             if (Output == true)
             {

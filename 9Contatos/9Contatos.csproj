@@ -134,9 +134,6 @@
     <Compile Include="Interface\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\Tela_OpcoesAvancadas.xaml.cs">
-      <DependentUpon>Tela_OpcoesAvancadas.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interface\InputBox_PegaRegiao.xaml.cs">
       <DependentUpon>InputBox_PegaRegiao.xaml</DependentUpon>
     </Compile>
@@ -255,10 +252,6 @@
     <Page Include="Interface\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Interface\Tela_OpcoesAvancadas.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interface\InputBox_PegaRegiao.xaml">
       <SubType>Designer</SubType>

@@ -15,12 +15,17 @@
             </NavigationThemeTransition>
         </TransitionCollection>
     </Page.Transitions>
+    <Page.Resources>
+        <Flyout x:Key="Salvar_Flyout">
+            <TextBlock  x:Name="Salvar_TextoFlyout" FontSize="20" Margin="0,0,0,0" TextWrapping="Wrap"/>
+        </Flyout>
+    </Page.Resources>
     <Page.BottomAppBar>
         <CommandBar Background="{ThemeResource SystemControlHighlightAccentBrush}">
             <CommandBar.Content>
                 <Grid/>
             </CommandBar.Content>
-            <AppBarButton x:Name="Bt_Salvar" Label="Salvar Contatos" Icon="Save" Click="Bt_Salvar_Click"/>
+            <AppBarButton x:Name="Bt_Salvar" Label="Salvar Contatos" Icon="Save" Click="Bt_Salvar_Click" FlyoutBase.AttachedFlyout="{StaticResource Salvar_Flyout}"/>
             <AppBarButton x:Name="Bt_Cancelar" Icon="Cancel" Label="Cancelar" Click="Bt_Cancelar_Click"/>
             <AppBarButton x:Name="Bt_Editar" Icon="Setting" Label="Formatar Contatos" Click="Bt_Editar_Click"/>
             <AppBarButton x:Name="Bt_Filtrar" Icon="Filter" Label="Filtrar Contatos" Click="Bt_Filtrar_Click"/>
