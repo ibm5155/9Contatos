@@ -10,52 +10,9 @@
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
-    <Grid MinHeight="200">
-        <ListView x:Name="listView" Margin="0,10,0,0" Visibility="Collapsed">
-            <ListViewItem x:Name="Donate01" Background="#FF3C3C3C" Height="33" Tapped="bt_donate01">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_Donate_Icn" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top"  Margin="0,0,0,0" >
-                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
-                    <TextBlock x:Name="List_Donate01" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"
-                        Text="Doar Salgadinho:"    
-                    />
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Donate02" Background="#FF3C3C3C" Height="33" Tapped="bt_donate02">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_Donate2_Icn" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top"  Margin="0,0,0,0" >
-                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
-                    <TextBlock x:Name="List_Donate02" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"
-                        Text="Doar 2 Salgadinhos:"    
-                    />
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Donate03" Background="#FF3C3C3C" Height="33" Tapped="bt_donate03">
-                <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_Donate3_Icn" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top"  Margin="0,0,0,0" >
-                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
-                    <TextBlock x:Name="List_Donate03" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"
-                        Text="Doar 1 Pringles:"    
-                    />
-                </StackPanel>
-            </ListViewItem>
-            <ListViewItem x:Name="Donate04" Background="#FF3C3C3C" Height="34" Tapped="bt_donate04">
-
-                    <StackPanel Orientation="Horizontal">
-                    <TextBlock x:Name="List_Donate4_Icn" TextWrapping="Wrap"  FontSize="18" VerticalAlignment="Top"  Margin="0,0,0,0" >
-                        <Run Text="$" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                    </TextBlock>
-                    <TextBlock x:Name="List_Donate04" TextWrapping="Wrap"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,3,0,0"    
-                               Text=" Doar almoço por 1 semana:"
-                    >
-                    </TextBlock>
-                </StackPanel>
-            </ListViewItem>
-        </ListView>
+    <Grid MinHeight="230">
         <StackPanel>
+        <TextBlock Text="Aviso!! valor aproximado." HorizontalAlignment="Center" FontSize="16" Margin="0,0,0,10"/>
         <Button x:Name="button_dnt1" Content="1 Salgadinho (R$3,50)" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Tapped="bt_donate01"/>
         <Button x:Name="button_dnt2" Content="2 Salgadinhos (R$5,50)" HorizontalAlignment="Stretch" Margin="0,5,0,0" VerticalAlignment="Top" Tapped="bt_donate02" Padding="0,10,0,0"/>
         <Button x:Name="button_dnt3" Content="1 Pringles (R$15,50)" HorizontalAlignment="Stretch" Margin="0,5,0,0" VerticalAlignment="Top" Tapped="bt_donate03" Padding="0,10,0,0"/>
