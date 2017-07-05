@@ -14,6 +14,8 @@ using _9Contatos.Interface;
 using _9Contatos.API.Outlook;
 using System.Threading.Tasks;
 using _9Contatos.API.PeopleAPP;
+using System.Net.NetworkInformation;
+using _9Contatos.InternetTools;
 
 #warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
 
@@ -43,11 +45,11 @@ namespace _9Contatos
             }
         }
 
-        private _9Contatos.Interface.OpcoesAvancadas xx;
+        //private _9Contatos.Interface.OpcoesAvancadas xx;
 
         private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e) // apagar
         {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
+            //this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
 
         }
 
@@ -123,19 +125,30 @@ namespace _9Contatos
 
                 case QualAPI.OutlookAPI:
 
-                    try
+                    if (Internet.CheckInternetConectivity() == true)
                     {
-                        Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
-                        if (Carregar == true)
+                        try
                         {
-                            Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                            Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
+                            if (Carregar == true)
+                            {
+                                Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                            }
+                        }
+                        catch (Microsoft.Identity.Client.MsalServiceException)
+                        {
+                            //faz nada já que não fez login....
                         }
                     }
-                    catch (Microsoft.Identity.Client.MsalServiceException)
+                    else
                     {
-                        //faz nada já que não fez login....
+                        var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
+                        pergunta.Title = "Sem Conexão com a internet";
+                        pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                        pergunta.ShowAsync();
                     }
                     break;
+
             }
         }
 

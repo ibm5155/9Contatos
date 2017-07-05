@@ -110,6 +110,7 @@
     <Compile Include="Interface\OptionBox_Donate.xaml.cs">
       <DependentUpon>OptionBox_Donate.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Internet\Internet.cs" />
     <Compile Include="Store\Comprar.cs" />
     <Compile Include="Store\License.cs" />
     <Compile Include="Telefone\Operadora.cs" />
