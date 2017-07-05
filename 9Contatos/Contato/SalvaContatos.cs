@@ -10,6 +10,7 @@ using _9Contatos.Interface;
 using _9Contatos.Telefones.Censura;
 using System.Diagnostics;
 using _9Contatos.Email;
+using _9Contatos.InternetTools;
 
 namespace _9Contatos.Contatos.Salvar
 {
@@ -203,7 +204,20 @@ namespace _9Contatos.Contatos.Salvar
                     Saida = await Salvar_PeopleAPI_Com_Alteracao();
                     break;
                 case QualAPI.OutlookAPI:
-                    Saida = await Salvar_OutlookAPI();
+                    if (Internet.CheckInternetConectivity() == true)
+                    {
+                        Saida = await Salvar_OutlookAPI();
+                    }
+                    else
+                    {
+                        Carregando.Hide();
+                        Saida = false;
+                        MessageDialog pergunta;
+                        pergunta = new MessageDialog("Para poder salvar as alterações precisamos ter conexão com a internet, por favor tente salvar os contatos novamente quanto obter acesso a internet.");
+                        pergunta.Title = "Estamos sem internet no momento";
+                        pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                        await pergunta.ShowAsync();
+                    }
                     break;
             }
             Carregando.Hide();
