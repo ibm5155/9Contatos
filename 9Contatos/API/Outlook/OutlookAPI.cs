@@ -11,6 +11,7 @@ using System.Net.Http;
 using _9Contatos.globais;
 using _9Contatos.InternetTools;
 using System.Threading;
+using System.Diagnostics;
 
 namespace _9Contatos.API.Outlook
 {
@@ -76,7 +77,8 @@ namespace _9Contatos.API.Outlook
         {
             Globais.Outlook_contatos = new List<Contatos_Outlook>();
             await GetTokenForUserAsync(); //pega token
-            Task< HttpResponseMessage> TaskGetURL;
+            CancellationTokenSource CancelaTaskGetURL;// usado para matar a TaskGetURL quando há uma falha.
+            Task<HttpResponseMessage> TaskGetURL;
             if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
             {
                 Globais.Contatos_Carregados = false;
@@ -114,14 +116,15 @@ namespace _9Contatos.API.Outlook
                 CarregaContatos.Carregando.RemoveErro();
 
                 while (TotalContatos > proximo_grupo)
-            {
+                {
                     if (Internet.CheckInternetConectivity() == true)
                     {
+                        CancelaTaskGetURL = new CancellationTokenSource();
+
                         //Só iremos continuar carregando caso tenha conexão com a internet
-                        TaskGetURL = client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
-                        
+                        TaskGetURL = client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones",CancelaTaskGetURL.Token);
                         //aguarda a task ser finalizada
-                        while(Internet.CheckInternetConectivity() == true && TaskGetURL.IsCompleted == false)
+                        while (Internet.CheckInternetConectivity() == true && TaskGetURL.IsCompleted == false)
                         {
                             await System.Threading.Tasks.Task.Delay(20); // espera por 20ms
                         }
@@ -131,7 +134,9 @@ namespace _9Contatos.API.Outlook
                         if (Internet.CheckInternetConectivity() == false)
                         {
                             //cancela a requisição pois houve um problema durante o recebimento da task
-                            Task.Factory.CancellationToken.ThrowIfCancellationRequested();
+                            CancelaTaskGetURL.Cancel();
+                            CancelaTaskGetURL.Dispose();
+                            await System.Threading.Tasks.Task.Delay(200); // espera por 20ms
                         }
                         else
                         {
@@ -140,12 +145,12 @@ namespace _9Contatos.API.Outlook
                                 Requisicao = TaskGetURL.Result;
                             }
                         }
-                        if (!Requisicao.IsSuccessStatusCode)
-                        {
-
-                            //                    throw new Exception("We could not send the message: " + response.StatusCode.ToString());
-                        }
-                        else if(TaskGetURL.IsCompleted ==false)
+                        Debug.WriteLine("Part " + i.ToString() + " Completed:" + TaskGetURL.IsCompleted.ToString()
+                                        + " Faulted:" + TaskGetURL.IsFaulted.ToString()
+                                        + " Canceled:" + TaskGetURL.IsCanceled.ToString()
+                                        + " Status:" + TaskGetURL.Status.ToString()
+                        );
+                        if(!Requisicao.IsSuccessStatusCode || TaskGetURL.IsCompleted ==false || TaskGetURL.IsCanceled == true || Internet.CheckInternetConectivity() == false)
                         {
                             //não faz nada, assim iremos percorrer o while novamente e iremos cair no caso de sem internet.
                         }
@@ -178,7 +183,6 @@ namespace _9Contatos.API.Outlook
                     }
                 }
             #endregion
-
             }
             Globais.Contatos_Carregados = true;
             return true;

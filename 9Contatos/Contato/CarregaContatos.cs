@@ -206,6 +206,7 @@ namespace _9Contatos.Contatos.Carrega
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();
             int Saida = 0;
+            int TotalTelefonesCnt = 0;
 
             Debug.WriteLine("Limpando CACHE de contatos antigos.");
 
@@ -228,7 +229,7 @@ namespace _9Contatos.Contatos.Carrega
                 case QualAPI.GmailAPI:
                     break;
             }
-            Debug.WriteLineIf(PodeCarregarOutraPagina == true, "CONTATOS CARREGADOS");
+            Debug.WriteLineIf(PodeCarregarOutraPagina == true, Globais.contatos.Count().ToString() + " CONTATOS CARREGADOS");
             Debug.WriteLineIf(PodeCarregarOutraPagina == false, "PROBLEMAS NA API AO CARREGAR OS CONTATOS.");
             //Zeramos os dados globais de filtro
             Globais.Filtrar_Sem_Numero = false;
@@ -246,6 +247,7 @@ namespace _9Contatos.Contatos.Carrega
                     //Etapa 2: adicionar o nono digito
                     for (int i = 0, fim = Globais.contatos.Count(); i < fim; i++)
                     {
+                        TotalTelefonesCnt += Globais.contatos[i].Telefones_Antigos.Count();
 
                         for (int j = 0, fim2 = Globais.contatos[i].Telefones_Antigos.Count(); j < fim2; j++)
                         {
@@ -269,6 +271,7 @@ namespace _9Contatos.Contatos.Carrega
                             Debug.WriteLine(" - ADICIONADO");
                         }
                     }
+                    Debug.WriteLine(TotalTelefonesCnt.ToString() + " TELEFONES CARREGADOS");
                 }
             }
 
