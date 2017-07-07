@@ -22,7 +22,7 @@ namespace _9Contatos.Contatos.Carrega
 
     class CarregaContatos
     {
-        public static Janela_Carregando Carregando;
+        public static ContentDialog_Processando Carregando;
 
 
         private static async Task<bool> Carrega_PeopleAPI(QualAPI api)
@@ -128,7 +128,7 @@ namespace _9Contatos.Contatos.Carrega
 
             bool Saida =true;
             OutlookAPI Outlook = new OutlookAPI();
-            Carregando = new Janela_Carregando();
+            Carregando = new ContentDialog_Processando("Carregando contatos","Estamos carregando contato por contato do servidor da microsoft então isso poderá levar um tempo, por favor não feche este aplicavo enquanto ele estiver operando", "ms-appx:///Assets/Network-server.png");
 
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();
@@ -147,7 +147,7 @@ namespace _9Contatos.Contatos.Carrega
             }
             catch(System.Net.Http.HttpRequestException)
             {
-                Carregando.Hide();
+                Carregando.Destroi();
                 //O usuário se conectou ao servidor da microsoft, mas por algum motivo, depois de carregar um token válido ele não conseguiu se conectar novamente a mesma
                 var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfique sua conexão de rede ou tente novamente mais tarde.");
                 pergunta.Title = "Problemas em contactar o servidor da microsoft.";
@@ -155,7 +155,18 @@ namespace _9Contatos.Contatos.Carrega
                 pergunta.ShowAsync();
                 Saida = false;
             }
-            Carregando.Hide();
+            catch(System.Threading.Tasks.TaskCanceledException)
+            {
+                Carregando.Destroi();
+                //O usuário se conectou ao servidor da microsoft, mas por algum motivo, depois de carregar um token válido ele não conseguiu se conectar novamente a mesma
+                var pergunta = new MessageDialog("Não podemos conectar ao serviço da Microsoft. Verfique sua conexão de rede ou tente novamente mais tarde.");
+                pergunta.Title = "Problemas em contactar o servidor da microsoft.";
+                pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                pergunta.ShowAsync();
+                Saida = false;
+            }
+            Carregando.Destroi();
+            Carregando = null;
             PegaRegiao dialog = new PegaRegiao();
             if (Saida)
             {

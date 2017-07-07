@@ -107,6 +107,9 @@
     <Compile Include="Email\ReportarEmail.cs" />
     <Compile Include="FileHandler\FileHandler.cs" />
     <Compile Include="Globais.cs" />
+    <Compile Include="Interface\ContentDialog_Processando.xaml.cs">
+      <DependentUpon>ContentDialog_Processando.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Interface\OptionBox_Donate.xaml.cs">
       <DependentUpon>OptionBox_Donate.xaml</DependentUpon>
     </Compile>
@@ -166,11 +169,13 @@
     <Content Include="Assets\duvida.png" />
     <Content Include="Assets\Icone.png" />
     <Content Include="Assets\internacional.png" />
+    <Content Include="Assets\Network-server.png" />
     <Content Include="Assets\NewStoreLogo.scale-100.png" />
     <Content Include="Assets\NewStoreLogo.scale-125.png" />
     <Content Include="Assets\NewStoreLogo.scale-150.png" />
     <Content Include="Assets\NewStoreLogo.scale-200.png" />
     <Content Include="Assets\NewStoreLogo.scale-400.png" />
+    <Content Include="Assets\NoInternet.png" />
     <Content Include="Assets\nono.png" />
     <Content Include="Assets\ok.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
@@ -234,6 +239,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Interface\ContentDialog_Processando.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Interface\OptionBox_Donate.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

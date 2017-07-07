@@ -9,6 +9,8 @@ using _9Contatos.Contatos.Carrega;
 using System.Net.Http;
 //using Windows.Data.Json;
 using _9Contatos.globais;
+using _9Contatos.InternetTools;
+using System.Threading;
 
 namespace _9Contatos.API.Outlook
 {
@@ -74,6 +76,7 @@ namespace _9Contatos.API.Outlook
         {
             Globais.Outlook_contatos = new List<Contatos_Outlook>();
             await GetTokenForUserAsync(); //pega token
+            Task< HttpResponseMessage> TaskGetURL;
             if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
             {
                 Globais.Contatos_Carregados = false;
@@ -107,41 +110,73 @@ namespace _9Contatos.API.Outlook
                 #region Carrega todos os contatos...
                 CarregaContatos.Carregando.Hide(); // gambiarra
                 CarregaContatos.Carregando.ShowAsync(); //Roda em paralelo ao código
-                CarregaContatos.Carregando.Altera_Titulo("Carregando Contatos");
-                CarregaContatos.Carregando.Altera_Maximo(TotalContatos);
                 int i = 0;
+                CarregaContatos.Carregando.RemoveErro();
 
-            while (TotalContatos > proximo_grupo)
+                while (TotalContatos > proximo_grupo)
             {
-                    Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString())+ "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
-                    //client.GetAsync tem um erro que se a conexão cair durante a sua execução, o programa vai ficar em loop.
-                    //se ela cair no inicio da execução ela vai dar uma Exception System.Net.Http.HttpRequestException
-                    if (!Requisicao.IsSuccessStatusCode)
+                    if (Internet.CheckInternetConectivity() == true)
                     {
+                        //Só iremos continuar carregando caso tenha conexão com a internet
+                        TaskGetURL = client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
+                        
+                        //aguarda a task ser finalizada
+                        while(Internet.CheckInternetConectivity() == true && TaskGetURL.IsCompleted == false)
+                        {
+                            await System.Threading.Tasks.Task.Delay(20); // espera por 20ms
+                        }
+                        //Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones");
+                        //client.GetAsync tem um erro que se a conexão cair durante a sua execução, o programa vai ficar em loop.
+                        //se ela cair no inicio da execução ela vai dar uma Exception System.Net.Http.HttpRequestException
+                        if (Internet.CheckInternetConectivity() == false)
+                        {
+                            //cancela a requisição pois houve um problema durante o recebimento da task
+                            Task.Factory.CancellationToken.ThrowIfCancellationRequested();
+                        }
+                        else
+                        {
+                            if (TaskGetURL.IsCompleted == true)
+                            {
+                                Requisicao = TaskGetURL.Result;
+                            }
+                        }
+                        if (!Requisicao.IsSuccessStatusCode)
+                        {
 
-                        //                    throw new Exception("We could not send the message: " + response.StatusCode.ToString());
+                            //                    throw new Exception("We could not send the message: " + response.StatusCode.ToString());
+                        }
+                        else if(TaskGetURL.IsCompleted ==false)
+                        {
+                            //não faz nada, assim iremos percorrer o while novamente e iremos cair no caso de sem internet.
+                        }
+                        else
+                        {
+                            if (Requisicao.Content != null)
+                            {
+                                var responseString = await Requisicao.Content.ReadAsStringAsync();
+                                Globais.Outlook_contatos.Add(new Contatos_Outlook());
+                                Globais.Outlook_contatos[i].Carrega(responseString);
+                                proximo_grupo += 10;
+                            }
+                            i++;
+                        }
                     }
                     else
                     {
-                        if (Requisicao.Content != null)
+                        CarregaContatos.Carregando.AdicionaErro("ms-appx:///Assets/NoInternet.png", "Aplicativo perdeu a conexão com a internet, por favor verifique sua conexão.");
+                        //aguardamos a conexão em um loop
+                        while (Internet.CheckInternetConectivity() == false && CarregaContatos.Carregando.Fechar == false)
                         {
-                            var responseString = await Requisicao.Content.ReadAsStringAsync();
-                            Globais.Outlook_contatos.Add(new Contatos_Outlook());
-                            Globais.Outlook_contatos[i].Carrega(responseString);
-                            proximo_grupo += 10;
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
-                            CarregaContatos.Carregando.Incrementa_Barra();
+                            await System.Threading.Tasks.Task.Delay(200); // espera por 20ms
+                            CarregaContatos.Carregando.IncrementaTimeout(200);
                         }
-                        i++;
+                        if(CarregaContatos.Carregando.Fechar == true)
+                        {
+                            return false;
+                        }
+                        CarregaContatos.Carregando.RemoveErro();
                     }
-            }
+                }
             #endregion
 
             }

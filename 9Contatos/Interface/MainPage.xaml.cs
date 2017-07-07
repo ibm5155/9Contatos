@@ -57,14 +57,7 @@ namespace _9Contatos
         {
         }
 
-        private void bt_Sobre_Click(object sender, RoutedEventArgs e) //apagar
-        {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
-        }
-
-
-
-        private void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
+        private async void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
 
@@ -120,7 +113,10 @@ namespace _9Contatos
                             this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                         }
                     }
-
+                    else
+                    {
+                        ProgressBar.Visibility = Visibility.Collapsed;
+                    }
                     break;
 
                 case QualAPI.OutlookAPI:
@@ -134,6 +130,10 @@ namespace _9Contatos
                             {
                                 Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                             }
+                            else
+                            {
+                                ProgressBar.Visibility = Visibility.Collapsed;
+                            }
                         }
                         catch (Microsoft.Identity.Client.MsalServiceException)
                         {
@@ -142,6 +142,7 @@ namespace _9Contatos
                     }
                     else
                     {
+                        ProgressBar.Visibility = Visibility.Collapsed;
                         var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
                         pergunta.Title = "Sem Conexão com a internet";
                         pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });

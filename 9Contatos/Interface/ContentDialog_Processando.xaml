@@ -1,0 +1,34 @@
+﻿<ContentDialog
+    x:Class="_9Contatos.Interface.ContentDialog_Processando"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:_9Contatos.Interface"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="TITLE" Width="480" HorizontalAlignment="Center" MinWidth="480" MinHeight="320" Opacity="0.7"
+    >
+
+    <Grid>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
+        </ProgressBar>
+
+        <StackPanel Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left">
+            <StackPanel x:Name="Normal" Height="123" Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Image x:Name="Normal_Imagem" Source="ms-appx:///Assets/duvida.png" Width="100" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" />
+                <TextBlock x:Name="Normal_Texto" Text="Texto Normal" MinWidth="0" Width="330" Margin="0"/>
+            </StackPanel>
+            <StackPanel x:Name="Erro" Height="100" Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left" Orientation="Horizontal">
+                <Image x:Name="Erro_Imagem" Source="ms-appx:///Assets/NoInternet.png" Width="100" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" />
+                <TextBlock x:Name="Erro_Texto" Text="Texto Erro" MinWidth="0" Width="330" Margin="0,0,0,0"/>
+            </StackPanel>
+
+        </StackPanel>
+        <Button x:Name="button_Cancelar" Content="Cancelar" HorizontalAlignment="Left" Margin="274,228,0,-3" VerticalAlignment="Top" Width="138" Visibility="Collapsed" Click="button_Cancelar_Click"/>
+    </Grid>
+</ContentDialog>
