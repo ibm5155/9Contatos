@@ -41,9 +41,13 @@
         </Flyout>
     </Page.Resources>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
         <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
         </ProgressBar>
-        <Grid Height="50" Margin="0,10,0,0" VerticalAlignment="Top" Width="Auto">
+        <Grid Grid.Row="0" Height="50" Margin="0,10,0,0" VerticalAlignment="Top" Width="Auto">
             <Image x:Name="image" Height="26" Width="29" Source="ms-appx:///Assets/Icone.png" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,15,210,10" NineGrid="0"/>
             <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Arruma Contatos"  FontSize="30" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="50,0,0,4"/>
 
@@ -56,9 +60,9 @@
                 </Border.BorderBrush>
             </Border>
         </Grid>
-        <Grid Padding="0" Margin="0,148,0,0" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
+        <Grid Padding="0" Grid.Row="1" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
 
-            <ListView Margin="0,0,0,0" Padding="0" ScrollViewer.VerticalScrollBarVisibility="Visible" MinHeight="367" VerticalContentAlignment="Stretch" VerticalAlignment="Bottom" >
+            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"  VerticalContentAlignment="Stretch" VerticalAlignment="Bottom" >
                 <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >

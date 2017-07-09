@@ -206,7 +206,7 @@ namespace _9Contatos.Contatos.Salvar
                 case QualAPI.OutlookAPI:
                     if (Internet.CheckInternetConectivity() == true)
                     {
-                        Carregando = new ContentDialog_Processando("Salvando Contatos", "Isso poderá demorar um pouco por favor aguarde." + Environment.NewLine + "Estamos enviando as alterações para os servidores da microsoft então poderá demorar algum tempo para que você perceba as atualizações dos seus contatos.", "ms-appx:///Assets/Network-server.png");
+                        Carregando = new ContentDialog_Processando("Salvando Contatos", "Isso poderá demorar aproximadamente " + GetTempoPrecisto() + ", favor aguardar com o dispositivo ligado e sem sair do aplicativo." + Environment.NewLine + "Estamos enviando as alterações para os servidores da microsoft então poderá demorar algum tempo para que você perceba as atualizações dos seus contatos.", "ms-appx:///Assets/Network-server.png");
                         Carregando.RemoveErro();
                         Carregando.ShowAsync();
                         Saida = await Salvar_OutlookAPI();
@@ -241,6 +241,27 @@ namespace _9Contatos.Contatos.Salvar
                 pergunta.Title = "Atualização concluida";
                 pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                 await pergunta.ShowAsync();
+            }
+            return Saida;
+        }
+
+        private static string GetTempoPrecisto()
+        {
+            string Saida = "";
+            int TotalContatos = Globais.contatos.Count;
+            switch (Globais.api_usada)
+            {
+                case QualAPI.OutlookAPI:
+                    if(TotalContatos > 60)
+                    {
+                        TotalContatos = TotalContatos / 60;
+                        Saida = TotalContatos.ToString() + " Minutos";
+                    }
+                    else
+                    {
+                        Saida = TotalContatos.ToString() + " Segundos";
+                    }
+                    break;
             }
             return Saida;
         }
