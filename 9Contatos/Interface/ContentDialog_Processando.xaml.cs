@@ -77,6 +77,7 @@ namespace _9Contatos.Interface
                 this.Erro_Texto.Text = Mensagem;
                 Erro_Texto.TextWrapping = TextWrapping.Wrap;
             }
+            Erro.Visibility = Visibility.Visible;
         }
 
         public void RemoveErro()
@@ -88,6 +89,7 @@ namespace _9Contatos.Interface
                 ErroRemovido = true;
                 TimeoutCnt = 0;
                 button_Cancelar.Visibility = Visibility.Collapsed;
+                Erro.Visibility = Visibility.Collapsed;
             }
         }
 

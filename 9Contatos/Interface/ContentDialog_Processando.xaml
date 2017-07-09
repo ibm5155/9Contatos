@@ -6,29 +6,26 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Title="TITLE" Width="480" HorizontalAlignment="Center" MinWidth="480" MinHeight="320" Opacity="0.9"
+    Title="TITLE" Width="480" HorizontalAlignment="Center" MinWidth="480"  Opacity="0.9"
     >
 
     <Grid>
-
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="0*"/>
-        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
         <ProgressBar x:Name="ProgressBar" Visibility="Collapsed" Grid.Row="0" Grid.ColumnSpan="3" IsIndeterminate="True" Margin="20,10,0,10" VerticalAlignment="Center">
         </ProgressBar>
-
-        <StackPanel Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left">
-            <StackPanel x:Name="Normal" Height="123" Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left" Orientation="Horizontal">
+        <StackPanel Grid.Row="0">
+            <StackPanel x:Name="Normal"  VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Image x:Name="Normal_Imagem" Source="ms-appx:///Assets/duvida.png" Width="100" Height="100" VerticalAlignment="Top" HorizontalAlignment="Left" />
-                <TextBlock x:Name="Normal_Texto" Text="Texto Normal" MinWidth="0" Width="330" Margin="0"/>
+                <TextBlock x:Name="Normal_Texto" Text="String não inicializada" MinWidth="0" Width="330" Margin="0" Height="auto"/>
             </StackPanel>
-            <StackPanel x:Name="Erro" Height="100" Margin="0" VerticalAlignment="Top" Width="430" MinWidth="100" HorizontalAlignment="Left" Orientation="Horizontal">
+            <StackPanel Visibility="Visible" x:Name="Erro" Height="auto" Margin="0" VerticalAlignment="Top" Width="430" HorizontalAlignment="Left" Orientation="Horizontal">
                 <Image x:Name="Erro_Imagem" Source="ms-appx:///Assets/NoInternet.png" Width="100" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" />
-                <TextBlock x:Name="Erro_Texto" Text="Texto Erro" MinWidth="0" Width="330" Margin="0,0,0,0"/>
+                <TextBlock x:Name="Erro_Texto" Text="String não inicializada" MinWidth="0" Height="auto" Width="330"/>
             </StackPanel>
-
         </StackPanel>
-        <Button x:Name="button_Cancelar" Content="Cancelar" HorizontalAlignment="Left" Margin="274,228,0,-3" VerticalAlignment="Top" Width="138" Visibility="Collapsed" Click="button_Cancelar_Click"/>
+        <Button Grid.Row="1" x:Name="button_Cancelar" Content="Cancelar" HorizontalAlignment="Left" Margin="274,0,0,0" VerticalAlignment="Top" Width="138" Visibility="Collapsed" Click="button_Cancelar_Click"/>
     </Grid>
 </ContentDialog>
