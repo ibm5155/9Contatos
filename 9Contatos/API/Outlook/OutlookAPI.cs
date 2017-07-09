@@ -12,6 +12,8 @@ using _9Contatos.globais;
 using _9Contatos.InternetTools;
 using System.Threading;
 using System.Diagnostics;
+using _9Contatos.Contatos.Salvar;
+using System.Reflection;
 
 namespace _9Contatos.API.Outlook
 {
@@ -44,34 +46,43 @@ namespace _9Contatos.API.Outlook
         /// <returns>Token for user.</returns>
         public static async Task<string> GetTokenForUserAsync()
         {
-            AuthenticationResult authResult;
-            try
+            if (TokenForUser != null)
             {
-                authResult = await IdentityClientApp.AcquireTokenSilentAsync(Scopes);
-                TokenForUser = authResult.Token;
+                /*
+                 * Se já temos o Token então não precisamos checa-lo.
+                 */
+//                return TokenForUser;
             }
-
-            catch (Exception)
+            else
             {
-                if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
+                AuthenticationResult authResult;
+                try
                 {
-                    try
-                    {
-                        authResult = await IdentityClientApp.AcquireTokenAsync(Scopes);
-                        TokenForUser = authResult.Token;
-                        Expiration = authResult.ExpiresOn;
+                    authResult = await IdentityClientApp.AcquireTokenSilentAsync(Scopes);
+                    TokenForUser = authResult.Token;
+                }
 
-                    }
-                    catch (Microsoft.Identity.Client.MsalException)
+                catch (Exception)
+                {
+                    if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
                     {
-                        TokenForUser = null;
+                        try
+                        {
+                            authResult = await IdentityClientApp.AcquireTokenAsync(Scopes);
+                            TokenForUser = authResult.Token;
+                            Expiration = authResult.ExpiresOn;
+
+                        }
+                        catch (Microsoft.Identity.Client.MsalException)
+                        {
+                            TokenForUser = null;
+                        }
                     }
                 }
+//                return TokenForUser;
             }
-
             return TokenForUser;
         }
-
 
         public static async Task<bool> Get_Contacts()
         {
@@ -88,12 +99,12 @@ namespace _9Contatos.API.Outlook
             {
                 HttpClient client = new HttpClient();
                 HttpResponseMessage Requisicao;
-                var token = await OutlookAPI.GetTokenForUserAsync();               
+                var token = await OutlookAPI.GetTokenForUserAsync();
                 int TotalContatos = 0;
                 int proximo_grupo = 0;
 
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token); //não sei o que é mas é requisitado...
-#region Recebe contagem de contatos
+                #region Recebe contagem de contatos
                 Requisicao = await client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts/$count"));
 
                 if (!Requisicao.IsSuccessStatusCode)
@@ -102,7 +113,7 @@ namespace _9Contatos.API.Outlook
                 }
                 else
                 {
-                    if(Requisicao.Content != null)
+                    if (Requisicao.Content != null)
                     {
                         var responseString = await Requisicao.Content.ReadAsStringAsync();
                         TotalContatos = int.Parse(responseString);
@@ -122,7 +133,7 @@ namespace _9Contatos.API.Outlook
                         CancelaTaskGetURL = new CancellationTokenSource();
 
                         //Só iremos continuar carregando caso tenha conexão com a internet
-                        TaskGetURL = client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones",CancelaTaskGetURL.Token);
+                        TaskGetURL = client.GetAsync(new Uri("https://graph.microsoft.com/v1.0/me/contacts?$skip=" + proximo_grupo.ToString()) + "&$select=Id,displayName,homePhones,MobilePhone,businessPhones", CancelaTaskGetURL.Token);
                         //aguarda a task ser finalizada
                         while (Internet.CheckInternetConectivity() == true && TaskGetURL.IsCompleted == false)
                         {
@@ -150,7 +161,7 @@ namespace _9Contatos.API.Outlook
                                         + " Canceled:" + TaskGetURL.IsCanceled.ToString()
                                         + " Status:" + TaskGetURL.Status.ToString()
                         );
-                        if(!Requisicao.IsSuccessStatusCode || TaskGetURL.IsCompleted ==false || TaskGetURL.IsCanceled == true || Internet.CheckInternetConectivity() == false)
+                        if (!Requisicao.IsSuccessStatusCode || TaskGetURL.IsCompleted == false || TaskGetURL.IsCanceled == true || Internet.CheckInternetConectivity() == false)
                         {
                             //não faz nada, assim iremos percorrer o while novamente e iremos cair no caso de sem internet.
                         }
@@ -175,14 +186,14 @@ namespace _9Contatos.API.Outlook
                             await System.Threading.Tasks.Task.Delay(200); // espera por 20ms
                             CarregaContatos.Carregando.IncrementaTimeout(200);
                         }
-                        if(CarregaContatos.Carregando.Fechar == true)
+                        if (CarregaContatos.Carregando.Fechar == true)
                         {
                             return false;
                         }
                         CarregaContatos.Carregando.RemoveErro();
                     }
                 }
-            #endregion
+                #endregion
             }
             Globais.Contatos_Carregados = true;
             return true;
@@ -195,7 +206,7 @@ namespace _9Contatos.API.Outlook
 
             NovoContato.NomeCompleto = Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].displayName;
 
-            if(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].mobilePhone != "")
+            if (Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].mobilePhone != "")
             {
                 NovoContato.Telefones_Antigos.Add(Globais.Outlook_contatos[IndiceY].Contatos[IndiceX].mobilePhone);
             }
@@ -223,6 +234,9 @@ namespace _9Contatos.API.Outlook
             /**
              * Curioso não ter um caso pronto de PATCH na estrutura do httpclient 
              */
+            CancellationTokenSource CancelaTaskSetURL;// usado para matar a TaskGetURL quando há uma falha.
+            Task<HttpResponseMessage> TaskSetURL;
+            HttpResponseMessage response = new HttpResponseMessage();
             bool Status = true;
             if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5)) ;
             else
@@ -235,11 +249,11 @@ namespace _9Contatos.API.Outlook
 
                 content = "{ " + '"' + "MobilePhone" + '"' + " : " + '"' + NewMobilePhone + '"';
 
-                content = content + ", " + '"' + "homePhones" + '"' + " : [ " ;
-                for(int i = 0;i <  NewhomePhones.Count(); i++)
+                content = content + ", " + '"' + "homePhones" + '"' + " : [ ";
+                for (int i = 0; i < NewhomePhones.Count(); i++)
                 {
                     content = content + '"' + NewhomePhones[i] + '"';
-                    if(i < NewhomePhones.Count() -1)
+                    if (i < NewhomePhones.Count() - 1)
                     {
                         content = content + ", ";
                     }
@@ -254,7 +268,7 @@ namespace _9Contatos.API.Outlook
                     }
                 }
                 content = content + " ] }";
-                
+
                 MensagemDadosAlterados = new StringContent(content);
                 MensagemDadosAlterados.Headers.ContentType.MediaType = "application/json";
                 #endregion
@@ -263,15 +277,69 @@ namespace _9Contatos.API.Outlook
 
 
                 #region Enviar MENSAGEM
-                var request = new HttpRequestMessage(new HttpMethod("PATCH"), new Uri("https://graph.microsoft.com/v1.0/me/contacts/" + contato.ID_OUTLOOK.Id + "/"))
+                HttpRequestMessage Requisicao;/* = new HttpRequestMessage(new HttpMethod("PATCH"), new Uri("https://graph.microsoft.com/v1.0/me/contacts/" + contato.ID_OUTLOOK.Id + "/"))
                 {
                     Content = MensagemDadosAlterados
-                    
-
-            };
+                };*/
                 var token = await OutlookAPI.GetTokenForUserAsync();
                 client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token); //não sei o que é mas é requisitado...
-                var response = await client.SendAsync(request);
+                Status = false;
+                do
+                {
+                    if (Internet.CheckInternetConectivity() == true)
+                    {
+                        CancelaTaskSetURL = new CancellationTokenSource();
+                        /* O HttpRequestMessage odeia ter que enviar uma Request mais de uma vez,
+                         * se você tentar fazer isso, ele vai criar um exception (System.InvalidOperationException)
+                         * Para contornar isso a gente faz uma função que sempre envia uma request clonada,
+                         * assim toda vez que é chamado a RequisicaoClonada() é criado uma copia nova da Requisicao.
+                         * É uma pena ter que fazer isso, pois se cair a internet no meio do processo você tem chances
+                         * de perder a mensagem e o programa achar que você enviou a mensagem e como sou um programador de elite
+                         * eu preciso burlar a matrix para garantir que essa bendita mensagem seja enviada sem falhas de 
+                         * internet no caminho.
+                        */
+                        Requisicao = new HttpRequestMessage(new HttpMethod("PATCH"), new Uri("https://graph.microsoft.com/v1.0/me/contacts/" + contato.ID_OUTLOOK.Id + "/"))
+                        {
+                            Content = MensagemDadosAlterados
+                        };
+                        TaskSetURL = client.SendAsync(Requisicao, CancelaTaskSetURL.Token);
+                        while (Internet.CheckInternetConectivity() == true && TaskSetURL.IsCompleted == false)
+                        {
+                            await System.Threading.Tasks.Task.Delay(20); // espera por 20ms
+                        }
+                        if (Internet.CheckInternetConectivity() == false)
+                        {
+                            //cancela a requisição pois houve um problema durante o recebimento da task
+                            CancelaTaskSetURL.Cancel();
+                            CancelaTaskSetURL.Dispose();
+                            Requisicao.Dispose();
+                            Requisicao = null;
+                            await System.Threading.Tasks.Task.Delay(200); // espera por 20ms
+                        }
+                        else /*Internet.CheckInternetConectivity() == true*/
+                        {
+                            response = TaskSetURL.Result;
+                            Status = true;
+                        }
+                    }
+                    else
+                    {
+                        SalvaContatos.Carregando.AdicionaErro("ms-appx:///Assets/NoInternet.png", "Aplicativo perdeu a conexão com a internet, por favor verifique sua conexão.");
+                        //aguardamos a conexão em um loop
+                        while (Internet.CheckInternetConectivity() == false && SalvaContatos.Carregando.Fechar == false)
+                        {
+                            await System.Threading.Tasks.Task.Delay(200); // espera por 20ms
+                            SalvaContatos.Carregando.IncrementaTimeout(200);
+                        }
+                        if (SalvaContatos.Carregando.Fechar == true)
+                        {
+                            return false;
+                        }
+                        SalvaContatos.Carregando.RemoveErro();
+                    }
+                } while (Status == false);
+
+                //                var response = await client.SendAsync(request);
                 var responseString = await response.Content.ReadAsStringAsync();
 
                 #endregion

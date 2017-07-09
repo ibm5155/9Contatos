@@ -129,9 +129,6 @@
     <Compile Include="Interface\OptionBox_FormatacaoContato.xaml.cs">
       <DependentUpon>OptionBox_FormatacaoContato.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interface\Popup_Carregando.xaml.cs">
-      <DependentUpon>Popup_Carregando.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Interface\InputBox_EditaContato.xaml.cs">
       <DependentUpon>InputBox_EditaContato.xaml</DependentUpon>
     </Compile>
@@ -178,6 +175,7 @@
     <Content Include="Assets\NoInternet.png" />
     <Content Include="Assets\nono.png" />
     <Content Include="Assets\ok.png" />
+    <Content Include="Assets\SavePhone.png" />
     <Content Include="Assets\SplashScreen.scale-150.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-400.png" />
@@ -248,10 +246,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Interface\OptionBox_FormatacaoContato.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Interface\Popup_Carregando.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

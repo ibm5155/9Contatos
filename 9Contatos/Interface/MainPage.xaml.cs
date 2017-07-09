@@ -17,8 +17,6 @@ using _9Contatos.API.PeopleAPP;
 using System.Net.NetworkInformation;
 using _9Contatos.InternetTools;
 
-#warning TEM UM GRANDE CONSUMO DE MEMÓRIA AO TROCAR DE FRAMES, PRECISO CORRIGIR ISSO!!!
-
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
 namespace _9Contatos

@@ -16,14 +16,13 @@ namespace _9Contatos.Contatos.Salvar
 {
     class SalvaContatos
     {
-        private static Janela_Carregando Carregando;
+        public static ContentDialog_Processando Carregando;
 
         public static async Task<bool> Salvar_PeopleAPI_Com_LINK()
         {
             bool Saida = true;
             List<string> Telefone_Novo = new List<string>();
             PeopleAPI Link = new PeopleAPI();
-            Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; Saida == true && i < Globais.contatos.Count; i++)
             {
                 Debug.Write("Salvando o contato " + Globais.contatos[i].NomeCompleto);
@@ -85,7 +84,6 @@ namespace _9Contatos.Contatos.Salvar
 
                 }
                 Debug.WriteLine(" - SALVO");
-                Carregando.Incrementa_Barra();
             }
             return Saida;
         }
@@ -95,7 +93,6 @@ namespace _9Contatos.Contatos.Salvar
             bool Saida = true;
             List<string> Telefone_Novo = new List<string>();
             PeopleAPI Link = new PeopleAPI();
-            Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; Saida == true && i < Globais.contatos.Count; i++)
             {
                 Telefone_Novo.Clear();
@@ -115,7 +112,6 @@ namespace _9Contatos.Contatos.Salvar
                     pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
                     await pergunta.ShowAsync();
                 }
-                Carregando.Incrementa_Barra();
             }
             return Saida;
         }
@@ -131,7 +127,6 @@ namespace _9Contatos.Contatos.Salvar
             OutlookAPI Link = new OutlookAPI();
             #endregion
             #region código
-            Carregando.Altera_Maximo(Globais.contatos.Count);
             for (int i = 0; TodosContatosSalvos == true && i < Globais.contatos.Count; i++)
             {
                 Debug.Write("Salvando o contato " + Globais.contatos[i].NomeCompleto);
@@ -180,8 +175,6 @@ namespace _9Contatos.Contatos.Salvar
                     await pergunta.ShowAsync();
                 }
                 Debug.WriteLine(" - SALVO");
-
-                Carregando.Incrementa_Barra();
             }
             #endregion
             return TodosContatosSalvos;
@@ -192,21 +185,32 @@ namespace _9Contatos.Contatos.Salvar
         {
             bool Saida = false;
             Debug.WriteLine("Iniciando processo de salvar contatos com a API " + Globais.api_usada);
-            Carregando = new Janela_Carregando();
-            Carregando.ShowAsync(); //Roda em paralelo ao código
+//            Carregando.ShowAsync(); //Roda em paralelo ao código
 
             switch (Globais.api_usada)
             {
                 case QualAPI.PeopleAPI:
+                    Carregando = new ContentDialog_Processando("Salvando Contatos", "Isso poderá demorar um pouco por favor aguarde.", "ms-appx:///Assets/SavePhone.png");
+                    Carregando.RemoveErro();
+                    Carregando.ShowAsync();
                     Saida = await Salvar_PeopleAPI_Com_LINK();
+                    Carregando.Destroi();
                     break;
                 case QualAPI.PeopleAPI_COM_Alteracao:
+                    Carregando = new ContentDialog_Processando("Salvando Contatos", "Isso poderá demorar um pouco por favor aguarde.", "ms-appx:///Assets/SavePhone.png");
+                    Carregando.RemoveErro();
+                    Carregando.ShowAsync();
                     Saida = await Salvar_PeopleAPI_Com_Alteracao();
+                    Carregando.Destroi();
                     break;
                 case QualAPI.OutlookAPI:
                     if (Internet.CheckInternetConectivity() == true)
                     {
+                        Carregando = new ContentDialog_Processando("Salvando Contatos", "Isso poderá demorar um pouco por favor aguarde." + Environment.NewLine + "Estamos enviando as alterações para os servidores da microsoft então poderá demorar algum tempo para que você perceba as atualizações dos seus contatos.", "ms-appx:///Assets/Network-server.png");
+                        Carregando.RemoveErro();
+                        Carregando.ShowAsync();
                         Saida = await Salvar_OutlookAPI();
+                        Carregando.Destroi();
                     }
                     else
                     {
@@ -220,7 +224,7 @@ namespace _9Contatos.Contatos.Salvar
                     }
                     break;
             }
-            Carregando.Hide();
+            Carregando = null;
             Debug.WriteLine("Fim do Processo de alteracao de contatos");
             if (Saida == true)
             {
