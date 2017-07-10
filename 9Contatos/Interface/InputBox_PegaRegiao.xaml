@@ -10,7 +10,7 @@
     PrimaryButtonText="Ok"
     SecondaryButtonText=""
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick_1"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" MinWidth="339" VerticalAlignment="Top" HorizontalAlignment="Left">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" MinWidth="339" VerticalAlignment="Top" HorizontalAlignment="Left" Opacity="0.9">
 
     <Grid>
         <TextBox x:Name="Entrada" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="250" InputScope="Number"/>

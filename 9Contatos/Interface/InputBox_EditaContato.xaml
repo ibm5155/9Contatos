@@ -10,7 +10,7 @@
     PrimaryButtonText="Editar"
     SecondaryButtonText="Cancelar"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded" VerticalAlignment="Center" HorizontalAlignment="Center">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Loaded="ContentDialog_Loaded" VerticalAlignment="Center" HorizontalAlignment="Center" Opacity="0.9">
 
     <Grid Margin="0,0,0,-15.667">
         <StackPanel Height="103" Width="270" HorizontalAlignment="Center" VerticalAlignment="Center">
