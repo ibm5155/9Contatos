@@ -25,6 +25,19 @@ namespace _9Contatos.Interface
         private int TimeoutCnt = 0;
         public bool Fechar = false;
 
+
+        /// <summary>
+        /// Serve para ajustar o tamanho maximo que o texto pode ter na horizontal a fim de não ficar fora da janela
+        /// assim podendo ajustar o mesmo para qualquer tipo de dispositivo.
+        /// </summary>
+        private void SetMaxTextWidth()
+        {
+//            this.Normal_Texto.Width = this.MaxWidth - this.Normal_Imagem.Width - 120 /*ContentDialog Border*/;
+ //           this.Erro_Texto.Width = this.MaxWidth - this.Erro_Imagem.Width - 120 /*ContentDialog Border*/;
+   //         this.Normal_Texto.MaxWidth = this.MaxWidth - this.Normal_Imagem.Width - 120 /*ContentDialog Border*/;
+     //       this.Erro_Texto.MaxWidth = this.MaxWidth - this.Erro_Imagem.Width - 120 /*ContentDialog Border*/;
+        }
+
         public ContentDialog_Processando()
         {
             this.InitializeComponent();
@@ -34,6 +47,7 @@ namespace _9Contatos.Interface
         public ContentDialog_Processando(string Titulo,string Mensagem,string Icone)
         {
             this.InitializeComponent();
+            SetMaxTextWidth();
             this.Title = Titulo;
             if(Icone != null)
             {
@@ -49,6 +63,7 @@ namespace _9Contatos.Interface
             if (Mensagem != null)
             {
                 this.Normal_Texto.Text = Mensagem;
+                SetMaxTextWidth();
                 Normal_Texto.TextWrapping = TextWrapping.Wrap;
             }
             else
@@ -75,9 +90,11 @@ namespace _9Contatos.Interface
             if (Mensagem != null)
             {
                 this.Erro_Texto.Text = Mensagem;
+                SetMaxTextWidth();
                 Erro_Texto.TextWrapping = TextWrapping.Wrap;
             }
-            Erro.Visibility = Visibility.Visible;
+            Erro_Imagem.Visibility = Visibility.Visible;
+            Erro_Texto.Visibility = Visibility.Visible;
         }
 
         public void RemoveErro()
@@ -89,7 +106,8 @@ namespace _9Contatos.Interface
                 ErroRemovido = true;
                 TimeoutCnt = 0;
                 button_Cancelar.Visibility = Visibility.Collapsed;
-                Erro.Visibility = Visibility.Collapsed;
+                Erro_Imagem.Visibility = Visibility.Collapsed;
+                Erro_Texto.Visibility = Visibility.Collapsed;
             }
         }
 
