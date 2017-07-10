@@ -8,7 +8,7 @@
     mc:Ignorable="d">
     <Page.Resources>
         <Flyout x:Key="MaisOpcoes_Flyout">
-            <StackPanel >
+            <StackPanel>
                 <TextBlock Text="Metodo a ser utilizado para alterar os contatos" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0,0,0,0"/>
                 <RadioButton x:Name="Arrumar_Sem_Modificacao" ToolTipService.ToolTip="Cria um contato temporário, formata o número desse contato criado e vincula ele ao contato original." Tapped="Mark_PeopleAPI1">
                     <StackPanel Orientation="Horizontal">
@@ -25,7 +25,7 @@
                 <RadioButton x:Name="Arrumar_Email" ToolTipService.ToolTip="Altera os números de telefone dos contatos que estão registrados na conta microsoft. Pode demorar um pouco para o app contatos sincronizar as alterações." Tapped="Mark_OutlookAPI">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="Arrumar_Email_icone" Symbol="Mail" Foreground="{ThemeResource SystemControlHighlightAccentBrush}"/>
-                        <TextBlock x:Name="Arrumar_Email_texto" TextWrapping="Wrap" Text="Arrumar Contatos do e-mail da Microsoft"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
+                        <TextBlock x:Name="Arrumar_Email_texto" TextWrapping="Wrap" Text="Arrumar Contatos de uma conta Microsoft"  FontSize="14" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="2,0,0,0"/>
                     </StackPanel>
                 </RadioButton>
                 <TextBlock Text="Outras opções" FontSize="20" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="20,0,0,0"/>
@@ -40,7 +40,7 @@
             </StackPanel>
         </Flyout>
     </Page.Resources>
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
+    <Grid Background="Black" RenderTransformOrigin="0.463,0.55" Margin="0,0,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -62,7 +62,7 @@
         </Grid>
         <Grid Padding="0" Grid.Row="1" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
 
-            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"  VerticalContentAlignment="Stretch" VerticalAlignment="Bottom" >
+            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"  VerticalContentAlignment="Stretch" VerticalAlignment="Bottom">
                 <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >

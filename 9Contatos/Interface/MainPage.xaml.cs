@@ -43,18 +43,6 @@ namespace _9Contatos
             }
         }
 
-        //private _9Contatos.Interface.OpcoesAvancadas xx;
-
-        private void bt_Mais_Opcoes_Click(object sender, RoutedEventArgs e) // apagar
-        {
-            //this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas),xx);
-
-        }
-
-        private async void image1_Tapped(object sender, TappedRoutedEventArgs e)//apagar
-        {
-        }
-
         private async void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));

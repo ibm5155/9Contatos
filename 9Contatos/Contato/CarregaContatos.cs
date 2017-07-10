@@ -128,7 +128,7 @@ namespace _9Contatos.Contatos.Carrega
 
             bool Saida =true;
             OutlookAPI Outlook = new OutlookAPI();
-            Carregando = new ContentDialog_Processando("Carregando contatos","Estamos carregando contato por contato do servidor da microsoft então isso poderá levar um tempo, por favor não feche este aplicavo enquanto ele estiver operando", "ms-appx:///Assets/Network-server.png");
+            Carregando = new ContentDialog_Processando("Carregando contatos","Estamos carregando os contatos de sua conta microsoft e isso irá levar um tempo, por favor não feche ou saia deste aplicavo enquanto ele estiver carregando os contatos.", "ms-appx:///Assets/Network-server.png");
 
             ParserNonoDigito ParserNove = new ParserNonoDigito();
             Telefone TelefoneBuffer = new Telefone();

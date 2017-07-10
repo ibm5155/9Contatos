@@ -10,55 +10,52 @@
     PrimaryButtonText=""
     SecondaryButtonText="OK"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
-    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" Width="Auto" Height="500" HorizontalAlignment="Left" VerticalAlignment="Top" MinWidth="0" VerticalContentAlignment="Top" Padding="0" MinHeight="0" MaxHeight="500" MaxWidth="500">
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick" HorizontalAlignment="Left" VerticalAlignment="Top" VerticalContentAlignment="Top" MaxHeight="500" MaxWidth="500" Opacity="0.9">
 
-    <Grid Width="279" Height="345" VerticalAlignment="Top" HorizontalAlignment="Left">
-        <StackPanel Height="340" VerticalAlignment="Top" HorizontalAlignment="Left" Width="269">
-            <StackPanel Height="60" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0" Width="269">
-                <Image x:Name="image_WARNING" Width="76" Source="ms-appx:///Assets/nono.png" Margin="0,0,0,10"/>
-                <TextBlock x:Name="textBlock2" TextWrapping="Wrap" Width="188" FontSize="13" Margin="0,0,0,10">
-                <Run Text="-Um contato "/>
-                <Run Text="que teve o nono "/>
-                <LineBreak/>
-                <Run Text="digito adicionado."/>
-                </TextBlock>
-            </StackPanel>
-            <StackPanel Height="58" Orientation="Horizontal" VerticalAlignment="Top" Margin="0" HorizontalAlignment="Left" Width="269">
-                <Image x:Name="image_Question" Width="73" Source="ms-appx:///Assets/duvida.png" Margin="0,0,0,10"/>
-                <TextBlock x:Name="textBlock3" TextWrapping="Wrap" Width="194" FontSize="13" Margin="0,15,0,0">
-                    <Run Text="-"/>
-                    <Run Text="Um número desconhecido."/>
-                </TextBlock>
-            </StackPanel>
-            <StackPanel Height="60" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="0" Width="269">
-                <Image  Width="76" Source="ms-appx:///Assets/internacional.png" Margin="0,0,0,10"/>
-                <TextBlock  TextWrapping="Wrap" Width="188" FontSize="13" Margin="0,15,0,10">
-                    <Run Text="-Um "/>
-                    <Run Text="número internacional"/>
-                </TextBlock>
-            </StackPanel>
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+    <Grid Width="300" Height="auto" VerticalAlignment="Top" HorizontalAlignment="Left">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
 
-            <StackPanel Height="58" Orientation="Horizontal" VerticalAlignment="Top" Margin="3,0,0,0" HorizontalAlignment="Left" Width="266" BorderThickness="0">
-                <SymbolIcon Margin="0" Width="64" Symbol="Setting"/>
-                <TextBlock TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Height="58" Width="202">
+        <Grid Grid.Row="0" Height="auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Image x:Name="image_WARNING"  Grid.Row="0" Height=" 60" Width="60" Source="ms-appx:///Assets/nono.png" Margin="0,0,0,10"/>
+            <Image x:Name="image_Question" Grid.Row="1" Height=" 60" Width="60" Source="ms-appx:///Assets/duvida.png" Margin="0,0,0,10"/>
+            <Image                         Grid.Row="2" Height=" 60" Width="60" Source="ms-appx:///Assets/internacional.png" Margin="0,0,0,10"/>
+            <SymbolIcon                    Grid.Row="3" Height=" 60" Width="60" Margin="0" Symbol="Setting"/>
+            <SymbolIcon                    Grid.Row="4" Height=" 60" Width="60"  Margin="0" Symbol="Save"/>
 
-                <Run Text="-"/>
-                <Run Text="O botão formatar serve para "/>
-                <Run Text="a "/>
-                <LineBreak/>
-                <Run Text="formatação"/>
-                <Run Text=" "/>
-                <Run Text="dos números."/>
-                </TextBlock>
-            </StackPanel>
-            <StackPanel Height="58" Orientation="Horizontal" VerticalAlignment="Top" Margin="3,0,0,0" HorizontalAlignment="Left" Width="266" BorderThickness="0">
-                <SymbolIcon Margin="0" Width="64" Symbol="Save"/>
-                <TextBlock TextWrapping="Wrap" FontSize="12" Margin="0" Text="-Os contatos só serão salvos quando você apertar no botão &quot;Salvar Contatos&quot;." Width="201"/>
-            </StackPanel>
-
-            <TextBlock TextWrapping="Wrap" FontSize="12" Margin="3,0,10,0">
-                 <Run Text="-Caso um contato tenha mais de um número, clique nele para visualizar todos os números do contato."/>
-            </TextBlock>
-        </StackPanel>
+            <TextBlock  Grid.Row="0" Grid.Column="1" Text="-Um contato que teve o nono digito adicionado." TextWrapping="Wrap" Width="188" FontSize="13" Margin="0,0,0,10"/>
+            <TextBlock  Grid.Row="1" Grid.Column="1" Text="-um número desconhecido." TextWrapping="Wrap" Width="194" FontSize="13" Margin="0,15,0,0"/>
+            <TextBlock  Grid.Row="2" Grid.Column="1" Text="-Um número internacional." TextWrapping="Wrap" Width="188" FontSize="13" Margin="0,15,0,10"/>
+            <TextBlock  Grid.Row="3" Grid.Column="1" Text="-O botão formatar serve para a formatação dos números." TextWrapping="Wrap" FontSize="12" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,10,0,0" Height="58" Width="202"/>
+            <TextBlock  Grid.Row="4" Grid.Column="1" Text="-Os contatos só serão salvos quando você apertar no botão &quot;Salvar Contatos&quot;." TextWrapping="Wrap" FontSize="12" Margin="0"  Width="201"/>
+        </Grid>
+        <Grid Grid.Row="1" Height="auto">
+            <TextBlock Text="-Caso um contato tenha mais de um número, clique nele para visualizar todos os números do contato." TextWrapping="Wrap" FontSize="12" Margin="3,0,10,0"/>
+        </Grid>
+        <Grid Grid.Row="2" Height="auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock Text="Opção selecionada para alteração dos contatos:" FontSize="16" TextWrapping="Wrap" FontWeight="Bold"/>
+            <TextBlock  Grid.Row="1" x:Name="MetodoUsado" FontSize="12" Margin="3,0,10,0" TextWrapping="Wrap"/>
+        </Grid>
     </Grid>
+    </ScrollViewer>
 </ContentDialog>
