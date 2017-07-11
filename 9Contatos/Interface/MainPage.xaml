@@ -62,7 +62,7 @@
         </Grid>
         <Grid Padding="0" Grid.Row="1" FlyoutBase.AttachedFlyout="{StaticResource MaisOpcoes_Flyout}">
 
-            <ListView ScrollViewer.VerticalScrollBarVisibility="Auto"  VerticalContentAlignment="Stretch" VerticalAlignment="Bottom">
+            <ListView x:Name="ListaOpcoes" ScrollViewer.VerticalScrollBarVisibility="Auto"  VerticalContentAlignment="Stretch" VerticalAlignment="Bottom">
                 <ListViewItem x:Name="Arrumar_Contatos" Background="#FF3C3C3C" Height="70" Tapped="bt_arrumar">
                     <StackPanel Orientation="Horizontal">
                         <SymbolIcon x:Name="List_Arrumar_Contatos_Icn" Symbol="Setting" Foreground="{ThemeResource SystemControlHighlightAccentBrush}" >

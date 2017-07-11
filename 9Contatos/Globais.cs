@@ -51,6 +51,8 @@ namespace _9Contatos.globais
         public static bool Contatos_Carregados = false;
         public static bool Contatos_Bloqueados_Pelo_User = false;
 
+        public static bool MainPage_Bloqueia_Listview = false;
+
 
 
 

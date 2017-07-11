@@ -49,7 +49,6 @@ namespace _9Contatos.API.Outlook
                 /*
                  * Se já temos o Token então não precisamos checa-lo.
                  */
-                //                return TokenForUser;
             }
             else
             {

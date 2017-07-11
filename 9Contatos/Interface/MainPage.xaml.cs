@@ -16,6 +16,7 @@ using System.Threading.Tasks;
 using _9Contatos.API.PeopleAPP;
 using System.Net.NetworkInformation;
 using _9Contatos.InternetTools;
+using Windows.UI.Core;
 
 // The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -45,122 +46,142 @@ namespace _9Contatos
 
         private async void bt_Sobre_Click(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
-
+            if (Globais.MainPage_Bloqueia_Listview == false)
+            {
+                this.Frame.Navigate(typeof(_9Contatos.Interface.Sobre));
+            }
         }
 
         private async void bt_donate(object sender, TappedRoutedEventArgs e)
         {
-            OptionBox_Donate dialog = new OptionBox_Donate();
-            await dialog.ShowAsync();
+            if (Globais.MainPage_Bloqueia_Listview == false)
+            {
+                OptionBox_Donate dialog = new OptionBox_Donate();
+                await dialog.ShowAsync();
+            }
         }
 
         private async void bt_arrumar(object sender, TappedRoutedEventArgs e)
         {
-            ProgressBar.Visibility = Visibility.Visible;
-            bool Carregar = false;
-            //teste de crash
-            switch (Globais.api_usada)
+
+            if (Globais.MainPage_Bloqueia_Listview == false)
             {
-                case QualAPI.PeopleAPI_COM_Alteracao:
-                    Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
-                    ProgressBar.Visibility = Visibility.Collapsed;
-                    if (Carregar == true)
-                    {
-                        if (Globais.contatos.Count() == 0)
-                        {
-                            var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                            pergunta.Title = "Nenhum contato encontrado";
-                            pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                            pergunta.ShowAsync();
-                        }
-                        else
-                        {
-                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                        }
-                    }
-                    break;
-
-                case QualAPI.PeopleAPI:
-
-                    Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
-                    ProgressBar.Visibility = Visibility.Collapsed;
-                    if (Carregar == true)
-                    {
-                        if (Globais.contatos.Count() == 0)
-                        {
-                            var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                            pergunta.Title = "Nenhum contato encontrado";
-                            pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                            pergunta.ShowAsync();
-                        }
-                        else
-                        {
-                            this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                        }
-                    }
-                    else
-                    {
+                Globais.MainPage_Bloqueia_Listview = true;
+                ProgressBar.Visibility = Visibility.Visible;
+                ListaOpcoes.SelectionMode = ListViewSelectionMode.None; //bloqueia a listview para evitar duplo cliques
+                bool Carregar = false;
+                //teste de crash
+                switch (Globais.api_usada)
+                {
+                    case QualAPI.PeopleAPI_COM_Alteracao:
+                        Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
                         ProgressBar.Visibility = Visibility.Collapsed;
-                    }
-                    break;
-
-                case QualAPI.OutlookAPI:
-
-                    if (Internet.CheckInternetConectivity() == true)
-                    {
-                        try
+                        if (Carregar == true)
                         {
-                            Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
-                            if (Carregar == true)
+                            if (Globais.contatos.Count() == 0)
                             {
-                                Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                                pergunta.Title = "Nenhum contato encontrado";
+                                pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                                pergunta.ShowAsync();
                             }
                             else
                             {
-                                ProgressBar.Visibility = Visibility.Collapsed;
+                                this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                             }
                         }
-                        catch (Microsoft.Identity.Client.MsalServiceException)
-                        {
-                            //faz nada já que não fez login....
-                        }
-                    }
-                    else
-                    {
+                        break;
+
+                    case QualAPI.PeopleAPI:
+
+                        Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
                         ProgressBar.Visibility = Visibility.Collapsed;
-                        var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
-                        pergunta.Title = "Sem Conexão com a internet";
-                        pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
-                        pergunta.ShowAsync();
-                    }
-                    break;
+                        if (Carregar == true)
+                        {
+                            if (Globais.contatos.Count() == 0)
+                            {
+                                var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                                pergunta.Title = "Nenhum contato encontrado";
+                                pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                                pergunta.ShowAsync();
+                            }
+                            else
+                            {
+                                this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                            }
+                        }
+                        else
+                        {
+                            ProgressBar.Visibility = Visibility.Collapsed;
+                        }
+                        break;
+
+                    case QualAPI.OutlookAPI:
+
+                        if (Internet.CheckInternetConectivity() == true)
+                        {
+                            try
+                            {
+                                Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
+                                if (Carregar == true)
+                                {
+                                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos)));
+                                    //                                Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                }
+                                else
+                                {
+                                    ProgressBar.Visibility = Visibility.Collapsed;
+                                }
+                            }
+                            catch (Microsoft.Identity.Client.MsalServiceException)
+                            {
+                                //faz nada já que não fez login....
+                            }
+                        }
+                        else
+                        {
+                            ProgressBar.Visibility = Visibility.Collapsed;
+                            var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
+                            pergunta.Title = "Sem Conexão com a internet";
+                            pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                            pergunta.ShowAsync();
+                        }
+                        break;
+                }
+                //libera listview
+                ListaOpcoes.SelectionMode = ListViewSelectionMode.Single;
+                Globais.MainPage_Bloqueia_Listview = false;
             }
         }
 
         private async void bt_classificar(object sender, TappedRoutedEventArgs e)
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:REVIEW?PFN={0}", Windows.ApplicationModel.Package.Current.Id.FamilyName)));
-
+            if (Globais.MainPage_Bloqueia_Listview == false)
+            {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri(string.Format("ms-windows-store:REVIEW?PFN={0}", Windows.ApplicationModel.Package.Current.Id.FamilyName)));
+            }
         }
 
         private void bt_mais(object sender, TappedRoutedEventArgs e)
         {
-            switch (Globais.api_usada)
+            if (Globais.MainPage_Bloqueia_Listview == false)
             {
-                case QualAPI.PeopleAPI:
-                    Arrumar_Sem_Modificacao.IsChecked = true;
-                    break;
-                case QualAPI.PeopleAPI_COM_Alteracao:
-                    Arrumar_Com_Modificacao.IsChecked = true;
-                    break;
-                case QualAPI.OutlookAPI:
-                    Arrumar_Email.IsChecked = true;
-                    break;
+                switch (Globais.api_usada)
+                {
+                    case QualAPI.PeopleAPI:
+                        Arrumar_Sem_Modificacao.IsChecked = true;
+                        break;
+                    case QualAPI.PeopleAPI_COM_Alteracao:
+                        Arrumar_Com_Modificacao.IsChecked = true;
+                        break;
+                    case QualAPI.OutlookAPI:
+                        Arrumar_Email.IsChecked = true;
+                        break;
+                }
+                FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+                //MaisOpcoes_Flyout
+                //  this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
             }
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);  
-            //MaisOpcoes_Flyout
-            //  this.Frame.Navigate(typeof(_9Contatos.Interface.OpcoesAvancadas), xx);
         }
 
         private void OpcaoAlteraContatoLista_Selecionado(object sender, TappedRoutedEventArgs e)
