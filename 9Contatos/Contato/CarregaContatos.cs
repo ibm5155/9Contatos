@@ -190,8 +190,8 @@ namespace _9Contatos.Contatos.Carrega
             {
                 Saida = false;
             }
-
-
+            //não precisamos mais dos contatos do outlook
+            Globais.Outlook_contatos.Clear();
             return Saida;
         }
 

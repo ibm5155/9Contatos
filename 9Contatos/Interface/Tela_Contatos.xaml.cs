@@ -299,21 +299,11 @@ namespace _9Contatos.Interface
 
         private async void Bt_Salvar_Click(object sender, RoutedEventArgs e)
         {
-            FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
-            switch (Globais.api_usada)
-            {
-                case QualAPI.PeopleAPI:
-                    Salvar_TextoFlyout.Text = "Salvando contatos temporários, favor não apagar" + Environment.NewLine + "seus contatos da agenda.";
-                    break;
-                case QualAPI.PeopleAPI_COM_Alteracao:
-                    break;
-                case QualAPI.OutlookAPI:
-                    Salvar_TextoFlyout.Text = "Aguarde um momento pois esse método de " + Environment.NewLine + "atualização de contatos demora um pouco.";
-                    break;
-            }
             bool Output = await SalvaContatos.Salvar();
             if (Output == true)
             {
+                /*GC*/
+                LimpaContatos();
                 Frame.GoBack();
             }
 
@@ -321,14 +311,9 @@ namespace _9Contatos.Interface
 
         private void Bt_Cancelar_Click(object sender, RoutedEventArgs e)
         {
+            /*GC*/
+            LimpaContatos();
             // Botar popup confirmando
-            ListadeContatos.Clear();
-            if (ListaContatosView != null)
-            {
-                ListaContatosView.ItemsSource = null;
-            }
-            ListaContatosView = null;
-
             Globais.contatos.Clear();
             Frame.GoBack();
             e = null;
@@ -356,6 +341,19 @@ namespace _9Contatos.Interface
             var dialog = new Popup_Explicacao_Contatos();
             await dialog.ShowAsync();
             e = null;
+        }
+
+        private void LimpaContatos()
+        {
+            Globais.contatos.Clear();
+            ListadeContatos.Clear();
+            if (ListaContatosView != null)
+            {
+                ListaContatosView.ItemsSource = null;
+            }
+            ListaContatosView = null;
+
+
         }
     }
 }

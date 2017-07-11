@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Title="Formatação dos Contatos"
     PrimaryButtonText="Formatar"
-    PrimaryButtonClick="Botao_Formatar_Click" Height="644" MinWidth="320" MinHeight="200" MaxWidth="316" VerticalAlignment="Top" Width="444" MaxHeight="500" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" SecondaryButtonText="" Closing="ContentDialog_Closing">
+    PrimaryButtonClick="Botao_Formatar_Click" Height="644" MinWidth="320" MinHeight="200" MaxWidth="316" VerticalAlignment="Top" Width="444" MaxHeight="500" HorizontalAlignment="Left" HorizontalContentAlignment="Stretch" SecondaryButtonText="" Closing="ContentDialog_Closing" Opacity="0.9">
 
     <Grid Width="270" Height="267" HorizontalAlignment="Center" VerticalAlignment="Top" Opacity="0.9">
         <Grid.RowDefinitions>

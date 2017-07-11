@@ -32,12 +32,10 @@ namespace _9Contatos.API.Outlook
     class OutlookAPI
     {
         // The Client ID is used by the application to uniquely identify itself to the v2.0 authentication endpoint.
-        public static string[] Scopes = { "https://graph.microsoft.com/Contacts.ReadWrite" };
         public static string TokenForUser = null;
         public static DateTimeOffset Expiration;
-        public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
-        static string clientId = App.Current.Resources["ida:ClientID"].ToString();
-        public static PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId);
+//        public static ApplicationDataContainer _settings = ApplicationData.Current.RoamingSettings;
+        
 
 
         /// <summary>
@@ -51,35 +49,20 @@ namespace _9Contatos.API.Outlook
                 /*
                  * Se já temos o Token então não precisamos checa-lo.
                  */
-//                return TokenForUser;
+                //                return TokenForUser;
             }
             else
             {
-                AuthenticationResult authResult;
-                try
-                {
-                    authResult = await IdentityClientApp.AcquireTokenSilentAsync(Scopes);
-                    TokenForUser = authResult.Token;
-                }
-
-                catch (Exception)
-                {
-                    if (TokenForUser == null || Expiration <= DateTimeOffset.UtcNow.AddMinutes(5))
-                    {
-                        try
-                        {
-                            authResult = await IdentityClientApp.AcquireTokenAsync(Scopes);
-                            TokenForUser = authResult.Token;
-                            Expiration = authResult.ExpiresOn;
-
-                        }
-                        catch (Microsoft.Identity.Client.MsalException)
-                        {
-                            TokenForUser = null;
-                        }
-                    }
-                }
-//                return TokenForUser;
+                //Adquire o Token
+                string[] Scopes = { "https://graph.microsoft.com/Contacts.ReadWrite" };
+                string clientId = App.Current.Resources["ida:ClientID"].ToString();
+                PublicClientApplication IdentityClientApp = new PublicClientApplication(clientId);
+                AuthenticationResult authResult = await IdentityClientApp.AcquireTokenAsync(Scopes);
+                TokenForUser = authResult.Token;
+                Expiration = authResult.ExpiresOn;
+                authResult = null;
+                IdentityClientApp = null;
+                clientId = null;
             }
             return TokenForUser;
         }

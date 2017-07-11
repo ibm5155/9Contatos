@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Title="O que deseja visualizar?"
     PrimaryButtonText="Filtrar"
-    PrimaryButtonClick="ContentDialog_PrimaryButtonClick_1" VerticalAlignment="Top" MaxHeight="456">
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick_1" VerticalAlignment="Top" MaxHeight="456" Opacity="0.9">
 
     <Grid Height="302">
         <Grid.ColumnDefinitions>

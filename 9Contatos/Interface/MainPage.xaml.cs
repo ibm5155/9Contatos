@@ -135,7 +135,6 @@ namespace _9Contatos
                         pergunta.ShowAsync();
                     }
                     break;
-
             }
         }
 
