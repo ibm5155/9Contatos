@@ -723,6 +723,12 @@ namespace _9Contatos.Telefones.telefone
                         saida = true;
                     }
                 }
+                else if(globais.Globais.MoroNoBrasil == false)
+                {
+                    //se não tem o digito que permite indentificar o país do número E o usuário não é do BRASIL, ignore esse número
+                    //pois ele poderá não ser um número local do brasil.
+                    saida = true;
+                }
             }
             return saida;
         }

@@ -13,6 +13,7 @@ namespace _9Contatos.globais
         public static List<Contato> contatos = new List<Contato>();
         public static List<Contatos_Outlook> Outlook_contatos = new List<Contatos_Outlook>();
 
+        public static bool MoroNoBrasil = ("BR" == Windows.System.UserProfile.GlobalizationPreferences.HomeGeographicRegion ? true : false);
         public static string MinhaRegiao = "";
         public static int OffsetCelular = -2;
         public static List<int> OffsetNome = new List<int>(); // Indica os Offsets do contato

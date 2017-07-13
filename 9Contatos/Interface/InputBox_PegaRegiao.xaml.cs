@@ -12,6 +12,11 @@ namespace _9Contatos.Interface
     {
         public PegaRegiao()
         {
+            if(Globais.MoroNoBrasil == false)
+            {
+                Globais.MinhaRegiao = "";
+                Hide();
+            }
             InitializeComponent();
         }
 

@@ -30,17 +30,26 @@ namespace _9Contatos.Interface
             checkBox_Original.IsChecked = Globais.Formatacao_Original;
             checkBox_Traco.IsChecked = Globais.Formatacao_Traco;
             checkBox_LongDist.IsChecked = Globais.Formatacao_Distancia;
-            if(Globais.Formatacao_Ocultar_Pais == false)
+            if (Globais.MoroNoBrasil == false)
             {
+                Nacional_Sem_DDD.IsEnabled = false;
+                Nacional.IsEnabled = false;
                 Internacional.IsChecked = true;
-            }
-            else if(Globais.Formatacao_Ocultar_Meu_DDD == true)
-            {
-                Nacional_Sem_DDD.IsChecked = true;
             }
             else
             {
-                Nacional.IsChecked = true;
+                if (Globais.Formatacao_Ocultar_Pais == false)
+                {
+                    Internacional.IsChecked = true;
+                }
+                else if (Globais.Formatacao_Ocultar_Meu_DDD == true)
+                {
+                    Nacional_Sem_DDD.IsChecked = true;
+                }
+                else
+                {
+                    Nacional.IsChecked = true;
+                }
             }
         }
 

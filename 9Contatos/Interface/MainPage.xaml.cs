@@ -70,84 +70,93 @@ namespace _9Contatos
                 ProgressBar.Visibility = Visibility.Visible;
                 ListaOpcoes.SelectionMode = ListViewSelectionMode.None; //bloqueia a listview para evitar duplo cliques
                 bool Carregar = false;
+                if (Globais.MoroNoBrasil == false)
+                {
+                    Globais.Formatacao_Ocultar_Pais = false;
+                    var pergunta = new MessageDialog("Sua região não é do brasil então só iremos formatar os números com o código do brasil (+55).");
+                    pergunta.Title = "Olá estrangeiro.";
+                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                    pergunta.ShowAsync();
+
+                }
                 //teste de crash
                 switch (Globais.api_usada)
-                {
-                    case QualAPI.PeopleAPI_COM_Alteracao:
-                        Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
-                        ProgressBar.Visibility = Visibility.Collapsed;
-                        if (Carregar == true)
-                        {
-                            if (Globais.contatos.Count() == 0)
-                            {
-                                var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                                pergunta.Title = "Nenhum contato encontrado";
-                                pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                                pergunta.ShowAsync();
-                            }
-                            else
-                            {
-                                this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                            }
-                        }
-                        break;
-
-                    case QualAPI.PeopleAPI:
-
-                        Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
-                        ProgressBar.Visibility = Visibility.Collapsed;
-                        if (Carregar == true)
-                        {
-                            if (Globais.contatos.Count() == 0)
-                            {
-                                var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
-                                pergunta.Title = "Nenhum contato encontrado";
-                                pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
-                                pergunta.ShowAsync();
-                            }
-                            else
-                            {
-                                this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
-                            }
-                        }
-                        else
-                        {
+                    {
+                        case QualAPI.PeopleAPI_COM_Alteracao:
+                            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI_COM_Alteracao);
                             ProgressBar.Visibility = Visibility.Collapsed;
-                        }
-                        break;
-
-                    case QualAPI.OutlookAPI:
-
-                        if (Internet.CheckInternetConectivity() == true)
-                        {
-                            try
+                            if (Carregar == true)
                             {
-                                Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
-                                if (Carregar == true)
+                                if (Globais.contatos.Count() == 0)
                                 {
-                                    await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos)));
-                                    //                                Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                    var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                                    pergunta.Title = "Nenhum contato encontrado";
+                                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                                    pergunta.ShowAsync();
                                 }
                                 else
                                 {
-                                    ProgressBar.Visibility = Visibility.Collapsed;
+                                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
                                 }
                             }
-                            catch (Microsoft.Identity.Client.MsalServiceException)
-                            {
-                                //faz nada já que não fez login....
-                            }
-                        }
-                        else
-                        {
+                            break;
+
+                        case QualAPI.PeopleAPI:
+
+                            Carregar = await CarregaContatos.Carrega(QualAPI.PeopleAPI);
                             ProgressBar.Visibility = Visibility.Collapsed;
-                            var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
-                            pergunta.Title = "Sem Conexão com a internet";
-                            pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
-                            pergunta.ShowAsync();
-                        }
-                        break;
-                }
+                            if (Carregar == true)
+                            {
+                                if (Globais.contatos.Count() == 0)
+                                {
+                                    var pergunta = new MessageDialog("Como não tem nenhum contato na agenda você não poderá editar nada.");
+                                    pergunta.Title = "Nenhum contato encontrado";
+                                    pergunta.Commands.Add(new UICommand { Label = "Entendi", Id = 0 });
+                                    pergunta.ShowAsync();
+                                }
+                                else
+                                {
+                                    this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                }
+                            }
+                            else
+                            {
+                                ProgressBar.Visibility = Visibility.Collapsed;
+                            }
+                            break;
+
+                        case QualAPI.OutlookAPI:
+
+                            if (Internet.CheckInternetConectivity() == true)
+                            {
+                                try
+                                {
+                                    Carregar = await CarregaContatos.Carrega(QualAPI.OutlookAPI);
+                                    if (Carregar == true)
+                                    {
+                                        await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => this.Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos)));
+                                        //                                Frame.Navigate(typeof(_9Contatos.Interface.TelaContatos));
+                                    }
+                                    else
+                                    {
+                                        ProgressBar.Visibility = Visibility.Collapsed;
+                                    }
+                                }
+                                catch (Microsoft.Identity.Client.MsalServiceException)
+                                {
+                                    //faz nada já que não fez login....
+                                }
+                            }
+                            else
+                            {
+                                ProgressBar.Visibility = Visibility.Collapsed;
+                                var pergunta = new MessageDialog("Para editar os contatos de uma conta da Microsoft você precisa ter conexão com a internet.");
+                                pergunta.Title = "Sem Conexão com a internet";
+                                pergunta.Commands.Add(new UICommand { Label = "Ok", Id = 0 });
+                                pergunta.ShowAsync();
+                            }
+                            break;
+                    }
                 //libera listview
                 ListaOpcoes.SelectionMode = ListViewSelectionMode.Single;
                 Globais.MainPage_Bloqueia_Listview = false;
