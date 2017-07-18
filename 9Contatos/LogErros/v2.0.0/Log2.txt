@@ -1,0 +1,24 @@
+﻿ERRO : STOWED_EXCEPTION_System.ArgumentOutOfRangeException_80131502_9Contatos.dll!$0__9Contatos::Telefones::telefone::Telefone.Get_Numero_Formatado
+STATUS: INVESTIGANDO
+OCORRENCIAS: 3 (v2.0.0)
+ARQUIVOS AFETADOS:  Telefone
+PROBLEMA:
+PILHA:
+Quadro	Imagem	Função	Compensar
+0	SharedLibrary	System::String.Insert	0x103	
+1	9Contatos	$0__9Contatos::Telefones::telefone::Telefone.Get_Numero_Formatado	0x6D	
+2	9Contatos	$0__9Contatos::Contatos::Carrega::CarregaContatos::_Carrega_d__4.MoveNext	0x517	
+3	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw	0x19	
+4	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ThrowForNonSuccess	0x53	
+5	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.HandleNonSuccessAndDebuggerNotification	0x2D	
+6	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter.ValidateEnd	0x1D	
+7	SharedLibrary	$13_System::Runtime::CompilerServices::TaskAwaiter$1_System::Byte_.GetResult	0xF	
+8	9Contatos	$0__9Contatos::MainPage::_bt_arrumar_d__3.MoveNext	0x221	
+9	SharedLibrary	System::Runtime::ExceptionServices::ExceptionDispatchInfo.Throw	0x19	
+10	SharedLibrary	$13_System::Runtime::CompilerServices::AsyncMethodBuilderCore::__c._ThrowAsync_b__9_0	0x13	
+11	SharedLibrary	$13_System::Threading::WinRTSynchronizationContext::Invoker.InvokeCore	0x33	
+
+DISPOSITIVOS:
+000-BR-RM-1092_1000  (lumia 535)
+Build:
+10.0.14393 
